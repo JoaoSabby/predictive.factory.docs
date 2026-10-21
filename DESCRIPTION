@@ -1,0 +1,19 @@
+Package: models.factory.docs
+Title: Documentação Arquitetural e Metodológica de models.factory
+Version: 0.1.0
+Authors@R: person("Equipe", "models.factory", role = c("aut", "cre"),
+    email = "documentacao@example.invalid")
+Description: Documentação da arquitetura, fundamentos científicos, governança,
+    infraestrutura e preservação de modelos preditivos do projeto models.factory.
+    Publicação em pkgdown com artigos Quarto e referências de funções em Rd.
+License: file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.1.0)
+Suggests:
+    knitr,
+    pkgdown (>= 2.1.0),
+    quarto,
+    rmarkdown,
+    stringr
+SystemRequirements: Quarto (>= 1.5); XeLaTeX apenas para exportacao PDF
+

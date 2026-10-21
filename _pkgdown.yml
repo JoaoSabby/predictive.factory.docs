@@ -1,0 +1,41 @@
+destination: site
+lang: pt
+template:
+  bootstrap: 5
+  math-rendering: mathml
+  bslib:
+    bg: "#f8fafb"
+    fg: "#192b3b"
+    primary: "#006b70"
+    link-color: "#006b70"
+    border-radius: 0.25rem
+home:
+  title: models.factory
+  description: Documentação arquitetural e metodológica da Fábrica Preditiva.
+navbar:
+  structure:
+    left: [arquitetura, publicacao, reference]
+    right: [search]
+  components:
+    arquitetura:
+      text: Arquitetura e fundamentos
+      href: articles/arquitetura.html
+    publicacao:
+      text: Construção e manutenção
+      href: articles/publicacao.html
+    reference:
+      text: Funções
+      href: articles/arquitetura.html#referencia-de-funcoes
+articles:
+  - title: Documentação do projeto
+    navbar: ~
+    contents:
+      - arquitetura
+      - publicacao
+reference: []
+footer:
+  structure:
+    left: [projeto]
+    right: [built_with]
+  components:
+    projeto: "models.factory | Documentação do projeto"

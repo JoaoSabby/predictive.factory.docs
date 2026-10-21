@@ -1,0 +1,139 @@
+```json
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://models.factory.example/schemas/feature-lineage/1.0.0.json",
+  "title": "Perfil ilustrativo de metadados de uma família de features",
+  "type": "object",
+  "required": [
+    "FEATURE_FAMILY",
+    "metadata",
+    "openLineage",
+    "featureSchema"
+  ],
+  "properties": {
+    "FEATURE_FAMILY": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]*$"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "@context",
+        "@id",
+        "dcterms:title",
+        "dcterms:description"
+      ],
+      "properties": {
+        "@context": {
+          "type": "object",
+          "required": [
+            "dcterms"
+          ],
+          "properties": {
+            "dcterms": {
+              "const": "http://purl.org/dc/terms/"
+            }
+          }
+        },
+        "@id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "dcterms:identifier": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dcterms:title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dcterms:description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dcterms:conformsTo": {
+          "type": "object",
+          "required": [
+            "@id"
+          ],
+          "properties": {
+            "@id": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "openLineage": {
+      "allOf": [
+        {
+          "$ref": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/JobEvent"
+        },
+        {
+          "type": "object",
+          "required": [
+            "inputs",
+            "outputs"
+          ],
+          "properties": {
+            "job": {
+              "type": "object",
+              "required": [
+                "facets"
+              ],
+              "properties": {
+                "facets": {
+                  "type": "object",
+                  "required": [
+                    "sql"
+                  ],
+                  "properties": {
+                    "sql": {
+                      "$ref": "https://openlineage.io/spec/facets/1-0-0/SQLJobFacet.json#/$defs/SQLJobFacet"
+                    }
+                  }
+                }
+              }
+            },
+            "inputs": {
+              "type": "array",
+              "minItems": 1
+            },
+            "outputs": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "facets"
+                ],
+                "properties": {
+                  "facets": {
+                    "type": "object",
+                    "required": [
+                      "columnLineage"
+                    ],
+                    "properties": {
+                      "columnLineage": {
+                        "$ref": "https://openlineage.io/spec/facets/1-2-0/ColumnLineageDatasetFacet.json#/$defs/ColumnLineageDatasetFacet"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "featureSchema": {
+      "$ref": "https://json-schema.org/draft/2020-12/schema"
+    }
+  },
+  "additionalProperties": false
+}
+
+```

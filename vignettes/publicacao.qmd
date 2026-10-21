@@ -1,0 +1,145 @@
+---
+title: "Construção e manutenção"
+author: "Equipe models.factory"
+date: today
+lang: pt-BR
+bibliography: ../citations.bib
+csl: ../assets/associacao-brasileira-de-normas-tecnicas.csl
+link-citations: true
+format:
+  html:
+    minimal: true
+    embed-resources: true
+    css: images/document.css
+toc: true
+toc-depth: 3
+---
+
+# Construção no RStudio Server
+
+O projeto publica documentação em HTML com pkgdown. O conteúdo principal
+permanece em Quarto/Markdown; a referência de funções utiliza arquivos Rd
+[@quarto; @pkgdown; @rmanual].
+
+## Preparação do ambiente
+
+Requisitos: R 4.1 ou posterior, pkgdown 2.1.0 ou posterior e Quarto CLI
+1.5 ou posterior. Instalar os pacotes na preparação do ambiente:
+
+```r
+install.packages(c("pkgdown", "quarto", "knitr", "rmarkdown", "stringr"))
+```
+
+Abrir o arquivo `models.factory.docs.Rproj` e executar:
+
+```r
+source("build.R", encoding = "UTF-8")
+```
+
+O site é gerado em `site/index.html`. A construção não instala pacotes nem
+acessa o Oracle. O pacote R `quarto` fornece a interface de execução;
+o Quarto CLI deve estar instalado separadamente e disponível no PATH.
+Em servidor sem internet, as dependências devem ser disponibilizadas antes
+da construção.
+
+## Organização das fontes
+
+| Arquivo ou diretório | Responsabilidade |
+|---|---|
+| `vignettes/arquitetura.qmd` | Capítulos da documentação |
+| `pdf-format.yml` | Configuração da exportação PDF |
+| `citations.bib` | Fontes bibliográficas |
+| `assets/` | Estilo CSL e imagem reservada para o modelo ER |
+| `examples/feature-lineage.json` | Exemplo de metadados |
+| `schemas/` | Contratos e especificações referenciadas |
+| `docs/functions/` | Arquivos Rd fornecidos pelo projeto |
+| `man/` | Cópias preparadas para a referência pkgdown |
+| `site/` | Saída HTML |
+| `export/` | Exportações independentes |
+
+O diretório padrão de saída do pkgdown foi alterado para `site/` para
+preservar `docs/functions/`. Os arquivos-fonte de funções não são gerados
+a partir da saída do site.
+
+# Manutenção do conteúdo
+
+## Modelo ER e dicionário
+
+A figura do capítulo Modelo Entidade-Relacionamento é um placeholder.
+Substituir o arquivo `assets/modelo-er-reservado.png` pela imagem final
+ou atualizar o caminho da figura.
+
+As sete entidades estão identificadas. As descrições detalhadas, os campos,
+as chaves e os relacionamentos permanecem reservados. A SQL demonstrativa
+de armazenamento não define o DDL dessas entidades.
+
+## Referências bibliográficas
+
+Manter as entradas em `citations.bib` e utilizar chamadas Pandoc, como
+`[@chen2016]`. O arquivo CSL fornecido aplica apresentação ABNT.
+A ordem das entradas no arquivo BibTeX agrupa fundamentos científicos,
+manuais e normativos; a ordenação visual da bibliografia obedece ao CSL.
+
+A edição e a versão das fontes devem ser conferidas na atualização do
+documento. A disponibilidade de um recurso posterior ao Oracle 19c é
+registrada como evidência de continuidade dos padrões.
+
+## JSON de linhagem
+
+O documento principal inclui automaticamente o conteúdo de
+`examples/feature-lineage.json`. Seu contrato está em
+`schemas/feature-lineage.schema.json`.
+
+A propriedade `featureSchema` contém um contrato dos valores da feature.
+A propriedade `openLineage` contém uma definição estática `JobEvent`.
+O bloco `metadata` utiliza termos Dublin Core em JSON-LD.
+Os blocos externos compõem um perfil ilustrativo do projeto.
+
+As cópias em `schemas/vendor/` permitem validar as versões OpenLineage
+utilizadas sem depender de consulta remota durante a validação.
+URIs e datas do exemplo são hipotéticas.
+
+# Documentação de funções
+
+Adicionar arquivos `.Rd` em `docs/functions/`. O nome de tópico em
+`\name{}` deve ser único. Na construção, o script:
+
+1. Lê e verifica a estrutura básica dos arquivos Rd.
+2. Prepara cópias em `man/` para o mecanismo nativo de referência pkgdown.
+3. Atualiza os links do capítulo Referência de funções.
+4. Remove apenas cópias anteriormente registradas pelo próprio script que
+   deixaram de ter fonte correspondente.
+
+Os arquivos originais permanecem em `docs/functions/`. Sem arquivos Rd,
+o capítulo fica vazio. A construção desabilita execução dos exemplos.
+As funções executáveis do pipeline não fazem parte deste pacote documental.
+
+# HTML e PDF independentes
+
+```r
+source("buildHtml.R", encoding = "UTF-8")
+source("buildPdf.R", encoding = "UTF-8")
+```
+
+O PDF requer XeLaTeX, o pacote LaTeX `fvextra` e as famílias completas
+DejaVu Serif, DejaVu Sans e DejaVu Sans Mono. Utiliza A4, margens superior
+e esquerda de 30 mm, inferior e direita de 20 mm, sumário em três níveis
+e links coloridos. A exportação gera LaTeX com Quarto e compila o PDF com
+XeLaTeX em três passagens, para estabilizar sumário e referências cruzadas.
+
+As ilustrações interativas em JavaScript são exclusivas do HTML. O texto
+preserva o cálculo do cenário inicial para leitura estática e PDF.
+
+# Verificação
+
+A construção deve concluir sem citações ausentes ou links locais quebrados.
+Os arquivos JSON devem ser validados contra os contratos correspondentes.
+A publicação não comprova execução do pipeline, desempenho da infraestrutura
+ou equivalência de modelos reais: essas evidências pertencem às etapas
+operacionais documentadas.
+
+
+# Referências
+
+::: {#refs}
+:::

@@ -1,0 +1,25 @@
+documentclass: scrreprt
+papersize: a4
+header-includes: |
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},breaklines,breakanywhere,fontsize=\footnotesize}
+  \setlength{\emergencystretch}{3em}
+  \AtBeginDocument{\raggedright}
+format:
+  pdf: &pdfOptions
+    documentclass: scrreprt
+    papersize: a4
+    pdf-engine: xelatex
+    latex-auto-install: false
+    mainfont: DejaVu Serif
+    sansfont: DejaVu Sans
+    monofont: DejaVu Sans Mono
+    colorlinks: true
+    geometry:
+      - top=30mm
+      - left=30mm
+      - bottom=20mm
+      - right=20mm
+    keep-tex: false
+  latex:
+    <<: *pdfOptions

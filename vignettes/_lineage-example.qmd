@@ -1,0 +1,120 @@
+```json
+{
+  "FEATURE_FAMILY": "SALDOS",
+  "metadata": {
+    "@context": {
+      "dcterms": "http://purl.org/dc/terms/"
+    },
+    "@id": "urn:models.factory:feature-family:saldos:v1",
+    "dcterms:identifier": "SALDOS_V1",
+    "dcterms:title": "Saldos consolidados por cliente",
+    "dcterms:description": "Saldo total das contas por cliente e data de referência, em reais.",
+    "dcterms:conformsTo": {
+      "@id": "urn:models.factory:feature-contract:saldos:v1"
+    }
+  },
+  "openLineage": {
+    "eventTime": "2026-10-20T13:00:00Z",
+    "producer": "https://models.factory.example/lineage/1.0.0",
+    "schemaURL": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/JobEvent",
+    "job": {
+      "namespace": "models.factory",
+      "name": "FEATURE_FAMILY_SALDOS",
+      "facets": {
+        "sql": {
+          "_producer": "https://models.factory.example/lineage/1.0.0",
+          "_schemaURL": "https://openlineage.io/spec/facets/1-0-0/SQLJobFacet.json#/$defs/SQLJobFacet",
+          "query": "SELECT SEQUENCIA_CLIENTE, DATA_REFERENCIA, CAST(SUM(VALOR_SALDO) AS NUMBER(18,2)) AS VALOR_SALDO_TOTAL FROM BDQ.SALDO_CONTA GROUP BY SEQUENCIA_CLIENTE, DATA_REFERENCIA"
+        }
+      }
+    },
+    "inputs": [
+      {
+        "namespace": "oracle://db.example.invalid:1521/BDQDBD",
+        "name": "BDQ.SALDO_CONTA"
+      }
+    ],
+    "outputs": [
+      {
+        "namespace": "oracle://db.example.invalid:1521/BDQDBD",
+        "name": "BDQ.ML_FEATURE_STORE",
+        "facets": {
+          "columnLineage": {
+            "_producer": "https://models.factory.example/lineage/1.0.0",
+            "_schemaURL": "https://openlineage.io/spec/facets/1-2-0/ColumnLineageDatasetFacet.json#/$defs/ColumnLineageDatasetFacet",
+            "fields": {
+              "VALOR_SALDO_TOTAL": {
+                "inputFields": [
+                  {
+                    "namespace": "oracle://db.example.invalid:1521/BDQDBD",
+                    "name": "BDQ.SALDO_CONTA",
+                    "field": "VALOR_SALDO",
+                    "transformations": [
+                      {
+                        "type": "DIRECT",
+                        "subtype": "AGGREGATION",
+                        "description": "Soma dos saldos, convertida para NUMBER(18,2).",
+                        "masking": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "dataset": [
+              {
+                "namespace": "oracle://db.example.invalid:1521/BDQDBD",
+                "name": "BDQ.SALDO_CONTA",
+                "field": "SEQUENCIA_CLIENTE",
+                "transformations": [
+                  {
+                    "type": "INDIRECT",
+                    "subtype": "GROUP_BY",
+                    "description": "Define a granularidade por cliente e competência.",
+                    "masking": false
+                  }
+                ]
+              },
+              {
+                "namespace": "oracle://db.example.invalid:1521/BDQDBD",
+                "name": "BDQ.SALDO_CONTA",
+                "field": "DATA_REFERENCIA",
+                "transformations": [
+                  {
+                    "type": "INDIRECT",
+                    "subtype": "GROUP_BY",
+                    "description": "Define a granularidade por cliente e competência.",
+                    "masking": false
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "featureSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:models.factory:feature-contract:saldos:v1",
+    "type": "object",
+    "properties": {
+      "VALOR_SALDO_TOTAL": {
+        "description": "Saldo consolidado, em reais; null quando não houver saldo conhecido.",
+        "type": [
+          "number",
+          "null"
+        ],
+        "multipleOf": 0.01,
+        "exclusiveMinimum": -10000000000000000,
+        "exclusiveMaximum": 10000000000000000
+      }
+    },
+    "required": [
+      "VALOR_SALDO_TOTAL"
+    ],
+    "additionalProperties": false
+  }
+}
+
+```

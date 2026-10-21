@@ -1,0 +1,6 @@
+project:
+  type: default
+  render:
+    - arquitetura.qmd
+    - publicacao.qmd
+format: html

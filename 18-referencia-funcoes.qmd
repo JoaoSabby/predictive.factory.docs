@@ -1,0 +1,6 @@
+# Referência de funções {#referencia-de-funcoes}
+
+Páginas geradas por `scripts/funcoes.R` a partir da documentação roxygen2 do pacote.
+Cada função tem sua própria página, listada também no menu lateral.
+
+{{< include _referencia-indice.qmd >}}

@@ -1,0 +1,21 @@
+# Validação e métricas de desempenho {#validacao}
+
+## Divisão treino e teste
+
+<!-- Conteúdo a ser escrito. -->
+
+## Validação cruzada
+
+<!-- Conteúdo a ser escrito. -->
+
+## ROC-AUC
+
+<!-- Conteúdo a ser escrito. -->
+
+## PR-AUC
+
+<!-- Conteúdo a ser escrito. -->
+
+## Escolha do limiar
+
+<!-- Conteúdo a ser escrito. -->

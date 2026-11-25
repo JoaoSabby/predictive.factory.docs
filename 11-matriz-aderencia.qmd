@@ -1,0 +1,9 @@
+# Matriz de aderência e evolução arquitetural {#aderencia}
+
+## Requisitos, decisões e evidências
+
+<!-- Conteúdo a ser escrito. -->
+
+## Roadmap e estados
+
+<!-- Conteúdo a ser escrito. -->

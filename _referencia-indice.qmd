@@ -1,0 +1,3 @@
+<!-- Gerado por scripts/funcoes.R. Edite o roxygen2 da funcao, nao este arquivo. -->
+
+Nenhuma função documentada foi encontrada. Execute `scripts/funcoes.R` apontando para o pacote.

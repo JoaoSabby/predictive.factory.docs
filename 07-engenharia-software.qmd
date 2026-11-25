@@ -1,0 +1,13 @@
+# Engenharia de software e reprodutibilidade {#engenharia}
+
+## Qualidade de produto e ciclo de vida
+
+<!-- Conteúdo a ser escrito. -->
+
+## MLOps, DataOps e DAGs
+
+<!-- Conteúdo a ser escrito. -->
+
+## Reprodutibilidade, integridade e imutabilidade
+
+<!-- Conteúdo a ser escrito. -->

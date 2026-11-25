@@ -1,0 +1,68 @@
+---
+title: "predictive.factory"
+subtitle: "Documentação técnica, arquitetura e guias interativos"
+author: "João Batista Gonçalves de Brito"
+toc: false
+---
+
+::: {.content-visible when-format="html"}
+{{< include _badges.qmd >}}
+:::
+
+::: {.pf-resumo}
+<!-- Apresentação do projeto em um parágrafo. -->
+Espaço reservado para a apresentação da Fábrica Preditiva.
+:::
+
+## Estrutura do documento
+
+::: {.pf-cards}
+
+::: {.pf-card}
+<i class="bi bi-diagram-3"></i>
+
+#### [Fundamentos e arquitetura](01-fundamentos.qmd)
+
+Fundamentos, qualidade de dados, HPC, governança, padrões, persistência e preservação.
+:::
+
+::: {.pf-card}
+<i class="bi bi-sliders"></i>
+
+#### [Métodos](12-balanceamento-adanear.qmd)
+
+Balanceamento, árvores e boosting, validação, métricas e leaderboard.
+:::
+
+::: {.pf-card}
+<i class="bi bi-gear-wide-connected"></i>
+
+#### [Modelagem e pipeline](16-modelagem.qmd)
+
+Variáveis, janelas, experimentos e fluxo de execução.
+:::
+
+::: {.pf-card}
+<i class="bi bi-braces"></i>
+
+#### [Referência de funções](18-referencia-funcoes.qmd)
+
+Uma página por função, gerada a partir do roxygen2.
+:::
+
+::: {.pf-card}
+<i class="bi bi-ui-checks-grid"></i>
+
+#### [Recursos interativos](90-recursos-interativos.qmd)
+
+Catálogo de widgets, Observable JS e componentes, com trechos para copiar.
+:::
+
+:::
+
+::: {.callout-note appearance="simple"}
+## Execução sem internet
+
+O site é estático e não depende de CDN. Gere com `quarto render` e publique `_site/` em servidor
+interno, ou visualize com `quarto preview`.
+:::

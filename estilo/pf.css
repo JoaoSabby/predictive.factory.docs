@@ -1,0 +1,77 @@
+/* Estilos comuns aos temas claro e escuro */
+
+/* Titulos com respiro e ancoras discretas */
+h1, h2, h3 { letter-spacing: -.015em; scroll-margin-top: 5rem; }
+h2 { margin-top: 2.2rem; padding-bottom: .25rem; border-bottom: 1px solid rgba(127,127,127,.18); }
+
+/* Iframes dos widgets: altura ajustada por widgets/iframe-resize.js */
+.pf-frame {
+  display: block;
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid;
+  box-sizing: content-box;
+  border-radius: 10px;
+  background: #181a20;
+  margin: 1rem 0 1.5rem;
+}
+
+/* Shields gerados por scripts/badges.R */
+.pf-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: .4rem 0 .8rem; }
+.pf-badges img { height: 20px; }
+
+/* Subtitulo das paginas de funcoes geradas por scripts/funcoes.R */
+.pf-fn-title { font-size: 1.15rem; opacity: .8; margin: -.5rem 0 1.25rem; }
+
+/* Bloco de proposito ou resumo no inicio do capitulo */
+.pf-resumo {
+  border-left: 4px solid var(--bs-primary);
+  background: rgba(0,107,112,.06);
+  padding: .9rem 1.2rem;
+  border-radius: 0 .35rem .35rem 0;
+  margin: 1.25rem 0;
+}
+
+/* Espaco reservado para figuras e conteudos futuros */
+.pf-placeholder {
+  border: 2px dashed rgba(127,127,127,.45);
+  border-radius: 8px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  opacity: .75;
+  margin: 1.5rem 0;
+}
+
+/* Widget embutido diretamente na pagina, sem iframe */
+.pf-inline {
+  border: 1px solid rgba(127,127,127,.3);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+.pf-inline label { display: block; margin-bottom: .7rem; }
+.pf-inline input[type="range"] { width: 100%; max-width: 480px; display: block; accent-color: var(--bs-primary); }
+.pf-inline output { font-size: 1.35rem; font-weight: 700; color: var(--bs-primary); }
+
+/* Cartoes em grade para indices e paginas iniciais */
+.pf-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+.pf-card {
+  border: 1px solid rgba(127,127,127,.25);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.pf-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.pf-card .bi { font-size: 1.5rem; color: var(--bs-primary); }
+.pf-card h4 { margin: .5rem 0 .35rem; font-size: 1.05rem; }
+.pf-card h4 a { text-decoration: none; }
+.pf-card h4 a:hover { text-decoration: underline; }
+.pf-card p { margin: 0; font-size: .92rem; opacity: .85; }
+
+/* Tabelas mais leves */
+table { font-size: .94rem; }
+td, th { vertical-align: top; }
+
+@media print {
+  .pf-frame, .pf-inline { display: none; }
+}

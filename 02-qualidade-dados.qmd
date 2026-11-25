@@ -1,0 +1,17 @@
+# Governança e qualidade de dados {#qualidade}
+
+## Dimensões e responsabilidades
+
+<!-- Conteúdo a ser escrito. -->
+
+## Data Quality Score
+
+<!-- Conteúdo a ser escrito. -->
+
+## pointblank e gates
+
+<!-- Conteúdo a ser escrito. -->
+
+## Simulação do score
+
+<!-- Conteúdo a ser escrito. -->

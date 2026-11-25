@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curva ROC e ROC-AUC (offline)</title>
+<link rel="stylesheet" href="pf-metrics.css">
+</head>
+<body>
+<div class="pf-wrap">
+  <div class="pf-title">Curva ROC e área sob a curva (ROC-AUC)</div>
+  <div class="pf-sub">Escores sintéticos binormais: negativos ~ N(0, 1) e positivos ~ N(d, 1). Mova o limiar para percorrer a curva.
+    Altere a prevalência e observe que a curva ROC praticamente não muda.</div>
+
+  <div class="pf-controls">
+    <label><span class="row">Separação entre classes (d) <b id="d-val"></b></span>
+      <input type="range" id="d" min="0" max="3.5" step="0.1" value="1.5"></label>
+    <label><span class="row">Prevalência <b id="prev-val"></b></span>
+      <input type="range" id="prev" min="0.01" max="0.5" step="0.01" value="0.1"></label>
+    <label><span class="row">Limiar de decisão <b id="thr-val"></b></span>
+      <input type="range" id="thr" min="-3" max="5" step="0.05" value="1"></label>
+    <div><button class="pf-btn" id="redraw">Nova amostra</button></div>
+  </div>
+
+  <div class="pf-grid2">
+    <div class="pf-panel">
+      <h3>Distribuição dos escores por classe</h3>
+      <div id="dens"></div>
+      <div class="pf-legend">
+        <span><i style="background:#ce9178"></i>Positivos</span>
+        <span><i style="background:#4ec9b0"></i>Negativos</span>
+        <span><i style="background:#feca57"></i>Limiar</span>
+      </div>
+    </div>
+    <div class="pf-panel">
+      <h3>Curva ROC</h3>
+      <div id="roc"></div>
+    </div>
+  </div>
+
+  <div class="pf-grid2" style="margin-top:12px;">
+    <div class="pf-panel">
+      <h3>Matriz de confusão no limiar</h3>
+      <table class="pf-table">
+        <thead><tr><th></th><th>Previsto positivo</th><th>Previsto negativo</th></tr></thead>
+        <tbody id="cm"></tbody>
+      </table>
+    </div>
+    <div class="pf-panel">
+      <h3>Indicadores</h3>
+      <div class="pf-kpis" id="kpis" style="margin-top:0;"></div>
+    </div>
+  </div>
+
+  <div class="pf-note" id="note"></div>
+</div>
+
+<script src="pf-metrics.js"></script>
+<script>
+(function(){
+  const notify = PF.autoResize('roc-auc');
+  const N = 3000;
+  let seed = 21;
+
+  const getD = PF.bindRange('d', function(v){ return PF.fmt(v, 1); }, render);
+  const getPrev = PF.bindRange('prev', function(v){ return PF.pct(v, 0); }, render);
+  const getThr = PF.bindRange('thr', function(v){ return PF.fmt(v, 2); }, render);
+  document.getElementById('redraw').addEventListener('click', function(){ seed++; render(); });
+
+  function render(){
+    const d = getD(), prev = getPrev(), thr = getThr();
+    const data = PF.binormal(N, prev, d, seed * 7);
+    const roc = PF.rocCurve(data);
+    const cm = PF.confusion(data, thr);
+
+    /* Densidades */
+    const pos = data.filter(function(r){ return r.y === 1; }).map(function(r){ return r.s; });
+    const neg = data.filter(function(r){ return r.y === 0; }).map(function(r){ return r.s; });
+    const hp = PF.histogram(pos, -4, 6, 50), hn = PF.histogram(neg, -4, 6, 50);
+    const ymax = Math.max(0.45, Math.max.apply(null, hp.concat(hn).map(function(p){ return p[1]; })) * 1.1);
+    const p1 = PF.plot({ width: 440, height: 260, xmin: -4, xmax: 6, ymin: 0, ymax: ymax, ticks: 5, xdec: 0, ydec: 2, xlab: 'Escore', ylab: 'Densidade' });
+    p1.area(hn, 'rgba(78,201,176,0.35)'); p1.line(hn, '#4ec9b0', 1.5);
+    p1.area(hp, 'rgba(206,145,120,0.35)'); p1.line(hp, '#ce9178', 1.5);
+    p1.vline(thr, '#feca57', 'limiar');
+    document.getElementById('dens').innerHTML = p1.svg();
+
+    /* Curva ROC */
+    const p2 = PF.plot({ width: 440, height: 260, xmin: 0, xmax: 1, ymin: 0, ymax: 1, ticks: 5, xdec: 1, ydec: 1,
+      xlab: 'Taxa de falsos positivos (1 − especificidade)', ylab: 'Taxa de verdadeiros positivos' });
+    const pts = roc.points.map(function(p){ return [p.fpr, p.tpr]; });
+    p2.area(pts, 'rgba(86,156,214,0.22)');
+    p2.line([[0, 0], [1, 1]], '#64748b', 1.2, '4,4');
+    p2.line(pts, '#569cd6', 2.4);
+    p2.dot(cm.fpr, cm.tpr, '#feca57', 6);
+    p2.text(0.55, 0.12, 'ROC-AUC = ' + PF.fmt(roc.auc, 3), '#9cdcfe');
+    p2.text(0.55, 0.05, 'Aleatório = 0,500', '#94a3b8');
+    document.getElementById('roc').innerHTML = p2.svg();
+
+    document.getElementById('cm').innerHTML =
+      '<tr><td>Real positivo</td><td>VP = ' + cm.tp + '</td><td>FN = ' + cm.fn + '</td></tr>' +
+      '<tr><td>Real negativo</td><td>FP = ' + cm.fp + '</td><td>VN = ' + cm.tn + '</td></tr>';
+
+    document.getElementById('kpis').innerHTML =
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(roc.auc, 3) + '</div><div class="l">ROC-AUC empírica</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(PF.phi(d / Math.SQRT2), 3) + '</div><div class="l">Teórica Φ(d/√2)</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.pct(cm.tpr) + '</div><div class="l">TVP (sensibilidade)</div></div>' +
+      '<div class="pf-kpi warn"><div class="v">' + PF.pct(cm.fpr) + '</div><div class="l">TFP</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.pct(1 - cm.fpr) + '</div><div class="l">Especificidade</div></div>' +
+      '<div class="pf-kpi ' + (cm.precision < 0.5 ? 'bad' : '') + '"><div class="v">' + PF.pct(cm.precision) + '</div><div class="l">Precisão</div></div>';
+
+    document.getElementById('note').innerHTML =
+      '<b>Leitura.</b> A ROC-AUC é a probabilidade de um positivo sorteado receber escore maior que um negativo sorteado. ' +
+      'Ela não depende do limiar nem da prevalência: ao reduzir a prevalência para ' + PF.pct(prev, 0) +
+      ', a AUC permanece próxima de ' + PF.fmt(PF.phi(d / Math.SQRT2), 3) + ', mas a precisão no limiar atual é ' +
+      PF.pct(cm.precision) + '. Em eventos raros, complemente a ROC-AUC com a PR-AUC.';
+    notify();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

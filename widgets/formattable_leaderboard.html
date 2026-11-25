@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formattable Model Leaderboard (Offline)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #181a20;
+    color: #1f2937;
+  }
+  .ft-card {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  }
+  .ft-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .ft-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .ft-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .ft-input, .ft-select {
+    padding: 5px 9px;
+    font-size: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #f8fafc;
+    color: #0f172a;
+  }
+  table.ft-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table.ft-table th {
+    text-align: left;
+    padding: 9px 10px;
+    border-bottom: 2px solid #cbd5e1;
+    color: #1e293b;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    background: #f8fafc;
+  }
+  table.ft-table th.num, table.ft-table td.num {
+    text-align: right;
+  }
+  table.ft-table th.center, table.ft-table td.center {
+    text-align: center;
+  }
+  table.ft-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  table.ft-table tr:hover td {
+    background: #f1f5f9;
+  }
+  .heat-pill {
+    display: inline-block;
+    min-width: 44px;
+    padding: 3px 7px;
+    border-radius: 4px;
+    text-align: right;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+  }
+  .bar-cell {
+    position: relative;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 6px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    color: #0f172a;
+  }
+  .bar-fill {
+    position: absolute;
+    right: 0;
+    top: 1px;
+    bottom: 1px;
+    background: #fecdd3;
+    border-radius: 3px;
+    z-index: 0;
+  }
+  .bar-text {
+    position: relative;
+    z-index: 1;
+  }
+  .grade-a { color: #15803d; font-weight: 700; }
+  .grade-b { color: #334155; }
+  .grade-c { color: #64748b; }
+  .score-best { color: #15803d; font-weight: 700; font-family: Consolas, monospace; }
+  .score-mid { color: #64748b; font-family: Consolas, monospace; }
+  .status-yes { color: #15803d; font-weight: 700; }
+  .status-no { color: #dc2626; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="ft-card">
+  <div class="ft-header">
+    <div class="ft-title">Leaderboard de Experimentos (Estilo <code>formattable</code> Off-line)</div>
+    <div class="ft-controls">
+      <input type="text" id="ft-search" class="ft-input" placeholder="Filtrar pipeline...">
+      <select id="ft-filter-tier" class="ft-select">
+        <option value="ALL">Todos os Tiers</option>
+        <option value="A">Tier A</option>
+        <option value="B">Tier B</option>
+        <option value="C">Tier C</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="overflow-x:auto;">
+    <table class="ft-table">
+      <thead>
+        <tr>
+          <th data-col="id">id</th>
+          <th data-col="pipeline">pipeline</th>
+          <th data-col="latency_ms" class="num">latency_ms</th>
+          <th data-col="tier" class="center">tier</th>
+          <th data-col="roc_auc" class="num" style="width:18%;">roc_auc</th>
+          <th data-col="pr_auc" class="num" style="width:18%;">pr_auc</th>
+          <th data-col="composite" class="num">composite_score</th>
+          <th data-col="promoted" class="center">promoted</th>
+        </tr>
+      </thead>
+      <tbody id="ft-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+(function(){
+  const ROWS = [
+    { id: 1, pipeline: 'glm_baseline', latency_ms: 14, tier: 'C', roc_auc: 0.89, pr_auc: 0.91, composite: 0.900, promoted: false },
+    { id: 2, pipeline: 'lgbm_tuned_bo', latency_ms: 27, tier: 'A', roc_auc: 0.95, pr_auc: 0.91, composite: 0.930, promoted: true },
+    { id: 3, pipeline: 'xgb_adanear_bo', latency_ms: 30, tier: 'A', roc_auc: 0.96, pr_auc: 0.92, composite: 0.940, promoted: true },
+    { id: 4, pipeline: 'cart_pruned', latency_ms: 12, tier: 'C', roc_auc: 0.89, pr_auc: 0.91, composite: 0.900, promoted: false },
+    { id: 5, pipeline: 'ranger_balanced', latency_ms: 29, tier: 'B', roc_auc: 0.91, pr_auc: 0.89, composite: 0.900, promoted: true },
+    { id: 6, pipeline: 'nnet_regularized', latency_ms: 34, tier: 'B', roc_auc: 0.93, pr_auc: 0.85, composite: 0.890, promoted: false },
+    { id: 7, pipeline: 'catboost_default', latency_ms: 27, tier: 'B', roc_auc: 0.93, pr_auc: 0.92, composite: 0.925, promoted: true },
+    { id: 8, pipeline: 'stack_ensemble_v1', latency_ms: 41, tier: 'A', roc_auc: 0.99, pr_auc: 0.93, composite: 0.960, promoted: true },
+    { id: 9, pipeline: 'knn_exact_mkl', latency_ms: 31, tier: 'C', roc_auc: 0.85, pr_auc: 0.91, composite: 0.880, promoted: false },
+    { id: 10, pipeline: 'lda_shrinkage', latency_ms: 11, tier: 'C', roc_auc: 0.86, pr_auc: 0.88, composite: 0.870, promoted: false }
+  ];
+
+  let sortCol = 'id';
+  let sortAsc = true;
+
+  function latencyBg(ms){
+    const t = Math.max(0, Math.min(1, (ms - 10) / 32));
+    const r = Math.round(254 - t * 4);
+    const g = Math.round(243 - t * 65);
+    const b = Math.round(199 - t * 140);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function renderTable(){
+    const q = document.getElementById('ft-search').value.trim().toLowerCase();
+    const tierFilter = document.getElementById('ft-filter-tier').value;
+
+    /* Ranking fixo por composite_score decrescente */
+    const ranked = ROWS.slice().sort((a, b) => b.composite - a.composite);
+    const rankMap = {};
+    ranked.forEach((r, idx) => {
+      if(idx > 0 && ranked[idx - 1].composite === r.composite){
+        rankMap[r.id] = rankMap[ranked[idx - 1].id];
+      }else{
+        rankMap[r.id] = idx + 1;
+      }
+    });
+
+    let filtered = ROWS.filter(r => {
+      const okText = r.pipeline.includes(q);
+      const okTier = (tierFilter === 'ALL' || r.tier === tierFilter);
+      return okText && okTier;
+    });
+
+    filtered.sort((a, b) => {
+      const va = a[sortCol], vb = b[sortCol];
+      if(typeof va === 'string') return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+      return sortAsc ? (va - vb) : (vb - va);
+    });
+
+    const tbody = document.getElementById('ft-body');
+    tbody.innerHTML = filtered.map(r => {
+      const wRoc = Math.max(12, ((r.roc_auc - 0.80) / 0.20) * 100);
+      const wPr = Math.max(12, ((r.pr_auc - 0.80) / 0.20) * 100);
+      const tierCls = r.tier === 'A' ? 'grade-a' : (r.tier === 'B' ? 'grade-b' : 'grade-c');
+      const scCls = r.composite >= 0.925 ? 'score-best' : 'score-mid';
+      const rk = String(rankMap[r.id]).padStart(2, '0');
+      const stHtml = r.promoted
+        ? '<span class="status-yes">&#10004; Yes</span>'
+        : '<span class="status-no">&#10008; No</span>';
+      return `<tr>
+        <td>${r.id}</td>
+        <td><code>${r.pipeline}</code></td>
+        <td class="num"><span class="heat-pill" style="background:${latencyBg(r.latency_ms)};">${r.latency_ms} ms</span></td>
+        <td class="center ${tierCls}">${r.tier}</td>
+        <td class="num"><div class="bar-cell"><div class="bar-fill" style="width:${wRoc.toFixed(1)}%;"></div><span class="bar-text">${r.roc_auc.toFixed(2)}</span></div></td>
+        <td class="num"><div class="bar-cell"><div class="bar-fill" style="width:${wPr.toFixed(1)}%;"></div><span class="bar-text">${r.pr_auc.toFixed(2)}</span></div></td>
+        <td class="num ${scCls}">${r.composite.toFixed(3)} (rank: ${rk})</td>
+        <td class="center">${stHtml}</td>
+      </tr>`;
+    }).join('');
+
+    notifyResize();
+  }
+
+  document.querySelectorAll('th[data-col]').forEach(th => {
+    th.onclick = () => {
+      const col = th.dataset.col;
+      if(sortCol === col) sortAsc = !sortAsc;
+      else { sortCol = col; sortAsc = true; }
+      renderTable();
+    };
+  });
+  document.getElementById('ft-search').oninput = renderTable;
+  document.getElementById('ft-filter-tier').onchange = renderTable;
+
+  function notifyResize(){
+    try{
+      if(window.parent && window.parent !== window){
+        window.parent.postMessage({ type: 'pf-widget-resize', id: 'formattable', height: document.documentElement.scrollHeight }, '*');
+      }
+    }catch(e){}
+  }
+  window.addEventListener('load', notifyResize);
+  window.addEventListener('resize', notifyResize);
+  renderTable();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# Persistência e precisão no Oracle Database 19c EE {#persistencia}
+
+## Responsabilidades e organização física
+
+<!-- Conteúdo a ser escrito. -->
+
+## Política de precisão decimal e não uso de FLOAT {#precisao}
+
+<!-- Conteúdo a ser escrito. -->
+
+## SecureFiles e políticas de armazenamento
+
+<!-- Conteúdo a ser escrito. -->
+
+## Formatos e catálogo polimórfico
+
+<!-- Conteúdo a ser escrito. -->
+
+## Explicabilidade e quantização
+
+<!-- Conteúdo a ser escrito. -->
+
+## Consulta de arquivos externos
+
+<!-- Conteúdo a ser escrito. -->

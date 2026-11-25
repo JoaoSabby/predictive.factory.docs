@@ -1,0 +1,17 @@
+# Infraestrutura de alto desempenho {#hpc}
+
+## Hardware, sistema operacional e memória
+
+<!-- Conteúdo a ser escrito. -->
+
+## Intel oneAPI e concorrência
+
+<!-- Conteúdo a ser escrito. -->
+
+## Compilação e controle numérico
+
+<!-- Conteúdo a ser escrito. -->
+
+## Processamento na origem e Oracle In-Memory
+
+<!-- Conteúdo a ser escrito. -->

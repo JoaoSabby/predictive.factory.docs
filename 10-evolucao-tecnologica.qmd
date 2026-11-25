@@ -1,0 +1,17 @@
+# Evolução tecnológica e marcadores de portabilidade {#evolucao}
+
+## Continuidade dos padrões
+
+<!-- Conteúdo a ser escrito. -->
+
+## JSON Schema declarativo
+
+<!-- Conteúdo a ser escrito. -->
+
+## ONNX e XGBoost no ecossistema Oracle
+
+<!-- Conteúdo a ser escrito. -->
+
+## Lakehouse e vetores
+
+<!-- Conteúdo a ser escrito. -->

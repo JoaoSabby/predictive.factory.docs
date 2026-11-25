@@ -2,3 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
+/.quarto/
+/_site/
+/public/
+*_files/
+ebook_pdf.tex
+ebook_pdf.log
+
+**/*.quarto_ipynb

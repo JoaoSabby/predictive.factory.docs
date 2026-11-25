@@ -1,27 +1,29 @@
-# Construcao do site a partir da raiz do projeto
-requiredPackages <- c("pkgdown", "quarto", "knitr", "rmarkdown", "stringr")
-for(packageName in requiredPackages){
-  if(!requireNamespace(packageName, quietly = TRUE)){
-    stop("Dependência ausente. Instale os pacotes indicados em README.md.")
-  }
+# Construcao do site a partir da raiz do projeto (RStudio Server ou terminal)
+#
+#   source("build.R", encoding = "UTF-8")
+#
+# 1. Gera as paginas de funcoes a partir do roxygen2 do pacote (scripts/funcoes.R).
+#    Informe a pasta do pacote em PF_PACOTE; o padrao e ../predictive.factory.
+# 2. Renderiza o site em _site/ com o Quarto CLI.
+# 3. Opcionalmente gera o PDF e o copia para _site/ (PF_PDF=true).
+# Nao instala pacotes e nao acessa a internet.
+
+if(!file.exists("_quarto.yml")){
+  stop("Execute o script a partir da pasta que contem _quarto.yml.")
 }
-
-library(stringr)
-library(pkgdown)
-
-if(!file.exists("DESCRIPTION")){
-  stop("Execute o script a partir da pasta que contém DESCRIPTION.")
-}
-
-if(packageVersion("pkgdown") < "2.1.0"){
-  stop("A construção requer pkgdown 2.1.0 ou posterior.")
-}
-
 quartoPath <- Sys.which("quarto")
 if(!nzchar(quartoPath)){
-  stop("Quarto CLI não encontrado no PATH da sessão R.")
+  stop("Quarto CLI nao encontrado no PATH da sessao R.")
 }
 
-source("scripts/prepareDocs.R", encoding = "UTF-8")
-build_site(new_process = FALSE, install = FALSE, examples = FALSE, preview = FALSE)
-message("Site gerado em site/index.html.")
+source("scripts/funcoes.R", encoding = "UTF-8")
+
+renderStatus <- system2(quartoPath, "render")
+if(renderStatus != 0L){
+  stop("A renderizacao do site nao foi concluida.")
+}
+
+if(identical(tolower(Sys.getenv("PF_PDF", "false")), "true")){
+  source("buildPdf.R", encoding = "UTF-8")
+}
+message("Site gerado em _site/index.html.")

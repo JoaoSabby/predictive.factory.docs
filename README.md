@@ -62,7 +62,9 @@ do pacote são apagadas na execução seguinte. Edite sempre o roxygen2, não os
 
 ## Shields
 
-Edite a tabela em `scripts/badges.R` e execute `Rscript scripts/badges.R`.
+Edite a tabela em `scripts/badges.R` (rótulo, valor, cor e ícone) e execute `Rscript scripts/badges.R`.
+Os ícones ficam em `images/badges/icones/`: `si-*` vêm do Simple Icons (CC0);
+`bi-*` vêm do Bootstrap Icons (MIT), usados quando a tecnologia não tem logotipo público (HPC, OpenMP, mimalloc, tuned, tuna, Oracle).
 
 ## Publicação no GitLab Pages
 

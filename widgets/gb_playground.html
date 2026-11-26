@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gradient Boosting Playground (Offline)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #181a20;
+    color: #e2e8f0;
+  }
+  .gb-wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: #20232b;
+    border: 1px solid #323744;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .gb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .gb-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4ec9b0;
+  }
+  .ds-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .ds-label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 600;
+  }
+  .ds-btn {
+    width: 46px;
+    height: 46px;
+    padding: 2px;
+    border: 2px solid #3b4252;
+    border-radius: 6px;
+    background: #14161c;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .ds-btn:hover { transform: translateY(-1px); border-color: #64748b; }
+  .ds-btn.active { border-color: #4ec9b0; box-shadow: 0 0 8px rgba(78, 201, 176, 0.35); }
+  .ds-btn canvas { width: 100%; height: 100%; display: block; }
+  .gb-main {
+    display: grid;
+    grid-template-columns: minmax(270px, 330px) 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .pred-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #171920;
+    border: 1px solid #2e3340;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .col-heading {
+    font-size: 13px;
+    font-weight: 700;
+    color: #9cdcfe;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  canvas#main-canvas {
+    width: 100%;
+    max-width: 290px;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #3b4252;
+    cursor: crosshair;
+  }
+  .pred-caption {
+    font-size: 11.5px;
+    color: #cbd5e1;
+    margin-top: 6px;
+    text-align: center;
+  }
+  .loss-row {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 12px;
+    font-family: Consolas, monospace;
+  }
+  .loss-train { color: #94a3b8; }
+  .loss-test { color: #f8fafc; font-weight: 700; }
+  canvas#loss-canvas {
+    width: 100%;
+    max-width: 280px;
+    height: 44px;
+    margin-top: 4px;
+  }
+  .trees-col {
+    background: #171920;
+    border: 1px solid #2e3340;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .trees-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .tree-cell {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .tree-box {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    border: 1px solid #3b4252;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .tree-box:hover {
+    border-color: #feca57;
+    transform: scale(1.04);
+  }
+  .tree-box.selected {
+    border: 2px solid #4ec9b0;
+  }
+  .tree-box canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .plus-sign {
+    font-size: 14px;
+    font-weight: 700;
+    color: #64748b;
+    user-select: none;
+  }
+  .controls-panel {
+    margin-top: 14px;
+    background: #171920;
+    border: 1px solid #2e3340;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 12px;
+    align-items: center;
+  }
+  .slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+  }
+  .slider-group label {
+    display: flex;
+    justify-content: space-between;
+    color: #cbd5e1;
+    font-family: Consolas, monospace;
+  }
+  .slider-group input[type="range"] {
+    width: 100%;
+    accent-color: #2196f3;
+    cursor: pointer;
+  }
+  .checks-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    color: #cbd5e1;
+  }
+  .checks-group label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+  .checks-group input[type="checkbox"] {
+    accent-color: #2196f3;
+  }
+  @media (max-width: 780px) {
+    .gb-main { grid-template-columns: 1fr; }
+    .trees-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+</style>
+</head>
+<body>
+<div class="gb-wrap">
+  <div class="gb-header">
+    <div class="gb-title">Gradient Boosting Playground (Aditivo em Árvores CART)</div>
+    <div class="ds-bar">
+      <span class="ds-label">Dataset:</span>
+      <button class="ds-btn" data-ds="circle" title="Círculo Concêntrico"><canvas width="40" height="40"></canvas></button>
+      <button class="ds-btn" data-ds="xor" title="Quadrantes XOR"><canvas width="40" height="40"></canvas></button>
+      <button class="ds-btn active" data-ds="spiral" title="Espiral Dupla"><canvas width="40" height="40"></canvas></button>
+      <button class="ds-btn" data-ds="moons" title="Duas Luas"><canvas width="40" height="40"></canvas></button>
+      <button class="ds-btn" data-ds="stripes" title="Faixas Horizontais"><canvas width="40" height="40"></canvas></button>
+      <button class="ds-btn" data-ds="rings" title="Anéis Múltiplos"><canvas width="40" height="40"></canvas></button>
+    </div>
+  </div>
+
+  <div class="gb-main">
+    <div class="pred-col">
+      <div class="col-heading">Predição do Ensemble</div>
+      <canvas id="main-canvas" width="280" height="280"></canvas>
+      <div class="pred-caption" id="pred-caption">&uarr; predições de GB (todas as 30 árvores)</div>
+      <div class="loss-row">
+        <span class="loss-train" id="lbl-train-loss">train loss: 0.000</span>
+        <span class="loss-test" id="lbl-test-loss">test loss: 0.000</span>
+      </div>
+      <canvas id="loss-canvas" width="280" height="44"></canvas>
+    </div>
+
+    <div class="trees-col">
+      <div class="col-heading">Funções de decisão das primeiras 30 árvores (clique ou passe o cursor)</div>
+      <div class="trees-grid" id="trees-grid"></div>
+    </div>
+  </div>
+
+  <div class="controls-panel">
+    <div class="slider-group">
+      <label><span>tree depth:</span><strong id="val-depth">3</strong></label>
+      <input type="range" id="in-depth" min="1" max="5" value="3">
+    </div>
+    <div class="slider-group">
+      <label><span>learning rate:</span><strong id="val-lr">0.15</strong></label>
+      <input type="range" id="in-lr" min="0.05" max="0.60" step="0.05" value="0.15">
+    </div>
+    <div class="slider-group">
+      <label><span>rotate dataset:</span><strong id="val-rot">0&deg;</strong></label>
+      <input type="range" id="in-rot" min="0" max="180" step="15" value="0">
+    </div>
+    <div class="slider-group">
+      <label><span>subsample:</span><strong id="val-sub">100%</strong></label>
+      <input type="range" id="in-sub" min="40" max="100" step="10" value="100">
+    </div>
+    <div class="slider-group">
+      <label><span># trees:</span><strong id="val-ntrees">30</strong></label>
+      <input type="range" id="in-ntrees" min="5" max="30" step="1" value="30">
+    </div>
+    <div class="checks-group">
+      <label><input type="checkbox" id="chk-rot-trees"> rotate trees (oblique splits)</label>
+      <label><input type="checkbox" id="chk-grad" checked> show gradients on hover</label>
+      <label><input type="checkbox" id="chk-newton"> use Newton-Raphson update</label>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const GRID = 28;
+  let state = {
+    ds: 'spiral',
+    depth: 3,
+    lr: 0.15,
+    rotDeg: 0,
+    subsample: 1.0,
+    nTrees: 30,
+    rotateTrees: false,
+    showGrad: true,
+    useNewton: false,
+    hoverTree: -1
+  };
+
+  let trainData = [];
+  let testData = [];
+  let ensemble = [];
+  let trainLossHist = [];
+  let testLossHist = [];
+
+  /* Gerador pseudo-aleatorio deterministico (Mulberry32) */
+  function makeRng(seed){
+    let a = seed >>> 0;
+    return function(){
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function rotatePt(x, y, rad){
+    const c = Math.cos(rad), s = Math.sin(rad);
+    return [x * c - y * s, x * s + y * c];
+  }
+
+  function generateDataset(type, rotDeg){
+    const rng = makeRng(42);
+    const rad = rotDeg * Math.PI / 180;
+    const pts = [];
+    const total = 260;
+    for(let i = 0; i < total; i++){
+      let x = 0, y = 0, label = 0;
+      if(type === 'circle'){
+        const r = rng() * 0.95;
+        const th = rng() * Math.PI * 2;
+        x = r * Math.cos(th);
+        y = r * Math.sin(th);
+        label = (r < 0.52) ? 1 : -1;
+      }else if(type === 'xor'){
+        x = (rng() * 1.8) - 0.9;
+        y = (rng() * 1.8) - 0.9;
+        label = ((x > 0 && y > 0) || (x < 0 && y < 0)) ? 1 : -1;
+      }else if(type === 'spiral'){
+        const cls = (i % 2 === 0) ? 1 : -1;
+        const idx = Math.floor(i / 2) / (total / 2);
+        const r = idx * 0.88 + 0.05;
+        const th = idx * 3.1 * Math.PI + (cls === 1 ? 0 : Math.PI) + (rng() - 0.5) * 0.28;
+        x = r * Math.cos(th);
+        y = r * Math.sin(th);
+        label = cls;
+      }else if(type === 'moons'){
+        const cls = (i % 2 === 0) ? 1 : -1;
+        const th = rng() * Math.PI;
+        if(cls === 1){
+          x = Math.cos(th) * 0.65 - 0.25 + (rng() - 0.5) * 0.16;
+          y = Math.sin(th) * 0.65 - 0.1 + (rng() - 0.5) * 0.16;
+        }else{
+          x = 1 - Math.cos(th) * 0.65 - 0.4 + (rng() - 0.5) * 0.16;
+          y = 0.25 - Math.sin(th) * 0.65 + (rng() - 0.5) * 0.16;
+        }
+        label = cls;
+      }else if(type === 'stripes'){
+        x = (rng() * 1.8) - 0.9;
+        y = (rng() * 1.8) - 0.9;
+        label = (Math.sin(y * 7.5) > 0) ? 1 : -1;
+      }else{
+        const r = rng() * 0.95;
+        const th = rng() * Math.PI * 2;
+        x = r * Math.cos(th);
+        y = r * Math.sin(th);
+        label = (r < 0.32 || (r > 0.58 && r < 0.82)) ? 1 : -1;
+      }
+      const [rx, ry] = rotatePt(x, y, rad);
+      pts.push({ x: rx, y: ry, yTrue: label, f: 0, grad: 0 });
+    }
+    trainData = pts.slice(0, 180);
+    testData = pts.slice(180);
+  }
+
+  /* Ajuste recursivo de arvore CART sobre pseudo-residuos */
+  function fitTree(indices, pts, depth, maxDepth, angleRad, useNewton){
+    let sumG = 0, sumH = 0;
+    for(let idx of indices){
+      const p = pts[idx];
+      sumG += p.grad;
+      sumH += useNewton ? Math.max(0.05, p.hess) : 1.0;
+    }
+    const leafVal = indices.length > 0 ? (sumG / sumH) : 0;
+    if(depth >= maxDepth || indices.length < 4){
+      return { leaf: true, val: leafVal };
+    }
+    let bestGain = 1e-6;
+    let bestSplit = null;
+    const angles = angleRad !== 0 ? [0, Math.PI / 2, angleRad, angleRad + Math.PI / 2] : [0, Math.PI / 2];
+    for(let ang of angles){
+      const ca = Math.cos(ang), sa = Math.sin(ang);
+      const proj = indices.map(i => ({ i, v: pts[i].x * ca + pts[i].y * sa }));
+      proj.sort((a, b) => a.v - b.v);
+      let gL = 0, hL = 0;
+      for(let s = 1; s < proj.length - 1; s++){
+        const p = pts[proj[s - 1].i];
+        gL += p.grad;
+        hL += useNewton ? Math.max(0.05, p.hess) : 1.0;
+        if(proj[s].v - proj[s - 1].v < 1e-5) continue;
+        const gR = sumG - gL;
+        const hR = sumH - hL;
+        const gain = (gL * gL) / hL + (gR * gR) / hR - (sumG * sumG) / sumH;
+        if(gain > bestGain){
+          bestGain = gain;
+          bestSplit = {
+            ca, sa,
+            thr: 0.5 * (proj[s - 1].v + proj[s].v),
+            leftIdx: proj.slice(0, s).map(o => o.i),
+            rightIdx: proj.slice(s).map(o => o.i)
+          };
+        }
+      }
+    }
+    if(!bestSplit){
+      return { leaf: true, val: leafVal };
+    }
+    return {
+      leaf: false,
+      ca: bestSplit.ca,
+      sa: bestSplit.sa,
+      thr: bestSplit.thr,
+      left: fitTree(bestSplit.leftIdx, pts, depth + 1, maxDepth, angleRad, useNewton),
+      right: fitTree(bestSplit.rightIdx, pts, depth + 1, maxDepth, angleRad, useNewton)
+    };
+  }
+
+  function evalTree(node, x, y){
+    if(node.leaf) return node.val;
+    const v = x * node.ca + y * node.sa;
+    return (v <= node.thr) ? evalTree(node.left, x, y) : evalTree(node.right, x, y);
+  }
+
+  function logLoss(pts){
+    let s = 0;
+    for(let p of pts){
+      const z = Math.max(-18, Math.min(18, p.f));
+      s += Math.log(1 + Math.exp(-p.yTrue * z));
+    }
+    return s / pts.length;
+  }
+
+  function trainBoosting(){
+    generateDataset(state.ds, state.rotDeg);
+    const rng = makeRng(1337);
+    ensemble = [];
+    trainLossHist = [];
+    testLossHist = [];
+    for(let p of trainData) p.f = 0;
+    for(let p of testData) p.f = 0;
+
+    for(let m = 0; m < 30; m++){
+      for(let p of trainData){
+        const prob = 1 / (1 + Math.exp(-p.f));
+        const y01 = (p.yTrue + 1) * 0.5;
+        p.grad = y01 - prob;
+        p.hess = prob * (1 - prob);
+      }
+      const subIdx = [];
+      for(let i = 0; i < trainData.length; i++){
+        if(rng() <= state.subsample) subIdx.push(i);
+      }
+      const ang = state.rotateTrees ? (m * 0.41) : 0;
+      const tree = fitTree(subIdx, trainData, 0, state.depth, ang, state.useNewton);
+      ensemble.push(tree);
+      if(m < state.nTrees){
+        for(let p of trainData) p.f += state.lr * evalTree(tree, p.x, p.y);
+        for(let p of testData) p.f += state.lr * evalTree(tree, p.x, p.y);
+        trainLossHist.push(logLoss(trainData));
+        testLossHist.push(logLoss(testData));
+      }
+    }
+  }
+
+  /* Mapeamento de cor divergente laranja (-1) <-> neutro <-> azul (+1) */
+  function scoreToColor(val){
+    const t = Math.max(-1, Math.min(1, Math.tanh(val)));
+    if(t >= 0){
+      const r = Math.round(32 + (78 - 32) * t);
+      const g = Math.round(36 + (175 - 36) * t);
+      const b = Math.round(44 + (225 - 44) * t);
+      return `rgb(${r},${g},${b})`;
+    }else{
+      const u = -t;
+      const r = Math.round(32 + (235 - 32) * u);
+      const g = Math.round(36 + (152 - 36) * u);
+      const b = Math.round(44 + (78 - 44) * u);
+      return `rgb(${r},${g},${b})`;
+    }
+  }
+
+  function renderHeatmap(canvas, evalFn){
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const cw = w / GRID, ch = h / GRID;
+    for(let gy = 0; gy < GRID; gy++){
+      for(let gx = 0; gx < GRID; gx++){
+        const x = ((gx + 0.5) / GRID) * 2 - 1;
+        const y = 1 - ((gy + 0.5) / GRID) * 2;
+        ctx.fillStyle = scoreToColor(evalFn(x, y));
+        ctx.fillRect(gx * cw, gy * ch, Math.ceil(cw), Math.ceil(ch));
+      }
+    }
+  }
+
+  function drawPoints(ctx, w, h, pts, showGrads){
+    for(let p of pts){
+      const px = ((p.x + 1) * 0.5) * w;
+      const py = ((1 - p.y) * 0.5) * h;
+      if(showGrads){
+        ctx.strokeStyle = 'rgba(255,255,255,0.55)';
+        ctx.lineWidth = 1.1;
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(px, py - p.grad * 18);
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(px, py, 3.2, 0, Math.PI * 2);
+      ctx.fillStyle = p.yTrue > 0 ? '#0284c7' : '#f59e0b';
+      ctx.fill();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+  }
+
+  function renderAll(){
+    const mainC = document.getElementById('main-canvas');
+    const limit = state.hoverTree >= 0 ? (state.hoverTree + 1) : state.nTrees;
+    renderHeatmap(mainC, (x, y) => {
+      let s = 0;
+      for(let m = 0; m < limit; m++) s += state.lr * evalTree(ensemble[m], x, y);
+      return s;
+    });
+    const mCtx = mainC.getContext('2d');
+    drawPoints(mCtx, mainC.width, mainC.height, trainData, state.hoverTree >= 0 && state.showGrad);
+
+    document.getElementById('pred-caption').innerHTML =
+      state.hoverTree >= 0
+        ? `&uarr; soma acumulada até a árvore #${state.hoverTree + 1}`
+        : `&uarr; predições de GB (todas as ${state.nTrees} árvores)`;
+
+    const trL = trainLossHist[trainLossHist.length - 1] || 0;
+    const teL = testLossHist[testLossHist.length - 1] || 0;
+    document.getElementById('lbl-train-loss').textContent = `train loss: ${trL.toFixed(3)}`;
+    document.getElementById('lbl-test-loss').textContent = `test loss: ${teL.toFixed(3)}`;
+
+    /* Curva de perda */
+    const lC = document.getElementById('loss-canvas');
+    const lCtx = lC.getContext('2d');
+    lCtx.clearRect(0, 0, lC.width, lC.height);
+    if(trainLossHist.length > 1){
+      const drawCurve = (arr, col) => {
+        lCtx.strokeStyle = col;
+        lCtx.lineWidth = 1.8;
+        lCtx.beginPath();
+        arr.forEach((v, idx) => {
+          const x = (idx / (arr.length - 1)) * (lC.width - 10) + 5;
+          const y = lC.height - 6 - Math.min(1, v / 0.85) * (lC.height - 12);
+          if(idx === 0) lCtx.moveTo(x, y); else lCtx.lineTo(x, y);
+        });
+        lCtx.stroke();
+      };
+      drawCurve(trainLossHist, '#64748b');
+      drawCurve(testLossHist, '#4ec9b0');
+    }
+
+    /* Grade das 30 arvores individuais */
+    const gridEl = document.getElementById('trees-grid');
+    gridEl.innerHTML = '';
+    for(let m = 0; m < 30; m++){
+      const cell = document.createElement('div');
+      cell.className = 'tree-cell';
+      const box = document.createElement('div');
+      box.className = 'tree-box' + (state.hoverTree === m ? ' selected' : '');
+      box.style.opacity = m < state.nTrees ? '1' : '0.32';
+      const c = document.createElement('canvas');
+      c.width = 56; c.height = 56;
+      renderHeatmap(c, (x, y) => evalTree(ensemble[m], x, y) * 2.2);
+      box.appendChild(c);
+      box.onmouseenter = () => { state.hoverTree = m; renderAll(); };
+      box.onmouseleave = () => { state.hoverTree = -1; renderAll(); };
+      cell.appendChild(box);
+      if(m < 29){
+        const plus = document.createElement('span');
+        plus.className = 'plus-sign';
+        plus.textContent = '+';
+        cell.appendChild(plus);
+      }
+      gridEl.appendChild(cell);
+    }
+    notifyResize();
+  }
+
+  /* Miniaturas dos datasets */
+  document.querySelectorAll('.ds-btn').forEach(btn => {
+    const type = btn.dataset.ds;
+    const c = btn.querySelector('canvas');
+    generateDataset(type, 0);
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#14161c';
+    ctx.fillRect(0, 0, 40, 40);
+    for(let p of trainData.slice(0, 90)){
+      ctx.fillStyle = p.yTrue > 0 ? '#38bdf8' : '#fbbf24';
+      ctx.fillRect(((p.x + 1) * 0.5) * 36 + 2, ((1 - p.y) * 0.5) * 36 + 2, 2, 2);
+    }
+    btn.onclick = () => {
+      document.querySelectorAll('.ds-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.ds = type;
+      trainBoosting();
+      renderAll();
+    };
+  });
+
+  function bindSlider(id, valId, key, fmt, retrain){
+    const el = document.getElementById(id);
+    el.oninput = () => {
+      state[key] = parseFloat(el.value);
+      document.getElementById(valId).textContent = fmt(state[key]);
+      if(retrain) trainBoosting();
+      renderAll();
+    };
+  }
+  bindSlider('in-depth', 'val-depth', 'depth', v => v, true);
+  bindSlider('in-lr', 'val-lr', 'lr', v => v.toFixed(2), true);
+  bindSlider('in-rot', 'val-rot', 'rotDeg', v => v + '°', true);
+  bindSlider('in-sub', 'val-sub', 'subsample', v => v + '%', true);
+  bindSlider('in-ntrees', 'val-ntrees', 'nTrees', v => v, true);
+  document.getElementById('in-sub').oninput = function(){
+    state.subsample = parseFloat(this.value) / 100;
+    document.getElementById('val-sub').textContent = this.value + '%';
+    trainBoosting(); renderAll();
+  };
+  document.getElementById('chk-rot-trees').onchange = function(){ state.rotateTrees = this.checked; trainBoosting(); renderAll(); };
+  document.getElementById('chk-grad').onchange = function(){ state.showGrad = this.checked; renderAll(); };
+  document.getElementById('chk-newton').onchange = function(){ state.useNewton = this.checked; trainBoosting(); renderAll(); };
+
+  function notifyResize(){
+    try{
+      if(window.parent && window.parent !== window){
+        window.parent.postMessage({ type: 'pf-widget-resize', id: 'gb-playground', height: document.documentElement.scrollHeight }, '*');
+      }
+    }catch(e){}
+  }
+  window.addEventListener('load', notifyResize);
+  window.addEventListener('resize', notifyResize);
+
+  trainBoosting();
+  renderAll();
+})();
+</script>
+</body>
+</html>

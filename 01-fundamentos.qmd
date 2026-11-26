@@ -1,0 +1,29 @@
+# Fundamentos científicos e arquitetura {#fundamentos}
+
+## Origem e escopo
+
+<!-- Conteúdo a ser escrito. -->
+
+## Aprendizado estatístico e regularização
+
+<!-- Conteúdo a ser escrito. -->
+
+## Árvores e Gradient Boosting
+
+<!-- Conteúdo a ser escrito. -->
+
+### XGBoost
+
+<!-- Conteúdo a ser escrito. -->
+
+### LightGBM
+
+<!-- Conteúdo a ser escrito. -->
+
+## Linguagem de orquestração e motores computacionais
+
+<!-- Conteúdo a ser escrito. -->
+
+## Expansibilidade e saídas
+
+<!-- Conteúdo a ser escrito. -->

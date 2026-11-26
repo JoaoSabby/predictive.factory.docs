@@ -1,0 +1,13 @@
+# Preservação dupla do modelo final {#portabilidade}
+
+## Modelo nativo do XGBoost
+
+<!-- Conteúdo a ser escrito. -->
+
+## ONNX como representação de intercâmbio
+
+<!-- Conteúdo a ser escrito. -->
+
+## Contrato de preservação e equivalência
+
+<!-- Conteúdo a ser escrito. -->

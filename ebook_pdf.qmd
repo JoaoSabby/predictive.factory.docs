@@ -1,0 +1,79 @@
+---
+title: "predictive.factory"
+subtitle: "Documentação técnica e referência"
+author: "João Batista Gonçalves de Brito"
+date: today
+lang: pt-BR
+bibliography: referencias.bib
+csl: abnt.csl
+link-citations: true
+toc: true
+toc-depth: 2
+number-sections: true
+format:
+  pdf:
+    documentclass: scrreprt
+    papersize: a4
+    pdf-engine: xelatex
+    latex-auto-install: false
+    mainfont: DejaVu Serif
+    sansfont: DejaVu Sans
+    monofont: DejaVu Sans Mono
+    fontsize: 11pt
+    colorlinks: true
+    geometry:
+      - top=30mm
+      - left=30mm
+      - bottom=20mm
+      - right=20mm
+    include-in-header:
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},breaklines,breakanywhere,fontsize=\footnotesize}
+        \setlength{\emergencystretch}{3em}
+---
+
+<!-- Ordem dos capitulos no PDF. A pagina de recursos interativos fica apenas no site. -->
+
+{{< include 01-fundamentos.qmd >}}
+
+{{< include 02-qualidade-dados.qmd >}}
+
+{{< include 03-modelagem-dados.qmd >}}
+
+{{< include 04-infraestrutura-hpc.qmd >}}
+
+{{< include 05-governanca-bancaria.qmd >}}
+
+{{< include 06-padroes-metadados.qmd >}}
+
+{{< include 07-engenharia-software.qmd >}}
+
+{{< include 08-persistencia-oracle.qmd >}}
+
+{{< include 09-preservacao-modelo.qmd >}}
+
+{{< include 10-evolucao-tecnologica.qmd >}}
+
+{{< include 11-matriz-aderencia.qmd >}}
+
+{{< include 12-balanceamento-adanear.qmd >}}
+
+{{< include 13-arvores-boosting.qmd >}}
+
+{{< include 14-validacao-metricas.qmd >}}
+
+{{< include 15-avaliacao-leaderboard.qmd >}}
+
+{{< include 16-modelagem.qmd >}}
+
+{{< include 17-pipeline.qmd >}}
+
+# Referência de funções {#referencia-de-funcoes-pdf}
+
+{{< include _referencia-pdf.qmd >}}
+
+# Referências {.unnumbered}
+
+::: {#refs}
+:::

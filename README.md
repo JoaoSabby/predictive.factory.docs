@@ -1,89 +1,71 @@
-# models.factory
+# predictive.factory · documentação
 
-Documentação arquitetural e metodológica da Fábrica Preditiva, em
-Quarto/Markdown com publicação pelo pkgdown.
+![R](images/badges/lang-r.svg) ![C++](images/badges/lang-cpp.svg) ![Fortran](images/badges/lang-fortran.svg)
+![Quarto](images/badges/lang-quarto.svg) ![AVX-512](images/badges/tec-avx512.svg)
+![Intel oneAPI](images/badges/tec-oneapi.svg) ![oneMKL](images/badges/tec-mkl.svg)
+![DuckDB](images/badges/tec-duckdb.svg) ![Oracle Database](images/badges/tec-oracle.svg)
 
-## Executar no RStudio Server
+Site Quarto da Fábrica Preditiva, com tema claro/escuro, busca local, widgets interativos e
+exportação PDF. Funciona **sem internet**: nenhuma dependência de CDN, fontes remotas ou shields.io.
 
-Abrir `models.factory.docs.Rproj`. No console R:
+## Construir
+
+Requisitos: Quarto CLI 1.5 ou posterior no PATH. Para o PDF: XeLaTeX, `fvextra` e fontes DejaVu.
+Para a referência de funções: R e, opcionalmente, `roxygen2`.
 
 ```r
-install.packages(c("pkgdown", "quarto", "knitr", "rmarkdown", "stringr"))
-source("build.R", encoding = "UTF-8")
+# RStudio Server, na raiz deste projeto
+Sys.setenv(PF_PACOTE = "../predictive.factory")  # pasta do pacote com os roxygen2
+source("build.R", encoding = "UTF-8")             # funções + site em _site/
+source("buildPdf.R", encoding = "UTF-8")          # PDF em ebook_pdf.pdf
 ```
 
-A instalação dos pacotes é necessária apenas na preparação do ambiente.
-A construção gera `site/index.html`. O diretório de saída é `site/`,
-preservando `docs/functions/` como fonte dos arquivos Rd.
+```bash
+# Terminal
+Rscript scripts/funcoes.R ../predictive.factory
+quarto render                      # site em _site/
+quarto render ebook_pdf.qmd        # PDF
+quarto preview                     # servidor local com recarga automática
+```
 
-Requisitos: R 4.1 ou posterior, pkgdown 2.1.0 ou posterior e Quarto CLI
-1.5 ou posterior no PATH da sessão R. O pacote R `quarto` não substitui
-a instalação do Quarto CLI. Em ambiente sem internet, disponibilizar
-previamente os pacotes e o executável. A construção não instala dependências.
+> O Observable JS usa módulos JavaScript, que o navegador bloqueia em `file://`. Para ver o site
+> localmente use `quarto preview` ou qualquer servidor estático (por exemplo,
+> `python -m http.server -d _site`). Em servidor interno, basta publicar `_site/`.
 
-## Arquivos principais
+## Estrutura
 
 | Caminho | Conteúdo |
 |---|---|
-| `vignettes/arquitetura.qmd` | Documento principal, com capítulos, equações e referências |
-| `vignettes/publicacao.qmd` | Construção e manutenção da documentação |
-| `pdf-format.yml` | Configuração da exportação PDF |
-| `citations.bib` | Bibliografia científica, normativa e técnica |
-| `assets/associacao-brasileira-de-normas-tecnicas.csl` | Estilo ABNT |
-| `_pkgdown.yml` | Navegação, aparência e diretório de saída |
-| `docs/functions/*.Rd` | Fontes da documentação de funções |
-| `scripts/prepareDocs.R` | Preparação das referências Rd e dos exemplos incluídos |
-| `examples/feature-lineage.json` | Exemplo hipotético com OpenLineage, Dublin Core e JSON Schema |
-| `schemas/feature-lineage.schema.json` | Contrato do perfil ilustrativo |
-| `schemas/vendor/` | Especificações OpenLineage utilizadas na validação |
-| `assets/modelo-er-reservado.png` | Espaço reservado para imagem do modelo ER |
-| `VALIDACAO.md` | Verificações realizadas e limites da validação |
+| `_quarto.yml` | Navegação, tema, menu lateral e opções globais |
+| `index.qmd` | Página inicial com shields e cartões de navegação |
+| `01`–`17-*.qmd` | Capítulos (esqueleto de títulos e seções) |
+| `18-referencia-funcoes.qmd` | Índice das funções; páginas em `referencia/` |
+| `90-recursos-interativos.qmd` | Catálogo de widgets, Observable JS e componentes, com código para copiar |
+| `99-referencias.qmd` | Bibliografia completa (ABNT) |
+| `ebook_pdf.qmd` | Ordem dos capítulos no PDF |
+| `widgets/` | Widgets HTML offline e o núcleo `pf-metrics.js`/`pf-metrics.css` |
+| `estilo/` | Temas claro/escuro (SCSS) e estilos comuns (`pf.css`) |
+| `images/` | Logo, favicon, figuras e `badges/` |
+| `scripts/funcoes.R` | roxygen2 → uma página `.qmd` por função |
+| `scripts/badges.R` | Gera os shields SVG locais e `_badges.qmd` |
+| `referencias.bib`, `abnt.csl` | Bibliografia e estilo ABNT |
+| `schemas/`, `examples/` | Contratos JSON Schema e exemplos |
 
 ## Referência de funções
 
-Adicionar os arquivos Rd diretamente a `docs/functions/` e executar
-novamente `build.R`. O script lê exclusivamente `docs/functions/*.Rd`,
-prepara as páginas de referência e atualiza o índice do capítulo
-**Referência de funções**.
+`scripts/funcoes.R` recebe a raiz do pacote, executa `roxygen2::roxygenise()` (desative com
+`PF_ROXYGENISE=false`) e converte cada `man/*.Rd` em `referencia/<função>.qmd`, com seções em
+português (Descrição, Uso, Argumentos, Valor, Exemplos). Tópicos com `@keywords internal` são
+ignorados. O menu lateral lista `referencia/*.qmd` automaticamente; o capítulo 18 recebe uma tabela
+com todas as funções; no PDF, cada função vira uma seção do capítulo. Páginas de funções removidas
+do pacote são apagadas na execução seguinte. Edite sempre o roxygen2, não os `.qmd` gerados.
 
-O campo `\name{}` deve conter um nome de tópico simples e único.
-Os arquivos em `man/` gerados pelo script são derivados; manter a fonte
-em `docs/functions/`. Sem arquivos Rd, o capítulo permanece vazio.
-Os exemplos das funções não são executados na construção.
+## Shields
 
-## Modelo ER e dicionário
+Edite a tabela em `scripts/badges.R` e execute `Rscript scripts/badges.R`.
 
-Substituir `assets/modelo-er-reservado.png` ou atualizar sua referência no
-documento principal. As seções das sete tabelas estão reservadas para
-documentação posterior. Nenhuma chave ou definição de campo é proposta como
-DDL definitivo dessas entidades.
+## Publicação no GitLab Pages
 
-## Exportações independentes
-
-```r
-source("buildHtml.R", encoding = "UTF-8")
-source("buildPdf.R", encoding = "UTF-8")
-```
-
-O HTML independente é gerado em `export/arquitetura.html`.
-O PDF requer XeLaTeX, o pacote LaTeX `fvextra` e as famílias completas
-DejaVu Serif, DejaVu Sans e DejaVu Sans Mono disponíveis no servidor.
-O arquivo é gerado em `export/arquitetura.pdf`.
-A publicação pkgdown utiliza HTML; PDF é uma exportação separada.
-A versão PDF preserva o cenário estático das ilustrações interativas.
-
-## Manutenção
-
-Editar o conteúdo principal em `vignettes/arquitetura.qmd`.
-Editar o exemplo e o contrato nos respectivos arquivos JSON. Os arquivos
-`_functions.qmd`, `_lineage-example.qmd` e `_lineage-schema.qmd` são
-preparados automaticamente pelo script.
-
-A data é calculada na renderização. Atualizar as fontes quando houver
-mudança de norma, versão ou produto. O campo de e-mail da autoria em
-`DESCRIPTION` é um placeholder e pode ser substituído pelo contato
-institucional antes de eventual distribuição como pacote.
-
-A documentação descreve a arquitetura e seus critérios. Não executa cargas,
-treinamento, conversão de modelos nem comandos no Oracle.
-
+`.gitlab-ci.yml` renderiza o site e publica `_site/` como `public/`. A imagem do runner precisa ter
+o Quarto CLI; para incluir a referência de funções gerada, faça commit da pasta `referencia/`
+ou instale R no runner.

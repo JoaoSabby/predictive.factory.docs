@@ -1,0 +1,29 @@
+```{=html}
+<!-- Gerado por scripts/badges.R -->
+<p class="pf-badges" aria-label="Linguagens">
+<img src="images/badges/lang-r.svg" alt="linguagem: R">
+<img src="images/badges/lang-c.svg" alt="linguagem: C">
+<img src="images/badges/lang-cpp.svg" alt="linguagem: C++">
+<img src="images/badges/lang-fortran.svg" alt="linguagem: Fortran">
+<img src="images/badges/lang-bash.svg" alt="linguagem: Shell Script (Bash)">
+<img src="images/badges/lang-css.svg" alt="linguagem: CSS">
+<img src="images/badges/lang-html.svg" alt="linguagem: HTML">
+<img src="images/badges/lang-javascript.svg" alt="linguagem: JavaScript">
+<img src="images/badges/lang-typescript.svg" alt="linguagem: TypeScript">
+<img src="images/badges/lang-quarto.svg" alt="publicação: Quarto">
+</p>
+<p class="pf-badges" aria-label="Tecnologias">
+<img src="images/badges/tec-avx512.svg" alt="SIMD: AVX-512">
+<img src="images/badges/tec-oneapi.svg" alt="toolkit: Intel oneAPI">
+<img src="images/badges/tec-hpc.svg" alt="computação: HPC (High Performance Computing)">
+<img src="images/badges/tec-intel-compilers.svg" alt="compiladores: Intel icx · icpx · ifx">
+<img src="images/badges/tec-mkl.svg" alt="álgebra linear: Intel oneMKL">
+<img src="images/badges/tec-tbb.svg" alt="paralelismo: Intel oneTBB">
+<img src="images/badges/tec-openmp.svg" alt="paralelismo: OpenMP">
+<img src="images/badges/tec-mimalloc.svg" alt="alocador: mimalloc">
+<img src="images/badges/tec-tuned.svg" alt="sistema: tuned">
+<img src="images/badges/tec-tuna.svg" alt="sistema: tuna">
+<img src="images/badges/tec-duckdb.svg" alt="banco analítico: DuckDB">
+<img src="images/badges/tec-oracle.svg" alt="banco de dados: Oracle Database">
+</p>
+```

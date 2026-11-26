@@ -1,43 +1,21 @@
-# Exportacao PDF em duas etapas a partir do mesmo documento
-if(!requireNamespace("stringr", quietly = TRUE)){
-  stop("Instale o pacote stringr antes da construção.")
-}
-library(stringr)
-source("scripts/prepareDocs.R", encoding = "UTF-8")
+# Exportacao PDF a partir dos mesmos capitulos do site
+#
+#   source("buildPdf.R", encoding = "UTF-8")
+#
+# Requer XeLaTeX, o pacote LaTeX fvextra e as familias DejaVu Serif, Sans e Sans Mono.
+# O PDF e gerado em ebook_pdf.pdf e copiado para _site/ (link no menu superior do site).
 
 quartoPath <- Sys.which("quarto")
 xelatexPath <- Sys.which("xelatex")
 if(!nzchar(quartoPath) || !nzchar(xelatexPath)){
-  stop("Quarto CLI e XeLaTeX devem estar disponíveis no PATH da sessão R.")
+  stop("Quarto CLI e XeLaTeX devem estar disponiveis no PATH da sessao R.")
 }
 
-projectRoot <- normalizePath(".", mustWork = TRUE)
-metadataPath <- normalizePath("pdf-format.yml", mustWork = TRUE)
-dir.create("export", showWarnings = FALSE)
-renderStatus <- system2(quartoPath, c("render", "vignettes/arquitetura.qmd",
-  "--to", "latex", "--metadata-file", shQuote(metadataPath)))
+renderStatus <- system2(quartoPath, c("render", "ebook_pdf.qmd", "--to", "pdf"))
 if(renderStatus != 0L){
-  stop("Não foi possível gerar a fonte LaTeX a partir do documento Quarto.")
+  stop("A geracao do PDF nao foi concluida.")
 }
-
-setwd(file.path(projectRoot, "vignettes"))
-auxiliaryFiles <- c("arquitetura.aux", "arquitetura.toc", "arquitetura.out")
-existingAuxiliary <- auxiliaryFiles[file.exists(auxiliaryFiles)]
-if(length(existingAuxiliary) > 0L){
-  file.remove(existingAuxiliary)
+if(dir.exists("_site")){
+  file.copy("ebook_pdf.pdf", file.path("_site", "ebook_pdf.pdf"), overwrite = TRUE)
 }
-for(renderPass in seq_len(3L)){
-  latexStatus <- system2(xelatexPath, c("-interaction=nonstopmode",
-    "-halt-on-error", "arquitetura.tex"))
-  if(latexStatus != 0L){
-    setwd(projectRoot)
-    stop("A compilação PDF não foi concluída. Verifique o arquivo arquitetura.log.")
-  }
-}
-setwd(projectRoot)
-
-if(!file.copy("vignettes/arquitetura.pdf", "export/arquitetura.pdf",
-  overwrite = TRUE)){
-  stop("Não foi possível copiar o PDF para export/arquitetura.pdf.")
-}
-message("PDF gerado em export/arquitetura.pdf.")
+message("PDF gerado em ebook_pdf.pdf.")

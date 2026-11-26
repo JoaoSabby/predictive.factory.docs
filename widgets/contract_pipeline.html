@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Schema &amp; ML Pipeline Inspector (Offline)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #181a20;
+    color: #e2e8f0;
+  }
+  .cp-wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: #20232b;
+    border: 1px solid #323744;
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid #3b4252;
+    background: #171920;
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .tab-btn.active {
+    background: #4ec9b0;
+    color: #000000;
+    border-color: #4ec9b0;
+  }
+  .hidden { display: none !important; }
+  .preset-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .preset-btn {
+    padding: 4px 10px;
+    font-size: 11.5px;
+    border-radius: 14px;
+    border: 1px solid #3b4252;
+    background: #171920;
+    color: #cbd5e1;
+    cursor: pointer;
+  }
+  .preset-btn:hover { border-color: #569cd6; color: #9cdcfe; }
+  .schema-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .box {
+    background: #14161c;
+    border: 1px solid #2e3340;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .box-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9cdcfe;
+    margin-bottom: 6px;
+  }
+  textarea#json-input {
+    width: 100%;
+    height: 220px;
+    background: #0f1116;
+    color: #dcdcaa;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    resize: vertical;
+  }
+  pre#schema-view {
+    margin: 0;
+    height: 220px;
+    overflow: auto;
+    background: #0f1116;
+    color: #9cdcfe;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 8px;
+    font-family: Consolas, monospace;
+    font-size: 11.5px;
+  }
+  .val-result {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+  }
+  .val-ok {
+    background: rgba(78, 201, 176, 0.14);
+    border: 1px solid #4ec9b0;
+    color: #4ec9b0;
+  }
+  .val-err {
+    background: rgba(255, 107, 107, 0.14);
+    border: 1px solid #ff6b6b;
+    color: #ff9999;
+  }
+  .dag-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .dag-node {
+    background: #14161c;
+    border: 1px solid #3b4252;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .dag-node.active {
+    border-color: #4ec9b0;
+    background: rgba(78, 201, 176, 0.12);
+  }
+  .dag-step { font-size: 10.5px; color: #94a3b8; font-family: Consolas, monospace; }
+  .dag-name { font-size: 13px; font-weight: 700; color: #e2e8f0; margin-top: 2px; }
+  .dag-detail {
+    background: #14161c;
+    border: 1px solid #2e3340;
+    border-left: 4px solid #569cd6;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  @media (max-width: 760px) {
+    .schema-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="cp-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-schema">1. Validador JSON Schema (Contrato de Entrada)</button>
+    <button class="tab-btn" id="tab-dag">2. Grafo DAG &amp; Prevenção de Data Leakage</button>
+  </div>
+
+  <div id="pane-schema">
+    <div class="preset-bar">
+      <button class="preset-btn" data-preset="valid">Cenário Válido</button>
+      <button class="preset-btn" data-preset="type_err">Erro de Tipo (String vs Number)</button>
+      <button class="preset-btn" data-preset="missing_req">Campo Obrigatório Ausente</button>
+      <button class="preset-btn" data-preset="extra_prop">Campo Extra (additionalProperties: false)</button>
+    </div>
+    <div class="schema-grid">
+      <div class="box">
+        <div class="box-title">Payload JSON Editável (Entrada da Fábrica)</div>
+        <textarea id="json-input"></textarea>
+      </div>
+      <div class="box">
+        <div class="box-title">Contrato JSON Schema (Draft 2020-12)</div>
+        <pre id="schema-view"></pre>
+      </div>
+    </div>
+    <div class="val-result val-ok" id="val-status"></div>
+  </div>
+
+  <div id="pane-dag" class="hidden">
+    <div class="dag-row" id="dag-nodes"></div>
+    <div class="dag-detail" id="dag-detail"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const CONTRACT = {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "PredictiveFactoryRunContract",
+    "type": "object",
+    "required": ["run_id", "task_type", "target_col", "cv_folds", "imbalance"],
+    "additionalProperties": false,
+    "properties": {
+      "run_id": { "type": "string", "pattern": "^PF-[0-9]{4}$" },
+      "task_type": { "type": "string", "enum": ["binary", "multiclass", "regression"] },
+      "target_col": { "type": "string", "minLength": 1 },
+      "cv_folds": { "type": "integer", "minimum": 2, "maximum": 20 },
+      "imbalance": {
+        "type": "object",
+        "required": ["method"],
+        "additionalProperties": false,
+        "properties": {
+          "method": { "type": "string", "enum": ["none", "adanear", "adasyn", "nearmiss"] },
+          "adasyn_ratio": { "type": "number", "minimum": 0, "maximum": 5 }
+        }
+      }
+    }
+  };
+
+  const PRESETS = {
+    valid: {
+      run_id: "PF-2026",
+      task_type: "binary",
+      target_col: "TARGET_VALUE",
+      cv_folds: 5,
+      imbalance: { method: "adanear", adasyn_ratio: 0.5 }
+    },
+    type_err: {
+      run_id: "PF-2026",
+      task_type: "binary",
+      target_col: "TARGET_VALUE",
+      cv_folds: "cinco",
+      imbalance: { method: "adanear", adasyn_ratio: 0.5 }
+    },
+    missing_req: {
+      run_id: "PF-2026",
+      task_type: "regression",
+      cv_folds: 5,
+      imbalance: { method: "none" }
+    },
+    extra_prop: {
+      run_id: "PF-2026",
+      task_type: "multiclass",
+      target_col: "TARGET_VALUE",
+      cv_folds: 10,
+      imbalance: { method: "none" },
+      debug_secret_flag: true
+    }
+  };
+
+  const DAG_STAGES = [
+    {
+      step: "STAGE 01",
+      name: "Schema & Types",
+      shape: "N x P (contrato validado)",
+      desc: "Valida estrutura JSON Schema, tipos explícitos, ausência de vazamento temporal em DATA_REFERENCIA e integridade de TARGET_VALUE antes de alocar matrizes numéricas."
+    },
+    {
+      step: "STAGE 02",
+      name: "Resampling Split",
+      shape: "Train Fold / Validation Fold",
+      desc: "Particiona os dados ANTES de qualquer estatística de escala, imputação ou reamostragem. O conjunto de validação permanece intocado."
+    },
+    {
+      step: "STAGE 03",
+      name: "In-Fold Recipes & Balance",
+      shape: "Fit apenas no Train Fold",
+      desc: "Calcula médias/desvios populacionais e executa sby_adanear_hpc() exclusivamente dentro da dobra de treino, evitando vazamento de vizinhos sintéticos para a validação."
+    },
+    {
+      step: "STAGE 04",
+      name: "Bayesian Tuning & Fit",
+      shape: "Otimização Sequencial",
+      desc: "Avalia candidatos de hiperparâmetros usando métricas auditadas nas dobras de validação e ajusta o modelo vencedor sobre a partição de treino."
+    },
+    {
+      step: "STAGE 05",
+      name: "Frozen Artifact & Score",
+      shape: "Contrato de Inferência",
+      desc: "Empacota transformações congeladas, modelo ajustado e metadados de auditoria para escoragem determinística em lote."
+    }
+  ];
+
+  let activeDag = 0;
+
+  function validateContract(obj){
+    const errors = [];
+    if(typeof obj !== 'object' || obj === null || Array.isArray(obj)){
+      return ["Raiz deve ser um objeto JSON."];
+    }
+    for(let req of CONTRACT.required){
+      if(!(req in obj)) errors.push(`Campo obrigatório ausente: '${req}'.`);
+    }
+    for(let k of Object.keys(obj)){
+      if(!(k in CONTRACT.properties)) errors.push(`Propriedade não permitida (additionalProperties: false): '${k}'.`);
+    }
+    if('run_id' in obj && (typeof obj.run_id !== 'string' || !/^PF-[0-9]{4}$/.test(obj.run_id))){
+      errors.push("Campo 'run_id' deve seguir o padrão '^PF-[0-9]{4}$'.");
+    }
+    if('task_type' in obj && !['binary', 'multiclass', 'regression'].includes(obj.task_type)){
+      errors.push("Campo 'task_type' deve ser 'binary', 'multiclass' ou 'regression'.");
+    }
+    if('target_col' in obj && (typeof obj.target_col !== 'string' || obj.target_col.length < 1)){
+      errors.push("Campo 'target_col' deve ser string não vazia.");
+    }
+    if('cv_folds' in obj && (!Number.isInteger(obj.cv_folds) || obj.cv_folds < 2 || obj.cv_folds > 20)){
+      errors.push("Campo 'cv_folds' deve ser inteiro entre 2 e 20.");
+    }
+    if('imbalance' in obj){
+      const imb = obj.imbalance;
+      if(typeof imb !== 'object' || imb === null || Array.isArray(imb)){
+        errors.push("Campo 'imbalance' deve ser um objeto.");
+      }else{
+        if(!('method' in imb)) errors.push("Campo obrigatório ausente em 'imbalance': 'method'.");
+        for(let ik of Object.keys(imb)){
+          if(!['method', 'adasyn_ratio'].includes(ik)){
+            errors.push(`Propriedade não permitida em 'imbalance': '${ik}'.`);
+          }
+        }
+        if('method' in imb && !['none', 'adanear', 'adasyn', 'nearmiss'].includes(imb.method)){
+          errors.push("Campo 'imbalance.method' inválido.");
+        }
+        if('adasyn_ratio' in imb && (typeof imb.adasyn_ratio !== 'number' || imb.adasyn_ratio < 0 || imb.adasyn_ratio > 5)){
+          errors.push("Campo 'imbalance.adasyn_ratio' deve ser numérico entre 0 e 5.");
+        }
+      }
+    }
+    return errors;
+  }
+
+  function runValidation(){
+    const statusEl = document.getElementById('val-status');
+    try{
+      const parsed = JSON.parse(document.getElementById('json-input').value);
+      const errs = validateContract(parsed);
+      if(errs.length === 0){
+        statusEl.className = 'val-result val-ok';
+        statusEl.innerHTML = '<strong>&#10004; CONTRATO VÁLIDO:</strong> Payload aprovado pelo JSON Schema.';
+      }else{
+        statusEl.className = 'val-result val-err';
+        statusEl.innerHTML = '<strong>&#10008; VIOLAÇÃO DE CONTRATO:</strong><br>' + errs.map(e => '&bull; ' + e).join('<br>');
+      }
+    }catch(e){
+      statusEl.className = 'val-result val-err';
+      statusEl.innerHTML = '<strong>&#10008; ERRO DE SINTAXE JSON:</strong> ' + e.message;
+    }
+    notifyResize();
+  }
+
+  function renderDag(){
+    const row = document.getElementById('dag-nodes');
+    row.innerHTML = DAG_STAGES.map((st, idx) => `
+      <div class="dag-node ${idx === activeDag ? 'active' : ''}" data-idx="${idx}">
+        <div class="dag-step">${st.step}</div>
+        <div class="dag-name">${st.name}</div>
+      </div>
+    `).join('');
+    row.querySelectorAll('.dag-node').forEach(el => {
+      el.onclick = () => { activeDag = parseInt(el.dataset.idx, 10); renderDag(); };
+    });
+    const cur = DAG_STAGES[activeDag];
+    document.getElementById('dag-detail').innerHTML = `
+      <strong style="color:#4ec9b0;">${cur.step} — ${cur.name}</strong>
+      <span style="font-family:Consolas,monospace; font-size:11px; color:#9cdcfe; margin-left:8px;">[${cur.shape}]</span>
+      <p style="margin:6px 0 0 0; color:#cbd5e1;">${cur.desc}</p>
+    `;
+    notifyResize();
+  }
+
+  document.getElementById('schema-view').textContent = JSON.stringify(CONTRACT, null, 2);
+  document.getElementById('json-input').value = JSON.stringify(PRESETS.valid, null, 2);
+  document.getElementById('json-input').oninput = runValidation;
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.getElementById('json-input').value = JSON.stringify(PRESETS[btn.dataset.preset], null, 2);
+      runValidation();
+    };
+  });
+
+  document.getElementById('tab-schema').onclick = function(){
+    this.classList.add('active');
+    document.getElementById('tab-dag').classList.remove('active');
+    document.getElementById('pane-schema').classList.remove('hidden');
+    document.getElementById('pane-dag').classList.add('hidden');
+    notifyResize();
+  };
+  document.getElementById('tab-dag').onclick = function(){
+    this.classList.add('active');
+    document.getElementById('tab-schema').classList.remove('active');
+    document.getElementById('pane-dag').classList.remove('hidden');
+    document.getElementById('pane-schema').classList.add('hidden');
+    notifyResize();
+  };
+
+  function notifyResize(){
+    try{
+      if(window.parent && window.parent !== window){
+        window.parent.postMessage({ type: 'pf-widget-resize', id: 'contract-dag', height: document.documentElement.scrollHeight }, '*');
+      }
+    }catch(e){}
+  }
+  window.addEventListener('load', notifyResize);
+  window.addEventListener('resize', notifyResize);
+  runValidation();
+  renderDag();
+})();
+</script>
+</body>
+</html>

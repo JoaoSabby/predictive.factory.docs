@@ -1,0 +1,13 @@
+/*-- scss:defaults --*/
+$web-font-path: false; // sem fontes remotas (uso offline)
+// Mesma identidade no modo escuro, alinhada à paleta dos widgets
+$primary: #2a9d8f;
+$link-color: #4ec9b0;
+$body-bg: #15171c;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "Cascadia Code", "JetBrains Mono", Consolas, "DejaVu Sans Mono", monospace;
+$headings-font-weight: 650;
+$border-radius: .35rem;
+
+/*-- scss:rules --*/
+.pf-frame { border-color: #323744; }

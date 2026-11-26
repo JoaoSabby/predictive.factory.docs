@@ -1,0 +1,139 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "referencia/*.qmd"
+    - "!ebook_pdf.qmd"
+  resources:
+    - widgets/
+    - images/
+
+website:
+  title: "predictive.factory"
+  description: "Documentação técnica, arquitetura e guias interativos da Fábrica Preditiva."
+  favicon: images/favicon.png
+  site-url: ""
+  search:
+    location: sidebar
+    type: textbox
+  reader-mode: true
+  page-navigation: true
+  back-to-top-navigation: true
+  bread-crumbs: true
+  navbar:
+    background: primary
+    left:
+      - text: "Início"
+        href: index.qmd
+      - text: "Funções"
+        href: 18-referencia-funcoes.qmd
+      - text: "Recursos interativos"
+        href: 90-recursos-interativos.qmd
+    right:
+      - icon: file-earmark-pdf
+        href: ebook_pdf.pdf
+        aria-label: "Baixar PDF"
+  sidebar:
+    style: floating
+    logo: images/icon.png
+    pinned: true
+    collapse-level: 1
+    contents:
+      - index.qmd
+      - section: "Fundamentos e arquitetura"
+        contents:
+          - 01-fundamentos.qmd
+          - 02-qualidade-dados.qmd
+          - 03-modelagem-dados.qmd
+          - 04-infraestrutura-hpc.qmd
+          - 05-governanca-bancaria.qmd
+          - 06-padroes-metadados.qmd
+          - 07-engenharia-software.qmd
+          - 08-persistencia-oracle.qmd
+          - 09-preservacao-modelo.qmd
+          - 10-evolucao-tecnologica.qmd
+          - 11-matriz-aderencia.qmd
+      - section: "Métodos"
+        contents:
+          - 12-balanceamento-adanear.qmd
+          - 13-arvores-boosting.qmd
+          - 14-validacao-metricas.qmd
+          - 15-avaliacao-leaderboard.qmd
+      - section: "Modelagem e pipeline"
+        contents:
+          - 16-modelagem.qmd
+          - 17-pipeline.qmd
+      - section: "Referência de funções"
+        href: 18-referencia-funcoes.qmd
+        contents: "referencia/*.qmd"
+      - section: "Apêndices"
+        contents:
+          - 90-recursos-interativos.qmd
+          - 99-referencias.qmd
+  page-footer:
+    left: "predictive.factory · Documentação técnica"
+    right: "Construído com [Quarto](https://quarto.org) · funciona sem internet"
+
+format:
+  html:
+    theme:
+      light: [cosmo, estilo/tema-claro.scss]
+      dark: [cyborg, estilo/tema-escuro.scss]
+    respect-user-color-scheme: true
+    css: estilo/pf.css
+    toc: true
+    toc-depth: 3
+    toc-expand: 2
+    toc-title: "Nesta página"
+    number-sections: false
+    html-math-method: mathml
+    code-copy: true
+    code-overflow: wrap
+    code-link: false
+    anchor-sections: true
+    smooth-scroll: true
+    citations-hover: true
+    footnotes-hover: true
+    lightbox: auto
+    link-external-newwindow: true
+    date-modified: last-modified
+    # Ajuste de altura dos iframes (inline para
+    # funcionar em qualquer nivel de pasta, inclusive referencia/)
+    include-after-body:
+      - text: |
+          <script>
+          /* Script local offline para ajuste automatico de altura dos iframes interativos.
+             O widget informa a altura do proprio conteudo via postMessage; o iframe recebe
+             exatamente essa altura, o que evita ciclos de crescimento. */
+          window.addEventListener('message', function(event){
+            var data = event.data;
+            if(!data || typeof data.height !== 'number') return;
+            var id = null;
+            if(data.type === 'pf-widget-resize' && data.id) id = 'frame-' + data.id;
+            if(data.type === 'sby-conceptual-resize') id = 'frame-sby-conceptual';
+            if(data.type === 'sby-avx512-resize') id = 'frame-sby-avx512';
+            if(!id) return;
+            var el = document.getElementById(id);
+            if(!el) return;
+            var target = Math.ceil(data.height);
+            var current = el.getBoundingClientRect().height;
+            if(Math.abs(current - target) > 4){
+              el.style.minHeight = '0';
+              el.style.height = target + 'px';
+            }
+          });
+          </script>
+
+lang: pt-BR
+date-format: "DD/MM/YYYY"
+
+bibliography: referencias.bib
+csl: abnt.csl
+link-citations: true
+
+execute:
+  eval: false
+  echo: true
+  warning: false
+  message: false

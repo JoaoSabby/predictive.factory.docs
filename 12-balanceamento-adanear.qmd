@@ -1,0 +1,17 @@
+# Reamostragem híbrida (ADASYN + NearMiss) {#balanceamento}
+
+## Desbalanceamento de classes
+
+<!-- Conteúdo a ser escrito. -->
+
+## ADASYN
+
+<!-- Conteúdo a ser escrito. -->
+
+## NearMiss
+
+<!-- Conteúdo a ser escrito. -->
+
+## Motor numérico do sbyadanear
+
+<!-- Conteúdo a ser escrito. -->

@@ -1,0 +1,25 @@
+# Padrões de metadados, linhagem e contratos {#padroes}
+
+## OpenLineage, Dublin Core e JSON Schema
+
+<!-- Conteúdo a ser escrito. -->
+
+## OpenLineage e decomposição da SQL
+
+<!-- Conteúdo a ser escrito. -->
+
+## Vocabulário Dublin Core
+
+<!-- Conteúdo a ser escrito. -->
+
+## JSON Schema e constraints
+
+<!-- Conteúdo a ser escrito. -->
+
+### Exemplo hipotético para ML_FEATURE_LINEAGE
+
+<!-- Conteúdo a ser escrito. -->
+
+## Interoperabilidade financeira e FAIR
+
+<!-- Conteúdo a ser escrito. -->

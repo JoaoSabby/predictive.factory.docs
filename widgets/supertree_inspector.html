@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperTree Interactive Inspector (Offline)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #181a20;
+    color: #e2e8f0;
+  }
+  .st-wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: #20232b;
+    border: 1px solid #323744;
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .st-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    background: #171920;
+    border: 1px solid #2e3340;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .st-btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #3b4252;
+    background: #252932;
+    color: #e2e8f0;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .st-btn:hover { border-color: #4ec9b0; color: #4ec9b0; }
+  .st-btn.active { background: #0e639c; border-color: #38bdf8; color: #ffffff; }
+  .st-badge {
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    padding: 4px 10px;
+    background: #252932;
+    border: 1px solid #3b4252;
+    border-radius: 6px;
+    color: #9cdcfe;
+  }
+  .svg-stage {
+    background: #fcfbf9;
+    border-radius: 8px;
+    border: 1px solid #3b4252;
+    overflow-x: auto;
+    padding: 8px;
+  }
+  svg#tree-svg {
+    width: 100%;
+    min-width: 740px;
+    height: auto;
+    display: block;
+  }
+  .st-footer {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    font-family: Consolas, monospace;
+    font-size: 11.5px;
+    color: #94a3b8;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="st-wrap">
+  <div class="st-toolbar">
+    <div class="btn-group">
+      <button class="st-btn" id="btn-save-svg">&#8681; Save SVG</button>
+      <button class="st-btn active" id="btn-line-width">&#9707; Line Width</button>
+      <button class="st-btn active" id="btn-decisions">&#9873; Decisions</button>
+    </div>
+    <div class="btn-group">
+      <button class="st-btn" id="btn-depth-minus">&minus;</button>
+      <span class="st-badge" id="lbl-depth">Depth = 2</span>
+      <button class="st-btn" id="btn-depth-plus">+</button>
+    </div>
+    <div class="btn-group">
+      <button class="st-btn" id="btn-tree-prev">&lt;</button>
+      <span class="st-badge" id="lbl-tree-info">BoostedTree &bull; Tree 1 / 3</span>
+      <button class="st-btn" id="btn-tree-next">&gt;</button>
+    </div>
+  </div>
+
+  <div class="svg-stage">
+    <svg id="tree-svg" viewBox="0 0 960 500"></svg>
+  </div>
+
+  <div class="st-footer">
+    <span id="st-meta-left">predictive.factory &bull; NODES 15 &bull; LEAVES 8 &bull; DEPTH 3 &bull; SAMPLES 271</span>
+    <span id="st-meta-right">Clique em +/- para expandir profundidade ou Save SVG para exportar</span>
+  </div>
+</div>
+
+<script>
+(function(){
+  let maxViewDepth = 2;
+  let treeIdx = 0;
+  let proportionalWidth = true;
+  let showDecisions = true;
+
+  /* Gerador deterministico de dispersao para cada no */
+  function nodeScatter(seed, count, xMin, xMax, splitX, meanY){
+    let a = seed >>> 0;
+    const rng = () => {
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+    const pts = [];
+    for(let i = 0; i < count; i++){
+      const u = (rng() + rng() - 1) * 0.45 + 0.5;
+      const x = xMin + Math.max(0.04, Math.min(0.96, u)) * (xMax - xMin);
+      const yBase = x < splitX ? meanY - 35 : meanY + 42;
+      const y = Math.max(18, Math.min(330, yBase + (rng() - 0.5) * 145));
+      pts.push([x, y]);
+    }
+    return pts;
+  }
+
+  const TREES = [
+    {
+      name: 'BoostedTree • Tree 1 / 3',
+      root: {
+        feat: 'feature2', thr: -0.0078, val: -0.0078, n: 271, xMin: -0.10, xMax: 0.18,
+        left: {
+          feat: 'feature8', thr: 0.0270, val: 0.0270, n: 148, xMin: -0.14, xMax: 0.14,
+          left: {
+            feat: 'feature8', thr: -0.0104, val: -0.0104, n: 126, xMin: -0.14, xMax: 0.04,
+            left: { feat: 'leaf', thr: 0, val: -0.0215, n: 74, xMin: -0.14, xMax: -0.01 },
+            right: { feat: 'leaf', thr: 0, val: 0.0042, n: 52, xMin: -0.01, xMax: 0.04 }
+          },
+          right: {
+            feat: 'feature9', thr: -0.0197, val: -0.0197, n: 22, xMin: -0.10, xMax: 0.14,
+            left: { feat: 'leaf', thr: 0, val: -0.0310, n: 12, xMin: -0.10, xMax: -0.02 },
+            right: { feat: 'leaf', thr: 0, val: -0.0080, n: 10, xMin: -0.02, xMax: 0.14 }
+          }
+        },
+        right: {
+          feat: 'feature8', thr: -0.0011, val: -0.0011, n: 123, xMin: -0.12, xMax: 0.14,
+          left: {
+            feat: 'feature5', thr: 0.0143, val: 0.0143, n: 41, xMin: -0.12, xMax: 0.12,
+            left: { feat: 'leaf', thr: 0, val: 0.0061, n: 19, xMin: -0.12, xMax: 0.01 },
+            right: { feat: 'leaf', thr: 0, val: 0.0225, n: 22, xMin: 0.01, xMax: 0.12 }
+          },
+          right: {
+            feat: 'feature3', thr: 0.0580, val: 0.0580, n: 82, xMin: -0.10, xMax: 0.14,
+            left: { feat: 'leaf', thr: 0, val: 0.0410, n: 38, xMin: -0.10, xMax: 0.06 },
+            right: { feat: 'leaf', thr: 0, val: 0.0745, n: 44, xMin: 0.06, xMax: 0.14 }
+          }
+        }
+      }
+    },
+    {
+      name: 'BoostedTree • Tree 2 / 3',
+      root: {
+        feat: 'feature1', thr: 0.1420, val: 0.0124, n: 271, xMin: -0.20, xMax: 0.45,
+        left: {
+          feat: 'feature4', thr: -0.0320, val: -0.0185, n: 162, xMin: -0.25, xMax: 0.20,
+          left: { feat: 'leaf', thr: 0, val: -0.0290, n: 95, xMin: -0.25, xMax: -0.03 },
+          right: { feat: 'leaf', thr: 0, val: -0.0055, n: 67, xMin: -0.03, xMax: 0.20 }
+        },
+        right: {
+          feat: 'feature2', thr: 0.0410, val: 0.0440, n: 109, xMin: -0.08, xMax: 0.22,
+          left: { feat: 'leaf', thr: 0, val: 0.0210, n: 48, xMin: -0.08, xMax: 0.04 },
+          right: { feat: 'leaf', thr: 0, val: 0.0680, n: 61, xMin: 0.04, xMax: 0.22 }
+        }
+      }
+    },
+    {
+      name: 'BoostedTree • Tree 3 / 3',
+      root: {
+        feat: 'feature5', thr: -0.0150, val: 0.0031, n: 271, xMin: -0.18, xMax: 0.24,
+        left: {
+          feat: 'feature2', thr: 0.0110, val: -0.0142, n: 118, xMin: -0.12, xMax: 0.16,
+          left: { feat: 'leaf', thr: 0, val: -0.0260, n: 64, xMin: -0.12, xMax: 0.01 },
+          right: { feat: 'leaf', thr: 0, val: 0.0015, n: 54, xMin: 0.01, xMax: 0.16 }
+        },
+        right: {
+          feat: 'feature8', thr: 0.0195, val: 0.0195, n: 153, xMin: -0.15, xMax: 0.19,
+          left: { feat: 'leaf', thr: 0, val: 0.0092, n: 71, xMin: -0.15, xMax: 0.02 },
+          right: { feat: 'leaf', thr: 0, val: 0.0348, n: 82, xMin: 0.02, xMax: 0.19 }
+        }
+      }
+    }
+  ];
+
+  function renderTree(){
+    const treeObj = TREES[treeIdx];
+    const svg = document.getElementById('tree-svg');
+    const levelH = maxViewDepth >= 3 ? 132 : 165;
+    const totalH = (maxViewDepth + 1) * levelH + 30;
+    svg.setAttribute('viewBox', `0 0 960 ${totalH}`);
+
+    const edges = [];
+    const nodes = [];
+
+    function traverse(node, depth, x0, x1, seed){
+      const cx = 0.5 * (x0 + x1);
+      const cy = 54 + depth * levelH;
+      nodes.push({ node, depth, cx, cy, seed });
+      if(depth < maxViewDepth && node.left && node.right){
+        const mid = 0.5 * (x0 + x1);
+        const childY = 54 + (depth + 1) * levelH;
+        const leftCx = 0.5 * (x0 + mid);
+        const rightCx = 0.5 * (mid + x1);
+        edges.push({
+          x1: cx, y1: cy + 36, x2: leftCx, y2: childY - 36,
+          n: node.left.n, label: `${node.feat} < ${node.thr.toFixed(4)}`
+        });
+        edges.push({
+          x1: cx, y1: cy + 36, x2: rightCx, y2: childY - 36,
+          n: node.right.n, label: `${node.feat} >= ${node.thr.toFixed(4)}`
+        });
+        traverse(node.left, depth + 1, x0, mid, seed * 3 + 1);
+        traverse(node.right, depth + 1, mid, x1, seed * 3 + 2);
+      }
+    }
+
+    traverse(treeObj.root, 0, 20, 940, 17 + treeIdx * 31);
+
+    let out = `<rect x="0" y="0" width="960" height="${totalH}" fill="#fcfbf9"/>`;
+
+    /* Curvas Bezier dos ramos */
+    for(let e of edges){
+      const sw = proportionalWidth ? Math.max(1.5, (e.n / 271) * 11) : 3.2;
+      const my = 0.5 * (e.y1 + e.y2);
+      out += `<path d="M ${e.x1} ${e.y1} C ${e.x1} ${my}, ${e.x2} ${my}, ${e.x2} ${e.y2}" fill="none" stroke="#4b5563" stroke-width="${sw.toFixed(1)}" stroke-linecap="round"/>`;
+      if(showDecisions){
+        const lx = 0.5 * (e.x1 + e.x2);
+        const ly = my;
+        const bw = Math.max(116, e.label.length * 6.3);
+        out += `<rect x="${lx - bw / 2}" y="${ly - 10}" width="${bw}" height="20" rx="5" fill="#e5e7eb" stroke="#cbd5e1" stroke-width="1"/>`;
+        out += `<text x="${lx}" y="${ly + 3.5}" text-anchor="middle" font-family="Consolas, monospace" font-size="10.5" fill="#1f2937" font-weight="bold">${e.label}</text>`;
+      }
+    }
+
+    /* Cartoes de cada no com dispersao e linha de corte */
+    const boxW = maxViewDepth >= 3 ? 106 : 148;
+    const boxH = 72;
+    for(let item of nodes){
+      const { node, cx, cy, seed } = item;
+      const bx = cx - boxW / 2;
+      const by = cy - boxH / 2;
+      out += `<rect x="${bx}" y="${by}" width="${boxW}" height="${boxH}" rx="7" fill="#ffffff" stroke="#6b7280" stroke-width="1.2"/>`;
+      const pts = nodeScatter(seed, Math.min(95, Math.max(16, Math.round(node.n * 0.45))), node.xMin, node.xMax, node.thr, 175);
+      for(let pt of pts){
+        const px = bx + 16 + ((pt[0] - node.xMin) / (node.xMax - node.xMin)) * (boxW - 24);
+        const py = by + boxH - 12 - (pt[1] / 350) * (boxH - 22);
+        out += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="1.9" fill="#0ea5e9" opacity="0.82"/>`;
+      }
+      if(node.feat !== 'leaf'){
+        const sx = bx + 16 + ((node.thr - node.xMin) / (node.xMax - node.xMin)) * (boxW - 24);
+        out += `<line x1="${sx.toFixed(1)}" y1="${by + 12}" x2="${sx.toFixed(1)}" y2="${by + boxH - 10}" stroke="#111827" stroke-width="1.5" stroke-dasharray="3,2"/>`;
+      }
+      /* Pilula superior com predicao/limiar */
+      out += `<rect x="${cx - 34}" y="${by + 4}" width="68" height="14" rx="4" fill="#f3f4f6" stroke="#d1d5db" stroke-width="0.8"/>`;
+      out += `<text x="${cx}" y="${by + 14}" text-anchor="middle" font-family="Consolas, monospace" font-size="9.5" fill="#111827">${node.val.toFixed(5)}</text>`;
+      /* Eixos e nome da feature abaixo */
+      out += `<text x="${bx + 4}" y="${by + 13}" font-family="Consolas, monospace" font-size="8" fill="#6b7280">350</text>`;
+      out += `<text x="${bx + 4}" y="${by + boxH - 5}" font-family="Consolas, monospace" font-size="8" fill="#6b7280">0</text>`;
+      const titleTxt = node.feat === 'leaf' ? `leaf (n=${node.n})` : node.feat;
+      out += `<text x="${cx}" y="${by + boxH + 14}" text-anchor="middle" font-family="Consolas, monospace" font-size="11.5" fill="#1f2937" font-weight="bold">${titleTxt}</text>`;
+    }
+
+    svg.innerHTML = out;
+    document.getElementById('lbl-depth').textContent = `Depth = ${maxViewDepth}`;
+    document.getElementById('lbl-tree-info').textContent = treeObj.name;
+    document.getElementById('st-meta-left').textContent =
+      `predictive.factory • NODES ${nodes.length} • DISPLAY DEPTH ${maxViewDepth} • SAMPLES 271 • ${treeObj.name}`;
+    notifyResize();
+  }
+
+  document.getElementById('btn-depth-minus').onclick = () => { if(maxViewDepth > 1){ maxViewDepth--; renderTree(); } };
+  document.getElementById('btn-depth-plus').onclick = () => { if(maxViewDepth < 3){ maxViewDepth++; renderTree(); } };
+  document.getElementById('btn-tree-prev').onclick = () => { treeIdx = (treeIdx + TREES.length - 1) % TREES.length; renderTree(); };
+  document.getElementById('btn-tree-next').onclick = () => { treeIdx = (treeIdx + 1) % TREES.length; renderTree(); };
+  document.getElementById('btn-line-width').onclick = function(){ proportionalWidth = !proportionalWidth; this.classList.toggle('active', proportionalWidth); renderTree(); };
+  document.getElementById('btn-decisions').onclick = function(){ showDecisions = !showDecisions; this.classList.toggle('active', showDecisions); renderTree(); };
+  document.getElementById('btn-save-svg').onclick = () => {
+    const svgData = new XMLSerializer().serializeToString(document.getElementById('tree-svg'));
+    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `supertree_tree_${treeIdx + 1}.svg`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  function notifyResize(){
+    try{
+      if(window.parent && window.parent !== window){
+        window.parent.postMessage({ type: 'pf-widget-resize', id: 'supertree', height: document.documentElement.scrollHeight }, '*');
+      }
+    }catch(e){}
+  }
+  window.addEventListener('load', notifyResize);
+  window.addEventListener('resize', notifyResize);
+  renderTree();
+})();
+</script>
+</body>
+</html>

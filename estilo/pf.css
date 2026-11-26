@@ -1,0 +1,153 @@
+/* Estilos comuns aos temas claro e escuro */
+
+/* Titulos com respiro e ancoras discretas */
+h1, h2, h3 { letter-spacing: -.015em; scroll-margin-top: 5rem; }
+h2 { margin-top: 2.2rem; padding-bottom: .25rem; border-bottom: 1px solid rgba(127,127,127,.18); }
+
+/* Iframes dos widgets: altura ajustada por widgets/iframe-resize.js */
+.pf-frame {
+  display: block;
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid;
+  box-sizing: content-box;
+  border-radius: 10px;
+  background: #181a20;
+  margin: 1rem 0 1.5rem;
+}
+
+/* Shields gerados por scripts/badges.R */
+.pf-badges { display: flex; flex-wrap: wrap; gap: 6px; margin: .4rem 0 .8rem; }
+.pf-badges img { height: 20px; }
+
+/* Subtitulo das paginas de funcoes geradas por scripts/funcoes.R */
+.pf-fn-title { font-size: 1.15rem; opacity: .8; margin: -.5rem 0 1.25rem; }
+
+/* Bloco de proposito ou resumo no inicio do capitulo */
+.pf-resumo {
+  border-left: 4px solid var(--bs-primary);
+  background: rgba(0,107,112,.06);
+  padding: .9rem 1.2rem;
+  border-radius: 0 .35rem .35rem 0;
+  margin: 1.25rem 0;
+}
+
+/* Espaco reservado para figuras e conteudos futuros */
+.pf-placeholder {
+  border: 2px dashed rgba(127,127,127,.45);
+  border-radius: 8px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  opacity: .75;
+  margin: 1.5rem 0;
+}
+
+/* Widget embutido diretamente na pagina, sem iframe */
+.pf-inline {
+  border: 1px solid rgba(127,127,127,.3);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+.pf-inline label { display: block; margin-bottom: .7rem; }
+.pf-inline input[type="range"] { width: 100%; max-width: 480px; display: block; accent-color: var(--bs-primary); }
+.pf-inline output { font-size: 1.35rem; font-weight: 700; color: var(--bs-primary); }
+
+/* Cartoes em grade para indices e paginas iniciais */
+.pf-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+.pf-card {
+  border: 1px solid rgba(127,127,127,.25);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.pf-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.pf-card .bi { font-size: 1.5rem; color: var(--bs-primary); }
+.pf-card h4 { margin: .5rem 0 .35rem; font-size: 1.05rem; }
+.pf-card h4 a { text-decoration: none; }
+.pf-card h4 a:hover { text-decoration: underline; }
+.pf-card p { margin: 0; font-size: .92rem; opacity: .85; }
+
+/* Tabelas mais leves */
+table { font-size: .94rem; }
+td, th { vertical-align: top; }
+
+@media print {
+  .pf-frame, .pf-inline { display: none; }
+}
+
+/* ---------- Capa: pipeline interativo (_capa.qmd) ---------- */
+.pf-capa { margin: 1.5rem 0 2.5rem; padding-top: 10px; }
+.pf-capa-etapas {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(6, 1fr);
+}
+.pf-capa-etapas li { position: relative; display: flex; justify-content: center; }
+/* trilho entre etapas */
+.pf-capa-etapas li + li::before {
+  content: ""; position: absolute; top: 32px; right: calc(50% + 40px); left: calc(-50% + 40px);
+  height: 2px; border-radius: 2px;
+  background: rgba(127,127,127,.28);
+}
+.pf-capa-etapas li.feita::before,
+.pf-capa-etapas li.ativa::before { background: var(--bs-primary); }
+/* ponto que percorre o trilho ate a etapa ativa */
+.pf-capa-etapas li.ativa::after {
+  content: ""; position: absolute; top: 29px; left: calc(-50% + 40px);
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--bs-primary); box-shadow: 0 0 0 4px rgba(42,157,143,.18);
+  animation: pf-fluxo 1.1s ease-out forwards;
+}
+.pf-capa-etapas li:first-child.ativa::after { display: none; }
+@keyframes pf-fluxo {
+  from { left: calc(-50% + 40px); opacity: 0; }
+  20% { opacity: 1; }
+  85% { opacity: 1; }
+  to { left: calc(50% - 48px); opacity: 0; }
+}
+
+.pf-etapa {
+  all: unset; cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; gap: .55rem;
+  text-align: center; padding: 0 .25rem; border-radius: 12px;
+}
+.pf-etapa:focus-visible { outline: 2px solid var(--bs-primary); outline-offset: 6px; }
+.pf-etapa-icone {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 1.55rem;
+  border: 2px solid rgba(127,127,127,.35);
+  background: var(--bs-body-bg); color: rgba(127,127,127,.95);
+  transition: all .35s ease;
+}
+.pf-etapa-nome { font-size: .9rem; font-weight: 600; opacity: .7; transition: opacity .3s ease; }
+.pf-capa-etapas li.feita .pf-etapa-icone { border-color: var(--bs-primary); color: var(--bs-primary); }
+.pf-capa-etapas li.ativa .pf-etapa-icone {
+  border-color: var(--bs-primary); background: var(--bs-primary); color: #fff;
+  transform: scale(1.08); box-shadow: 0 8px 24px rgba(0,107,112,.28);
+}
+.pf-capa-etapas li.ativa .pf-etapa-nome { opacity: 1; }
+.pf-etapa:hover .pf-etapa-icone { border-color: var(--bs-primary); }
+
+.pf-capa-detalhe {
+  max-width: 640px; margin: 1.8rem auto 0; text-align: center; min-height: 9.5rem;
+}
+.pf-capa-detalhe.entra { animation: pf-entra .45s ease; }
+@keyframes pf-entra { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.pf-capa-passo { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; opacity: .6; }
+.pf-capa-titulo { margin: .3rem 0 .5rem; border: 0; padding: 0; font-size: 1.45rem; }
+.pf-capa-texto { margin: 0 0 .8rem; opacity: .85; }
+.pf-capa-link { font-weight: 600; text-decoration: none; }
+.pf-capa-link:hover { text-decoration: underline; }
+
+@media (max-width: 760px) {
+  .pf-capa-etapas { grid-template-columns: 1fr; gap: 1.1rem; }
+  .pf-capa-etapas li { justify-content: flex-start; }
+  .pf-capa-etapas li + li::before { top: -1.1rem; bottom: calc(100% - 0px); left: 31px; right: auto; width: 2px; height: 1.1rem; }
+  .pf-capa-etapas li.ativa::after { display: none; }
+  .pf-etapa { flex-direction: row; gap: .9rem; }
+  .pf-etapa-icone { width: 52px; height: 52px; font-size: 1.25rem; }
+  .pf-capa-detalhe { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf-capa *, .pf-capa *::before, .pf-capa *::after { animation: none !important; transition: none !important; }
+}

@@ -1,0 +1,97 @@
+<!-- Capa interativa do pipeline. Para editar: textos em data-titulo, data-texto e
+     data-link de cada etapa. Cores e espaçamentos em estilo/pf.css (seção "Capa"). -->
+
+::: {.column-page}
+```{=html}
+<section class="pf-capa" aria-label="Pipeline da predictive.factory">
+  <ol class="pf-capa-etapas">
+    <li><button type="button" class="pf-etapa"
+        data-titulo="Contrato de dados"
+        data-texto="Valida esquema, tipos e ausência de vazamento temporal antes de alocar qualquer matriz."
+        data-link="06-padroes-metadados.html">
+      <span class="pf-etapa-icone"><i class="bi bi-file-earmark-check"></i></span>
+      <span class="pf-etapa-nome">Contrato</span></button></li>
+    <li><button type="button" class="pf-etapa"
+        data-titulo="Particionamento"
+        data-texto="Separa treino, validação e teste antes de qualquer estatística ser estimada."
+        data-link="14-validacao-metricas.html">
+      <span class="pf-etapa-icone"><i class="bi bi-layout-split"></i></span>
+      <span class="pf-etapa-nome">Partição</span></button></li>
+    <li><button type="button" class="pf-etapa"
+        data-titulo="Pré-processamento na dobra"
+        data-texto="Escala, imputação e codificação ajustadas somente com os dados de treino de cada dobra."
+        data-link="17-pipeline.html">
+      <span class="pf-etapa-icone"><i class="bi bi-sliders"></i></span>
+      <span class="pf-etapa-nome">Preparo</span></button></li>
+    <li><button type="button" class="pf-etapa"
+        data-titulo="Balanceamento"
+        data-texto="ADASYN reforça a fronteira da classe rara e NearMiss remove redundâncias da majoritária."
+        data-link="12-balanceamento-adanear.html">
+      <span class="pf-etapa-icone"><i class="bi bi-symmetry-vertical"></i></span>
+      <span class="pf-etapa-nome">Balanceamento</span></button></li>
+    <li><button type="button" class="pf-etapa"
+        data-titulo="Modelagem e ajuste"
+        data-texto="Busca de hiperparâmetros com métricas auditadas nas dobras e ajuste do modelo vencedor."
+        data-link="16-modelagem.html">
+      <span class="pf-etapa-icone"><i class="bi bi-cpu"></i></span>
+      <span class="pf-etapa-nome">Modelagem</span></button></li>
+    <li><button type="button" class="pf-etapa"
+        data-titulo="Avaliação e registro"
+        data-texto="Comparação no leaderboard, promoção do modelo e artefato congelado para escoragem em lote."
+        data-link="15-avaliacao-leaderboard.html">
+      <span class="pf-etapa-icone"><i class="bi bi-trophy"></i></span>
+      <span class="pf-etapa-nome">Registro</span></button></li>
+  </ol>
+
+  <div class="pf-capa-detalhe" aria-live="polite">
+    <span class="pf-capa-passo"></span>
+    <h3 class="pf-capa-titulo"></h3>
+    <p class="pf-capa-texto"></p>
+    <a class="pf-capa-link" href="#">Abrir capítulo <i class="bi bi-arrow-right"></i></a>
+  </div>
+</section>
+
+<script>
+(function(){
+  const capa = document.querySelector(".pf-capa");
+  if(!capa) return;
+  const etapas = Array.from(capa.querySelectorAll(".pf-etapa"));
+  const passo = capa.querySelector(".pf-capa-passo");
+  const titulo = capa.querySelector(".pf-capa-titulo");
+  const texto = capa.querySelector(".pf-capa-texto");
+  const link = capa.querySelector(".pf-capa-link");
+  const calmo = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let atual = 0, timer = null;
+
+  function ativar(i){
+    atual = i;
+    etapas.forEach(function(e, k){
+      e.parentElement.classList.toggle("ativa", k === i);
+      e.parentElement.classList.toggle("feita", k < i);
+      e.setAttribute("aria-current", k === i ? "step" : "false");
+    });
+    const e = etapas[i];
+    passo.textContent = "Etapa " + (i + 1) + " de " + etapas.length;
+    titulo.textContent = e.dataset.titulo;
+    texto.textContent = e.dataset.texto;
+    link.href = e.dataset.link;
+    capa.querySelector(".pf-capa-detalhe").classList.remove("entra");
+    void capa.offsetWidth;
+    capa.querySelector(".pf-capa-detalhe").classList.add("entra");
+  }
+  function parar(){ if(timer){ clearInterval(timer); timer = null; } }
+
+  etapas.forEach(function(e, i){
+    e.addEventListener("mouseenter", function(){ parar(); ativar(i); });
+    e.addEventListener("focus", function(){ parar(); ativar(i); });
+    e.addEventListener("click", function(){ parar(); ativar(i); });
+  });
+
+  ativar(0);
+  if(!calmo){
+    timer = setInterval(function(){ ativar((atual + 1) % etapas.length); }, 3200);
+  }
+})();
+</script>
+```
+:::

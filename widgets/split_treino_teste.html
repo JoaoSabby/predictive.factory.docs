@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divisão treino e teste (offline)</title>
+<link rel="stylesheet" href="pf-metrics.css">
+<style>
+  .cells { display: grid; grid-template-columns: repeat(25, 1fr); gap: 3px; }
+  .cell { aspect-ratio: 1 / 1; border-radius: 3px; }
+  .cell.test { outline: 2px solid #feca57; outline-offset: -2px; opacity: 1; }
+  .cell.train { opacity: 0.55; }
+</style>
+</head>
+<body>
+<div class="pf-wrap">
+  <div class="pf-title">Divisão treino/teste: aleatória ou estratificada</div>
+  <div class="pf-sub">Cada quadrado é uma observação. Quadrados com borda amarela formam o conjunto de teste.
+    Compare a prevalência da classe positiva nas duas partições e a variação entre sorteios.</div>
+
+  <div class="pf-controls">
+    <label><span class="row">Observações (N) <b id="n-val"></b></span>
+      <input type="range" id="n" min="100" max="500" step="25" value="200"></label>
+    <label><span class="row">Prevalência da classe positiva <b id="prev-val"></b></span>
+      <input type="range" id="prev" min="0.02" max="0.5" step="0.01" value="0.1"></label>
+    <label><span class="row">Fração de teste <b id="frac-val"></b></span>
+      <input type="range" id="frac" min="0.1" max="0.5" step="0.05" value="0.25"></label>
+    <label class="check"><input type="checkbox" id="strat" checked> Estratificar pela classe</label>
+    <div><button class="pf-btn" id="redraw">Novo sorteio</button></div>
+  </div>
+
+  <div class="pf-grid2">
+    <div class="pf-panel">
+      <h3>Observações e partição</h3>
+      <div class="cells" id="cells"></div>
+      <div class="pf-legend">
+        <span><i style="background:#ce9178"></i>Positivo (evento)</span>
+        <span><i style="background:#4ec9b0"></i>Negativo</span>
+        <span><i style="background:transparent;outline:2px solid #feca57"></i>Teste</span>
+      </div>
+    </div>
+    <div class="pf-panel">
+      <h3>Composição das partições</h3>
+      <table class="pf-table">
+        <thead><tr><th>Partição</th><th>n</th><th>Positivos</th><th>Prevalência</th></tr></thead>
+        <tbody id="tbl"></tbody>
+      </table>
+      <h3 style="margin-top:14px;">Prevalência no teste em 300 sorteios</h3>
+      <div id="strip"></div>
+    </div>
+  </div>
+
+  <div class="pf-note" id="note"></div>
+</div>
+
+<script src="pf-metrics.js"></script>
+<script>
+(function(){
+  const notify = PF.autoResize('split-treino-teste');
+  let seed = 7;
+
+  function makeSplit(n, nPos, frac, strat, rng){
+    const idx = Array.from({ length: n }, function(_, i){ return i; });
+    function shuffle(a){
+      for(let i = a.length - 1; i > 0; i--){
+        const j = Math.floor(rng() * (i + 1));
+        const t = a[i]; a[i] = a[j]; a[j] = t;
+      }
+      return a;
+    }
+    const test = new Set();
+    if(strat){
+      const pos = shuffle(idx.filter(function(i){ return i < nPos; }));
+      const neg = shuffle(idx.filter(function(i){ return i >= nPos; }));
+      pos.slice(0, Math.round(pos.length * frac)).forEach(function(i){ test.add(i); });
+      neg.slice(0, Math.round(neg.length * frac)).forEach(function(i){ test.add(i); });
+    }else{
+      shuffle(idx).slice(0, Math.round(n * frac)).forEach(function(i){ test.add(i); });
+    }
+    return test;
+  }
+
+  function testPrevalence(test, nPos){
+    let p = 0;
+    test.forEach(function(i){ if(i < nPos) p++; });
+    return test.size ? p / test.size : 0;
+  }
+
+  const getN = PF.bindRange('n', function(v){ return v; }, render);
+  const getPrev = PF.bindRange('prev', function(v){ return PF.pct(v, 0); }, render);
+  const getFrac = PF.bindRange('frac', function(v){ return PF.pct(v, 0); }, render);
+  document.getElementById('strat').addEventListener('change', render);
+  document.getElementById('redraw').addEventListener('click', function(){ seed++; render(); });
+
+  function render(){
+    const n = getN(), prev = getPrev(), frac = getFrac();
+    const strat = document.getElementById('strat').checked;
+    const nPos = Math.max(1, Math.round(n * prev));
+    const rng = PF.makeRng(seed * 7919);
+    const test = makeSplit(n, nPos, frac, strat, rng);
+
+    /* Ordem de exibicao embaralhada de forma fixa para nao agrupar classes */
+    const order = Array.from({ length: n }, function(_, i){ return i; });
+    const r2 = PF.makeRng(99);
+    for(let i = n - 1; i > 0; i--){ const j = Math.floor(r2() * (i + 1)); const t = order[i]; order[i] = order[j]; order[j] = t; }
+    document.getElementById('cells').innerHTML = order.map(function(i){
+      return '<div class="cell ' + (test.has(i) ? 'test' : 'train') + '" style="background:' + (i < nPos ? PF.COLORS.pos : PF.COLORS.neg) + '"></div>';
+    }).join('');
+
+    const testPos = Math.round(testPrevalence(test, nPos) * test.size);
+    const trainN = n - test.size, trainPos = nPos - testPos;
+    document.getElementById('tbl').innerHTML =
+      '<tr><td>Base completa</td><td>' + n + '</td><td>' + nPos + '</td><td>' + PF.pct(nPos / n) + '</td></tr>' +
+      '<tr><td>Treino</td><td>' + trainN + '</td><td>' + trainPos + '</td><td>' + PF.pct(trainPos / trainN) + '</td></tr>' +
+      '<tr><td>Teste</td><td>' + test.size + '</td><td>' + testPos + '</td><td>' + PF.pct(testPos / test.size) + '</td></tr>';
+
+    /* Distribuicao da prevalencia no teste em muitos sorteios */
+    const reps = 300, rnd = [], str = [];
+    const r3 = PF.makeRng(seed * 31 + 5);
+    for(let k = 0; k < reps; k++){
+      rnd.push(testPrevalence(makeSplit(n, nPos, frac, false, r3), nPos));
+      str.push(testPrevalence(makeSplit(n, nPos, frac, true, r3), nPos));
+    }
+    const lo = Math.max(0, prev - 0.15), hi = Math.min(1, prev + 0.15);
+    const p = PF.plot({ width: 440, height: 150, xmin: lo, xmax: hi, ymin: 0, ymax: 2, ticks: 4, xdec: 2, ydec: 0, hideY: true, xlab: 'Prevalência no teste', ylab: '' });
+    const jit = PF.makeRng(3);
+    rnd.forEach(function(v){ p.dot(Math.min(hi, Math.max(lo, v)), 1.45 + (jit() - 0.5) * 0.4, 'rgba(255,107,107,0.55)', 2.2); });
+    str.forEach(function(v){ p.dot(Math.min(hi, Math.max(lo, v)), 0.55 + (jit() - 0.5) * 0.4, 'rgba(78,201,176,0.6)', 2.2); });
+    p.vline(nPos / n, '#feca57', 'real');
+    p.text(lo + (hi - lo) * 0.02, 1.85, 'Aleatória (dp ' + PF.fmt(PF.sd(rnd) * 100, 2) + ' p.p.)', '#ff9999');
+    p.text(lo + (hi - lo) * 0.02, 0.95, 'Estratificada (dp ' + PF.fmt(PF.sd(str) * 100, 2) + ' p.p.)', '#4ec9b0');
+    document.getElementById('strip').innerHTML = p.svg();
+
+    const minRnd = Math.min.apply(null, rnd);
+    document.getElementById('note').innerHTML =
+      '<b>Leitura.</b> Com ' + nPos + ' positivos em ' + n + ' registros, a divisão aleatória produziu, no pior sorteio, ' +
+      'prevalência de ' + PF.pct(minRnd) + ' no teste. A estratificação mantém a proporção da base em cada partição ' +
+      'e reduz a variância da estimativa de desempenho. Toda transformação ajustada aos dados ' +
+      '(padronização, imputação, reamostragem) deve ser estimada apenas no treino.';
+    notify();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Validação cruzada K-fold (offline)</title>
+<link rel="stylesheet" href="pf-metrics.css">
+<style>
+  .fold-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-family: Consolas, monospace; font-size: 11.5px; }
+  .fold-row .lbl { width: 74px; white-space: nowrap; color: #94a3b8; }
+  .fold-row .bar { flex: 1; display: flex; gap: 2px; }
+  .fold-row .seg { flex: 1; height: 18px; border-radius: 3px; background: #2b3a55; }
+  .fold-row .seg.val { background: #feca57; }
+  .fold-row .auc { width: 64px; text-align: right; color: #4ec9b0; }
+  .fold-row.active .lbl { color: #feca57; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="pf-wrap">
+  <div class="pf-title">Validação cruzada K-fold</div>
+  <div class="pf-sub">Cada linha é uma rodada: a dobra amarela valida e as demais treinam. Toda observação é usada uma única vez
+    para validação. O escore é sintético e fixo, de modo que a variação entre dobras reflete apenas a amostra de validação.</div>
+
+  <div class="pf-controls">
+    <label><span class="row">Dobras (K) <b id="k-val"></b></span>
+      <input type="range" id="k" min="2" max="10" step="1" value="5"></label>
+    <label><span class="row">Observações (N) <b id="n-val"></b></span>
+      <input type="range" id="n" min="200" max="2000" step="100" value="600"></label>
+    <label><span class="row">Prevalência <b id="prev-val"></b></span>
+      <input type="range" id="prev" min="0.02" max="0.5" step="0.01" value="0.1"></label>
+    <label><span class="row">Separação entre classes (d) <b id="d-val"></b></span>
+      <input type="range" id="d" min="0.2" max="3" step="0.1" value="1.2"></label>
+    <label class="check"><input type="checkbox" id="strat" checked> Estratificar dobras</label>
+    <div><button class="pf-btn" id="redraw">Novo sorteio</button></div>
+  </div>
+
+  <div class="pf-grid2">
+    <div class="pf-panel">
+      <h3>Rodadas e AUC na dobra de validação</h3>
+      <div id="folds"></div>
+    </div>
+    <div class="pf-panel">
+      <h3>Dobras: tamanho, positivos e ROC-AUC</h3>
+      <table class="pf-table">
+        <thead><tr><th>Dobra</th><th>n</th><th>Positivos</th><th>ROC-AUC</th></tr></thead>
+        <tbody id="tbl"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pf-kpis" id="kpis"></div>
+
+  <div class="pf-panel" style="margin-top:12px;">
+    <h3>Estabilidade da estimativa em 120 repetições</h3>
+    <div id="cmp"></div>
+  </div>
+
+  <div class="pf-note" id="note"></div>
+</div>
+
+<script src="pf-metrics.js"></script>
+<script>
+(function(){
+  const notify = PF.autoResize('validacao-cruzada');
+  let seed = 11;
+
+  const getK = PF.bindRange('k', function(v){ return v; }, render);
+  const getN = PF.bindRange('n', function(v){ return v; }, render);
+  const getPrev = PF.bindRange('prev', function(v){ return PF.pct(v, 0); }, render);
+  const getD = PF.bindRange('d', function(v){ return PF.fmt(v, 1); }, render);
+  document.getElementById('strat').addEventListener('change', render);
+  document.getElementById('redraw').addEventListener('click', function(){ seed++; render(); });
+
+  function assignFolds(data, K, strat, rng){
+    const fold = new Array(data.length);
+    function shuffle(a){
+      for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(rng() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; }
+      return a;
+    }
+    if(strat){
+      [1, 0].forEach(function(cls){
+        const ids = shuffle(data.map(function(r, i){ return r.y === cls ? i : -1; }).filter(function(i){ return i >= 0; }));
+        ids.forEach(function(id, j){ fold[id] = j % K; });
+      });
+    }else{
+      shuffle(data.map(function(_, i){ return i; })).forEach(function(id, j){ fold[id] = j % K; });
+    }
+    return fold;
+  }
+
+  function cvAucs(data, K, strat, rng){
+    const fold = assignFolds(data, K, strat, rng);
+    const res = [];
+    for(let f = 0; f < K; f++){
+      const val = data.filter(function(_, i){ return fold[i] === f; });
+      const pos = val.filter(function(r){ return r.y === 1; }).length;
+      const auc = (pos > 0 && pos < val.length) ? PF.aucRank(val) : NaN;
+      res.push({ n: val.length, pos: pos, auc: auc });
+    }
+    return res;
+  }
+
+  function render(){
+    const K = getK(), n = getN(), prev = getPrev(), d = getD();
+    const strat = document.getElementById('strat').checked;
+    const data = PF.binormal(n, prev, d, seed * 101);
+    const res = cvAucs(data, K, strat, PF.makeRng(seed * 13));
+    const aucs = res.map(function(r){ return r.auc; }).filter(function(v){ return !isNaN(v); });
+    const undefinedFolds = res.length - aucs.length;
+
+    document.getElementById('folds').innerHTML = res.map(function(r, f){
+      let segs = '';
+      for(let j = 0; j < K; j++) segs += '<div class="seg' + (j === f ? ' val' : '') + '"></div>';
+      return '<div class="fold-row"><span class="lbl">Rodada ' + (f + 1) + '</span><div class="bar">' + segs +
+        '</div><span class="auc">' + (isNaN(r.auc) ? 'indef.' : PF.fmt(r.auc, 3)) + '</span></div>';
+    }).join('') +
+      '<div class="pf-legend"><span><i style="background:#2b3a55"></i>Treino</span><span><i style="background:#feca57"></i>Validação</span></div>';
+
+    document.getElementById('tbl').innerHTML = res.map(function(r, f){
+      return '<tr><td>' + (f + 1) + '</td><td>' + r.n + '</td><td>' + r.pos + '</td><td>' +
+        (isNaN(r.auc) ? 'indefinida' : PF.fmt(r.auc, 3)) + '</td></tr>';
+    }).join('');
+
+    const theo = PF.phi(d / Math.SQRT2);
+    const m = PF.mean(aucs), s = PF.sd(aucs);
+    document.getElementById('kpis').innerHTML =
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(m, 3) + '</div><div class="l">ROC-AUC média nas dobras</div></div>' +
+      '<div class="pf-kpi warn"><div class="v">' + PF.fmt(s, 3) + '</div><div class="l">Desvio-padrão entre dobras</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(theo, 3) + '</div><div class="l">ROC-AUC populacional Φ(d/√2)</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + Math.round(n * (K - 1) / K) + '</div><div class="l">Registros de treino por rodada</div></div>' +
+      '<div class="pf-kpi ' + (undefinedFolds ? 'bad' : '') + '"><div class="v">' + undefinedFolds + '</div><div class="l">Dobras sem as duas classes</div></div>';
+
+    /* Comparacao: holdout unico (1/K) versus media K-fold */
+    const reps = 120, hold = [], cv = [];
+    for(let r = 0; r < reps; r++){
+      const dd = PF.binormal(n, prev, d, 5000 + seed * 977 + r);
+      const rng = PF.makeRng(r * 17 + seed);
+      const rr = cvAucs(dd, K, strat, rng).map(function(x){ return x.auc; }).filter(function(v){ return !isNaN(v); });
+      if(rr.length){ hold.push(rr[0]); cv.push(PF.mean(rr)); }
+    }
+    const all = hold.concat(cv);
+    const lo = Math.max(0.3, Math.min.apply(null, all) - 0.02), hi = Math.min(1, Math.max.apply(null, all) + 0.02);
+    const p = PF.plot({ width: 900, height: 150, xmin: lo, xmax: hi, ymin: 0, ymax: 2, ticks: 6, xdec: 2, ydec: 0, hideY: true, xlab: 'ROC-AUC estimada', ylab: '' });
+    const jit = PF.makeRng(4);
+    hold.forEach(function(v){ p.dot(v, 1.45 + (jit() - 0.5) * 0.4, 'rgba(255,107,107,0.6)', 2.6); });
+    cv.forEach(function(v){ p.dot(v, 0.55 + (jit() - 0.5) * 0.4, 'rgba(78,201,176,0.7)', 2.6); });
+    p.vline(theo, '#feca57', 'populacional');
+    p.text(lo + (hi - lo) * 0.01, 1.85, 'Holdout único com 1/K dos dados (dp ' + PF.fmt(PF.sd(hold), 3) + ')', '#ff9999');
+    p.text(lo + (hi - lo) * 0.01, 0.95, 'Média das ' + K + ' dobras (dp ' + PF.fmt(PF.sd(cv), 3) + ')', '#4ec9b0');
+    document.getElementById('cmp').innerHTML = p.svg();
+
+    document.getElementById('note').innerHTML =
+      '<b>Leitura.</b> A média das dobras varia menos entre repetições do que uma única partição de validação. ' +
+      'Com poucos positivos e K alto, dobras sem eventos tornam a ROC-AUC indefinida; a estratificação evita esse caso. ' +
+      'Na fábrica, cada rodada reajusta pré-processamento, balanceamento e modelo somente com as dobras de treino.';
+    notify();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

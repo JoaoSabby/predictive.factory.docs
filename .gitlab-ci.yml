@@ -1,0 +1,11 @@
+pages:
+  stage: deploy
+  script:
+    - quarto render
+    - mv _site public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
+    - master

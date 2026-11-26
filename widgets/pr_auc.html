@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curva precisão-revocação e PR-AUC (offline)</title>
+<link rel="stylesheet" href="pf-metrics.css">
+</head>
+<body>
+<div class="pf-wrap">
+  <div class="pf-title">Curva precisão-revocação (PR) e PR-AUC</div>
+  <div class="pf-sub">Mesmo gerador binormal do widget ROC. A linha tracejada é o desempenho de um classificador aleatório,
+    igual à prevalência. Reduza a prevalência mantendo a separação fixa e compare PR-AUC com ROC-AUC.</div>
+
+  <div class="pf-controls">
+    <label><span class="row">Separação entre classes (d) <b id="d-val"></b></span>
+      <input type="range" id="d" min="0" max="3.5" step="0.1" value="1.5"></label>
+    <label><span class="row">Prevalência <b id="prev-val"></b></span>
+      <input type="range" id="prev" min="0.01" max="0.5" step="0.01" value="0.05"></label>
+    <label><span class="row">Limiar de decisão <b id="thr-val"></b></span>
+      <input type="range" id="thr" min="-3" max="5" step="0.05" value="1.5"></label>
+    <div><button class="pf-btn" id="redraw">Nova amostra</button></div>
+  </div>
+
+  <div class="pf-grid2">
+    <div class="pf-panel">
+      <h3>Curva precisão-revocação</h3>
+      <div id="pr"></div>
+    </div>
+    <div class="pf-panel">
+      <h3>Efeito da prevalência (d fixo)</h3>
+      <div id="sweep"></div>
+      <div class="pf-legend">
+        <span><i style="background:#569cd6"></i>ROC-AUC</span>
+        <span><i style="background:#ce9178"></i>PR-AUC (AP)</span>
+        <span><i style="background:#64748b"></i>Linha de base da PR (prevalência)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf-kpis" id="kpis"></div>
+  <div class="pf-note" id="note"></div>
+</div>
+
+<script src="pf-metrics.js"></script>
+<script>
+(function(){
+  const notify = PF.autoResize('pr-auc');
+  const N = 3000;
+  let seed = 41;
+
+  const getD = PF.bindRange('d', function(v){ return PF.fmt(v, 1); }, render);
+  const getPrev = PF.bindRange('prev', function(v){ return PF.pct(v, 0); }, render);
+  const getThr = PF.bindRange('thr', function(v){ return PF.fmt(v, 2); }, render);
+  document.getElementById('redraw').addEventListener('click', function(){ seed++; render(); });
+
+  function render(){
+    const d = getD(), prev = getPrev(), thr = getThr();
+    const data = PF.binormal(N, prev, d, seed * 7);
+    const pr = PF.prCurve(data);
+    const roc = PF.rocCurve(data);
+    const cm = PF.confusion(data, thr);
+
+    const p1 = PF.plot({ width: 440, height: 270, xmin: 0, xmax: 1, ymin: 0, ymax: 1, ticks: 5, xdec: 1, ydec: 1,
+      xlab: 'Revocação (sensibilidade)', ylab: 'Precisão' });
+    const pts = [[0, pr.points.length ? pr.points[0].precision : 1]].concat(pr.points.map(function(p){ return [p.recall, p.precision]; }));
+    p1.area(pts, 'rgba(206,145,120,0.22)');
+    p1.line([[0, pr.baseline], [1, pr.baseline]], '#64748b', 1.4, '5,4');
+    p1.line(pts, '#ce9178', 2.4);
+    if(cm.tp + cm.fp > 0) p1.dot(cm.recall, cm.precision, '#feca57', 6);
+    p1.text(0.42, 0.93, 'PR-AUC (AP) = ' + PF.fmt(pr.ap, 3), '#f0beaa');
+    p1.text(0.42, Math.min(0.85, pr.baseline + 0.05), 'aleatório = ' + PF.fmt(pr.baseline, 3), '#94a3b8');
+    document.getElementById('pr').innerHTML = p1.svg();
+
+    /* Varredura da prevalencia com separacao fixa */
+    const prevs = [0.01, 0.02, 0.03, 0.05, 0.075, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5];
+    const rocL = [], apL = [], baseL = [];
+    prevs.forEach(function(pv, i){
+      const dd = PF.binormal(N, pv, d, 900 + i + seed * 3);
+      rocL.push([pv, PF.rocCurve(dd).auc]);
+      const prc = PF.prCurve(dd);
+      apL.push([pv, prc.ap]);
+      baseL.push([pv, prc.baseline]);
+    });
+    const p2 = PF.plot({ width: 440, height: 270, xmin: 0, xmax: 0.5, ymin: 0, ymax: 1, ticks: 5, xdec: 1, ydec: 1,
+      xlab: 'Prevalência', ylab: 'Área sob a curva' });
+    p2.line(baseL, '#64748b', 1.4, '5,4');
+    p2.line(rocL, '#569cd6', 2.2);
+    p2.line(apL, '#ce9178', 2.2);
+    rocL.forEach(function(p){ p2.dot(p[0], p[1], '#569cd6', 2.5); });
+    apL.forEach(function(p){ p2.dot(p[0], p[1], '#ce9178', 2.5); });
+    p2.vline(prev, '#feca57', 'atual');
+    document.getElementById('sweep').innerHTML = p2.svg();
+
+    const lift = pr.ap / pr.baseline;
+    document.getElementById('kpis').innerHTML =
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(pr.ap, 3) + '</div><div class="l">PR-AUC (precisão média)</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(pr.baseline, 3) + '</div><div class="l">Linha de base (prevalência)</div></div>' +
+      '<div class="pf-kpi warn"><div class="v">' + PF.fmt(lift, 1) + '×</div><div class="l">PR-AUC / linha de base</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(roc.auc, 3) + '</div><div class="l">ROC-AUC na mesma amostra</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.pct(cm.precision) + '</div><div class="l">Precisão no limiar</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.pct(cm.recall) + '</div><div class="l">Revocação no limiar</div></div>' +
+      '<div class="pf-kpi"><div class="v">' + PF.fmt(cm.f1, 3) + '</div><div class="l">F1 no limiar</div></div>';
+
+    document.getElementById('note').innerHTML =
+      '<b>Leitura.</b> A curva PR ignora os verdadeiros negativos e, por isso, reage à prevalência. ' +
+      'Com a mesma separação d = ' + PF.fmt(d, 1) + ', a ROC-AUC fica em torno de ' + PF.fmt(roc.auc, 3) +
+      ', enquanto a PR-AUC cai à medida que o evento fica raro. Compare a PR-AUC sempre com a sua linha de base ' +
+      'e entre modelos avaliados na mesma população. A precisão média (AP) soma a precisão em cada ganho de revocação, ' +
+      'sem interpolação linear entre pontos.';
+    notify();
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

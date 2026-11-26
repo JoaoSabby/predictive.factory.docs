@@ -1,0 +1,5 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Predição**
+
+- [`PredictModel()`](../referencia/funcoes/PredictModel.qmd): Executar a Predição do Modelo sobre a Base de Inferência

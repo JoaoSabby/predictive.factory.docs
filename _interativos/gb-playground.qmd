@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-gb-playground" class="pf-frame" src="../widgets/gb_playground.html" title="Gradient Boosting Playground" loading="lazy" style="min-height:610px"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Gradient Boosting Playground.*
+:::

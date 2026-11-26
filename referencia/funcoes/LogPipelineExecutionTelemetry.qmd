@@ -1,0 +1,79 @@
+---
+title: "LogPipelineExecutionTelemetry"
+subtitle: "Iniciar a Telemetria de Hardware de um Target"
+---
+
+## Uso
+
+```r
+LogPipelineExecutionTelemetry(logsTelemetryPath, targetName, sufixoTempo, workerPid)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Inicia o registro de uso de recursos do processo que executa o target, com leitura a
+cada segundo, no arquivo `{targetName}_{sufixoTempo}.log`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `logsTelemetryPath` | Caminho da pasta de telemetria. |
+| `targetName` | Nome do target, usado no nome do arquivo. |
+| `sufixoTempo` | Texto `AAAAMMDD_HHMMSS` que identifica a execução. |
+| `workerPid` | PID do processo monitorado. |
+
+## Detalhes
+
+O registro usa `autometric::log_start()`, que grava em segundo plano as métricas do
+processo identificado por `workerPid`. O encerramento é feito por
+`autometric::log_stop()` no `on.exit()` de `LogPipelineExecution()`. Quando o pacote
+autometric não está instalado, a função não executa nenhuma ação.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- inicia um processo de registro em segundo plano e cria o arquivo de telemetria.
+
+## Retorno
+
+`NULL` invisível.
+
+## Exemplos
+
+```r
+LogPipelineExecutionTelemetry(
+  logsTelemetryPath = tempdir(),
+  targetName = "exemplo",
+  sufixoTempo = format(Sys.time(), "%Y%m%d_%H%M%S"),
+  workerPid = Sys.getpid()
+)
+autometric::log_stop()
+```
+
+## Família
+
+**Registro de Execução**
+
+- [LogPipelineExecution](LogPipelineExecution.qmd)
+- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
+- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
+
+## Ver também
+
+- [LogPipelineExecution](LogPipelineExecution.qmd)
+- `autometric::log_start`
+
+## Referências
+
+- @autometric
+
+---
+
+*Gerado a partir de `LogPipelineExecutionTelemetry.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

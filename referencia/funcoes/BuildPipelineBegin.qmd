@@ -1,0 +1,86 @@
+---
+title: "BuildPipelineBegin"
+subtitle: "Construir o Pipeline de Inicialização"
+---
+
+## Uso
+
+```r
+BuildPipelineBegin()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria o target `pipelineBegin`, que registra o início da execução e captura metadados do
+usuário, do processo, do servidor e da sessão R.
+
+## Detalhes
+
+O target usa `tar_cue(mode = "always")` e, por isso, executa em toda chamada de
+`tar_make()`. Como `pipelineBegin` é dependência de `CheckFeatureStore()`, a cada
+execução a verificação da feature store também é refeita.
+
+## Targets do Pipeline
+
++-----------------+-------------------------------------------------------------------+
+| Target          | Descrição, comando e dependências                                 |
++=================+===================================================================+
+| `pipelineBegin` | Inicialização do processo de modelagem. Comando: `list(Username,  |
+|                 | PID, ...)`. Depende de: nenhum.                                   |
++-----------------+-------------------------------------------------------------------+
+
+A lista do comando contém: `Username`, `PPID`, `PID`, `Inicio`, `UsedRAM`,
+`Theads_limit` (opção `predy_threads_limit`), `Environment`, `Server` (saída de
+`lscpu`), `PlatformInfo`, `ExternalInfo` e `SessionInfo`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console a etapa de progresso do pipeline e a encerra com
+  `cli_progress_done()`;
+- na execução do target: executa o comando de sistema `lscpu` duas vezes.
+
+## Retorno
+
+Lista com um objeto `tar_target` (`pipelineBegin`).
+
+## Exemplos
+
+```r
+listPipelineBegin <- BuildPipelineBegin()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- `sessioninfo::session_info`
+- `targets::tar_cue`
+
+## Referências
+
+- @targets
+- @sessioninfo
+
+---
+
+*Gerado a partir de `BuildPipelineBegin.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

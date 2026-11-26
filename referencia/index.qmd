@@ -1,0 +1,16 @@
+# Referência das funções {#referencia-de-funcoes}
+
+Uma página por função do predictive.factory, gerada pela `RenderRoxygenToQuarto()` a partir do
+cabeçalho roxygen2 de cada arquivo em `Funcoes/`. As funções estão agrupadas pelas etapas do
+pipeline, na ordem em que são executadas; as que não são chamadas pelo pipeline ficam na seção
+**Fora do pipeline**.
+
+::: {.callout-note appearance="simple"}
+## Atualização
+
+As páginas e este índice não devem ser editados à mão. Para alterar uma função, edite o
+cabeçalho roxygen2 no projeto e execute `Rscript scripts/funcoes.R ../predictive.factory`. A
+etapa de cada função é definida em `referencia/ordem-pipeline.csv`.
+:::
+
+{{< include _indice-funcoes.qmd >}}

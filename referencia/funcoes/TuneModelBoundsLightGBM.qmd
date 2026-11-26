@@ -1,0 +1,91 @@
+---
+title: "TuneModelBoundsLightGBM"
+subtitle: "Definir os Limites da Busca de Hiperparâmetros do LightGBM"
+---
+
+## Uso
+
+```r
+TuneModelBoundsLightGBM()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Retorna os intervalos de busca para os hiperparâmetros do LightGBM, na nomenclatura do
+`tidymodels`, incluindo o peso da classe positiva.
+
+## Detalhes
+
++--------------------+----------------------------------------------------------------+
+| Parâmetro          | Intervalo                                                      |
++====================+================================================================+
+| `trees`            | $[500; 3000]$                                              |
++--------------------+----------------------------------------------------------------+
+| `tree_depth`       | $[3; 10]$                                                  |
++--------------------+----------------------------------------------------------------+
+| `learn_rate`       | $[0{,}005; 0{,}15]$                                        |
++--------------------+----------------------------------------------------------------+
+| `loss_reduction`   | $[0; 20]$                                                  |
++--------------------+----------------------------------------------------------------+
+| `sample_size`      | $[0{,}5; 1]$                                               |
++--------------------+----------------------------------------------------------------+
+| `mtry`             | $[1; p]$, com $p$ igual a `nFeatures`                  |
++--------------------+----------------------------------------------------------------+
+| `stop_iter`        | $[20; 100]$                                                |
++--------------------+----------------------------------------------------------------+
+| `scale_pos_weight` | $[1; \max(1, \min(1000, 2r))]$, com $r$ igual a        |
+|                    | `classRatio`                                                   |
++--------------------+----------------------------------------------------------------+
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Variáveis Externas:**
+`classRatio` e `nFeatures` não são argumentos da função; são procurados no ambiente de
+definição. Sem esses objetos, a execução termina com erro.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Lista invisível de vetores numéricos de comprimento 2.
+
+## Exemplos
+
+```r
+classRatio <- 25
+nFeatures <- 120L
+tuneModelBounds <- TuneModelBoundsLightGBM()
+```
+
+## Família
+
+**Otimização de Hiperparâmetros**
+
+- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
+- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+
+## Ver também
+
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [FitModelLightGBM](FitModelLightGBM.qmd)
+
+## Referências
+
+- @lightgbmdocs
+
+---
+
+*Gerado a partir de `TuneModelBoundsLightGBM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

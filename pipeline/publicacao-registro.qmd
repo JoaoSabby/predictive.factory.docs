@@ -1,0 +1,17 @@
+# Publicação e registro do modelo {#publicacao}
+
+## Registro de execução dos targets
+
+<!-- Conteúdo a ser escrito. -->
+
+## Registro do modelo
+
+<!-- Conteúdo a ser escrito. -->
+
+## Publicação da feature store
+
+<!-- Conteúdo a ser escrito. -->
+
+## Funções desta etapa
+
+{{< include _funcoes-execucao-e-registro-dos-targets.qmd >}}

@@ -1,0 +1,13 @@
+# Aprendizado supervisionado e classificação binária {#supervisionado}
+
+## Problema de classificação binária
+
+<!-- Conteúdo a ser escrito. -->
+
+## Classe positiva, probabilidade e limiar de decisão
+
+<!-- Conteúdo a ser escrito. -->
+
+## Vazamento temporal entre preditores e alvo
+
+<!-- Conteúdo a ser escrito. -->

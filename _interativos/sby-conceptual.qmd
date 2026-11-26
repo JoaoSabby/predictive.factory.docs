@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-sby-conceptual" class="pf-frame" src="../widgets/sbyadanear_conceptual.html" title="Fluxo conceitual ADASYN e NearMiss" loading="lazy" style="min-height:760px"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Fluxo conceitual ADASYN e NearMiss.*
+:::

@@ -1,0 +1,19 @@
+# Avaliação e predição {#avaliacao-predicao}
+
+## Avaliação na base de teste
+
+<!-- Conteúdo a ser escrito. -->
+
+## Métricas de desempenho
+
+<!-- Conteúdo a ser escrito. -->
+
+## Inferência sobre a base de predição
+
+<!-- Conteúdo a ser escrito. -->
+
+## Funções desta etapa
+
+{{< include _funcoes-avaliacao-do-modelo.qmd >}}
+
+{{< include _funcoes-predicao.qmd >}}

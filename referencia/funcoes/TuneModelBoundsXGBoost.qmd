@@ -1,0 +1,90 @@
+---
+title: "TuneModelBoundsXGBoost"
+subtitle: "Definir os Limites da Busca de Hiperparâmetros do XGBoost"
+---
+
+## Uso
+
+```r
+TuneModelBoundsXGBoost()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Retorna os intervalos de busca da otimização bayesiana para os hiperparâmetros do
+XGBoost, com transformações de escala que distribuem melhor a busca em parâmetros de
+efeito multiplicativo.
+
+## Detalhes
+
++-------------------------+----------------------------------+------------------------+
+| Parâmetro de busca      | Intervalo                        | Escala do XGBoost      |
++=========================+==================================+========================+
+| `colsample_bytree`      | $[0{,}60; 1{,}0]$            | linear                 |
++-------------------------+----------------------------------+------------------------+
+| `learning_rate_log10`   | $[\log_{10} 0{,}015;         | $\eta = 10^{u}$    |
+|                         | \log_{10} 0{,}08]$               |                        |
++-------------------------+----------------------------------+------------------------+
+| `max_depth`             | $[3; 10]$                    | inteiro, arredondado   |
++-------------------------+----------------------------------+------------------------+
+| `min_child_weight_log2` | $[\log_2 1; \log_2 64]$      | $w = 2^{u}$        |
++-------------------------+----------------------------------+------------------------+
+| `min_split_loss_log1p`  | $[\log(1+0); \log(1+10)]$    | $\gamma = e^{u} -  |
+|                         |                                  | 1$                     |
++-------------------------+----------------------------------+------------------------+
+| `reg_lambda_log2`       | $[\log_2 0{,}1; \log_2 64]$  | $\lambda = 2^{u}$  |
++-------------------------+----------------------------------+------------------------+
+| `subsample`             | $[0{,}75; 1{,}0]$            | linear                 |
++-------------------------+----------------------------------+------------------------+
+
+A transformação `log1p` permite incluir o zero no intervalo de `min_split_loss`. A
+reversão das escalas é feita na função objetivo de `TuneModel()` e na montagem de
+`results`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Lista nomeada de vetores numéricos de comprimento 2 (limite inferior e
+superior), no formato esperado pelo argumento `bounds` de `BayesianOptimization()`.
+
+## Exemplos
+
+```r
+tuneModelBounds <- TuneModelBoundsXGBoost()
+10^tuneModelBounds$learning_rate_log10
+```
+
+## Família
+
+**Otimização de Hiperparâmetros**
+
+- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
+- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+
+## Ver também
+
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- `rBayesianOptimization::BayesianOptimization`
+
+## Referências
+
+- @bergstra2012
+- @xgboostdocs
+
+---
+
+*Gerado a partir de `TuneModelBoundsXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

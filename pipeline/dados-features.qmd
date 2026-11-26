@@ -1,0 +1,21 @@
+# Preparação dos dados e features {#dados-features}
+
+## Feature store e população de clientes válidos
+
+<!-- Conteúdo a ser escrito. -->
+
+## Feature groups
+
+<!-- Conteúdo a ser escrito. -->
+
+## Consolidação da feature store
+
+<!-- Conteúdo a ser escrito. -->
+
+## Funções desta etapa
+
+{{< include _funcoes-feature-store-e-populacao.qmd >}}
+
+{{< include _funcoes-feature-groups.qmd >}}
+
+{{< include _funcoes-consolidacao-dos-dados.qmd >}}

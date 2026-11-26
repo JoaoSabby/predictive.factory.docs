@@ -1,0 +1,87 @@
+---
+title: "PrepareFitModelXGBoost"
+subtitle: "Preparar as Matrizes Esparsas de Ajuste do XGBoost"
+---
+
+## Uso
+
+```r
+PrepareFitModelXGBoost(fitSet, nThreads)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Converte a base de ajuste em matriz esparsa no formato coluna comprimida (CSC), sem
+criar matriz densa intermediária, e cria as matrizes `xgb.DMatrix` de treino e de
+validação com divisão estratificada e determinística.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `fitSet` | Data frame com `TARGET` e as features numéricas ou lógicas, já codificadas. |
+| `nThreads` | Inteiro com o número de threads de construção das matrizes. |
+
+## Detalhes
+
+#. o alvo é codificado como `1` para `"Sim"` e `0` para os demais valores;
+#. para cada classe, as primeiras $\lfloor 0{,}8 \, n_c \rfloor$ linhas, na ordem
+   original, vão para treino; o restante vai para validação;
+#. a matriz `dgCMatrix` é montada a partir dos vetores CSC:
+- $i$: índices de linha dos valores não nulos, em base zero;
+- $p$: ponteiros de início de cada coluna, $p_0 = 0$ e $p_j = p_{j-1} +
+  nnz_j$;
+- $x$: valores não nulos como `double`.
+
+::: {.callout-note}
+<i class="fa-solid fa-circle-info"></i> **Valores Ausentes e Tipos:**
+A seleção `which(featureVector != 0L)` descarta valores `NA`, que passam a ser zeros
+estruturais da matriz esparsa; o argumento `missing = NA_real_` não os recupera. As
+features devem ser numéricas ou lógicas. A divisão depende da ordem das linhas e não
+usa sorteio. A função não é chamada por nenhum pipeline do projeto.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Complexidade Computacional
+
+A montagem é linear no número de linhas e colunas, $O(n \cdot m)$, e a memória da
+matriz é proporcional ao número de valores não nulos, $O(nnz)$.
+
+## Retorno
+
+Lista com `train` e `valid`, objetos `xgb.DMatrix` com rótulos.
+
+## Exemplos
+
+```r
+fitXGBoostSet <- PrepareFitModelXGBoost(fitSet = trainingSet, nThreads = 4L)
+```
+
+## Família
+
+**Modelagem Preditiva**
+
+- [FitModel](FitModel.qmd)
+- [FitModelLightGBM](FitModelLightGBM.qmd)
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [PrepareDataModel](PrepareDataModel.qmd)
+
+## Ver também
+
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- `Matrix::dgCMatrix-class`
+
+## Referências
+
+- @duff1989
+- @matrixpkg
+
+---
+
+*Gerado a partir de `PrepareFitModelXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

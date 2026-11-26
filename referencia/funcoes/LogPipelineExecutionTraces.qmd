@@ -1,0 +1,81 @@
+---
+title: "LogPipelineExecutionTraces"
+subtitle: "Redirecionar a Saída do Console de um Target para Arquivo"
+---
+
+## Uso
+
+```r
+LogPipelineExecutionTraces(logsTracesPath, targetName, sufixoTempo, isWorker)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Abre o arquivo de trace `{targetName}_{sufixoTempo}.log` e redireciona para ele a saída
+padrão e as mensagens do processo que executa o target.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `logsTracesPath` | Caminho da pasta de traces. |
+| `targetName` | Nome do target, usado no nome do arquivo. |
+| `sufixoTempo` | Texto `AAAAMMDD_HHMMSS` que identifica a execução. |
+| `isWorker` | Lógico de comprimento 1: `TRUE` quando o processo é um worker. |
+
+## Detalhes
+
+A saída padrão é redirecionada com `sink(split = !isWorker)`: no processo principal, a
+saída também continua no console; nos workers, vai apenas para o arquivo. As mensagens
+(`type = "message"`) vão apenas para o arquivo. O encerramento dos dois `sink()` e da
+conexão é feito no `on.exit()` de `LogPipelineExecution()`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- cria o arquivo de trace e abre uma conexão de escrita;
+- altera os destinos de saída e de mensagens da sessão até o encerramento.
+
+## Retorno
+
+Conexão de arquivo aberta, que deve ser fechada por quem chamou a função.
+
+## Exemplos
+
+```r
+conexaoTrace <- LogPipelineExecutionTraces(
+  logsTracesPath = tempdir(),
+  targetName = "exemplo",
+  sufixoTempo = format(Sys.time(), "%Y%m%d_%H%M%S"),
+  isWorker = FALSE
+)
+message("registrado no trace")
+sink(type = "message"); sink(); close(conexaoTrace)
+```
+
+## Família
+
+**Registro de Execução**
+
+- [LogPipelineExecution](LogPipelineExecution.qmd)
+- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
+- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
+
+## Ver também
+
+- [LogPipelineExecution](LogPipelineExecution.qmd)
+- `base::sink`
+
+## Referências
+
+- @rsink
+
+---
+
+*Gerado a partir de `LogPipelineExecutionTraces.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

@@ -1,0 +1,11 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Configuração e execução**
+
+- [`DefineOptionsSetup()`](../referencia/funcoes/DefineOptionsSetup.qmd): Definir as Opções de Configuração do Predictive Factory
+- [`RunPipeline()`](../referencia/funcoes/RunPipeline.qmd): Executar o Pipeline Preditivo de um Modelo Alvo
+- [`CheckPredictiveModelExists()`](../referencia/funcoes/CheckPredictiveModelExists.qmd): Verificar a Existência do Modelo Preditivo no Registro
+- [`ConfigurePredictiveModelRun()`](../referencia/funcoes/ConfigurePredictiveModelRun.qmd): Configurar a Execução do Modelo Preditivo
+- [`LoadModelRunConfig()`](../referencia/funcoes/LoadModelRunConfig.qmd): Carregar a Configuração de Execução do Modelo Preditivo
+- [`ShowStartupBanner()`](../referencia/funcoes/ShowStartupBanner.qmd): Exibir o Banner de Inicialização do Motor Preditivo
+- [`CreateCrewControllerGroup()`](../referencia/funcoes/CreateCrewControllerGroup.qmd): Criar o Grupo de Controladores de Paralelismo crew

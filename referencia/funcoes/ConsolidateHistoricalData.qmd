@@ -1,0 +1,97 @@
+---
+title: "ConsolidateHistoricalData"
+subtitle: "Consolidar Alvo e Preditores para Modelagem"
+---
+
+## Uso
+
+```r
+ConsolidateHistoricalData(table_TARGET, modelingTable_FEATURE_STORE)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Une a tabela do alvo e a feature store de treino por `SEQUENCIA_CLIENTE`, traz o
+resultado para a memória do R e converte o alvo binário em fator com níveis `"Sim"` e
+`"Nao"`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `table_TARGET` | Vetor de caracteres de comprimento 1 com o nome da tabela do alvo, que deve conter `SEQUENCIA_CLIENTE` e `TARGET` codificado como `1` para a classe positiva. |
+| `modelingTable_FEATURE_STORE` | Vetor de caracteres de comprimento 1 com o nome da feature store de treino (`IM_ML_FEATURE_STORE_TREINO`). |
+
+## Detalhes
+
+#. executa `inner_join()` no Oracle entre `table_TARGET` e
+   `modelingTable_FEATURE_STORE`; clientes sem alvo ou sem preditores são descartados;
+#. define as features como todas as colunas exceto `TARGET` e as colunas de contexto da
+   opção `predy_columns_key_context`, em ordem alfabética;
+#. seleciona `TARGET` e as features, removendo as colunas de contexto, e coleta o
+   resultado com `collect()`;
+#. converte `TARGET`: o valor `1` vira `"Sim"` e qualquer outro valor vira `"Nao"`,
+   como fator não ordenado com níveis `c("Sim", "Nao")`.
+
+O primeiro nível `"Sim"` é tratado como classe positiva pelas funções de modelagem e de
+métricas do projeto.
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Valores Ausentes no Alvo:**
+`ifelse(TARGET == 1L, "Sim", "Nao")` retorna `NA` quando `TARGET` é nulo. Esses
+registros permanecem na base com alvo ausente.
+:::
+
+A variável local `colunasContexto` é calculada, mas não é usada.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- transfere a base consolidada do Oracle para a memória do R;
+- escreve no console as etapas de progresso.
+
+## Retorno
+
+Tibble em memória com a coluna `TARGET` (fator com níveis `"Sim"` e `"Nao"`)
+seguida das features em ordem alfabética, sem as colunas de contexto.
+
+## Exemplos
+
+```r
+# Pré-condição: tabelas do alvo e da feature store criadas no Oracle
+historicalData <- ConsolidateHistoricalData(
+  table_TARGET = "IM_ML_TARGET_TREINO",
+  modelingTable_FEATURE_STORE = "IM_ML_FEATURE_STORE_TREINO"
+)
+```
+
+## Família
+
+**Feature Store**
+
+- [CheckFeatureStore](CheckFeatureStore.qmd)
+- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
+- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
+- [DefineValidCustomers](DefineValidCustomers.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+
+## Ver também
+
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [PrepareDataModel](PrepareDataModel.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+
+## Referências
+
+- @dbplyr
+- @yardstick
+
+---
+
+*Gerado a partir de `ConsolidateHistoricalData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

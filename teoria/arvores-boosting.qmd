@@ -1,0 +1,17 @@
+# Árvores de decisão e Gradient Boosting {#arvores}
+
+## Árvores CART
+
+<!-- Conteúdo a ser escrito. -->
+
+## Gradient Boosting
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/gb-playground.qmd >}}
+
+## Inspeção estrutural das árvores
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/supertree.qmd >}}

@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-pr-auc" class="pf-frame" src="../widgets/pr_auc.html" title="Curva precisão-revocação e PR-AUC" loading="lazy"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Curva precisão-revocação e PR-AUC.*
+:::

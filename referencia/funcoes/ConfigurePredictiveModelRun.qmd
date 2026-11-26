@@ -1,0 +1,151 @@
+---
+title: "ConfigurePredictiveModelRun"
+subtitle: "Configurar a Execução do Modelo Preditivo"
+---
+
+## Uso
+
+```r
+ConfigurePredictiveModelRun(
+  targetModel,
+  dataReferencia,
+  horizontePreditivo,
+  janelaAgregacao,
+  janelaHistorico
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Gera o identificador do modelo, cria a estrutura de pastas da execução, calcula todas
+as datas de treino e de predição a partir da data de referência e das janelas, grava a
+configuração em YAML e registra o lock de execução.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `targetModel` | Vetor de caracteres de comprimento 1 com o nome do alvo de predição, já validado por `RunPipeline()`. |
+| `dataReferencia` | Data de referência (`Date` ou texto `"AAAA-MM-DD"`). É convertida para o primeiro dia do mês por `DataNoPrimeiroDia()`. |
+| `horizontePreditivo` | Inteiro com o número de meses previstos à frente. |
+| `janelaAgregacao` | Inteiro com o número de meses de sumarização dos preditores. |
+| `janelaHistorico` | Inteiro com o número de meses de profundidade histórica. |
+
+## Detalhes
+
+O identificador `idModel` segue o padrão `ALVO_AAAAMM_Phh_Aaa_Hhh`, por exemplo
+`DESERCAO_202601_P03_A06_H36`, com horizonte, agregação e histórico preenchidos com
+zeros à esquerda até dois dígitos.
+
+As datas são derivadas da data de referência $d$ (ajustada ao primeiro dia do mês),
+do horizonte $h$, da janela de agregação $a$ e da janela histórica $H$, em
+meses. Sendo $\mathrm{fim}(x)$ o último dia do mês de $x$:
+
++---------------------------------------+-----------------------+
+| Data                                  | Fórmula               |
++=======================================+=======================+
+| `dataTargetTreino`                    | $d$                   |
++---------------------------------------+-----------------------+
+| `dataTargetTreinoInicial`             | $d - (h - 1)$         |
++---------------------------------------+-----------------------+
+| `dataTargetTreinoFinal`               | $\mathrm{fim}(d)$     |
++---------------------------------------+-----------------------+
+| `dataFeatureTreino` ($f$)             | $d - h$               |
++---------------------------------------+-----------------------+
+| `dataFeatureTreinoAgregacaoInicial`   | $f - (a - 1)$         |
++---------------------------------------+-----------------------+
+| `dataFeatureTreinoHistoricaInicial`   | $f - (H - 1)$         |
++---------------------------------------+-----------------------+
+| `dataFeatureTreino*Final`             | $\mathrm{fim}(f)$     |
++---------------------------------------+-----------------------+
+| `dataFeaturePredicao` ($p$)           | $d$                   |
++---------------------------------------+-----------------------+
+| `dataFeaturePredicaoAgregacaoInicial` | $p - (a - 1)$         |
++---------------------------------------+-----------------------+
+| `dataFeaturePredicaoHistoricaInicial` | $p - (H - 1)$         |
++---------------------------------------+-----------------------+
+| `dataFeaturePredicao*Final`           | $\mathrm{fim}(p)$     |
++---------------------------------------+-----------------------+
+| `dataTargetPredicaoInicial`           | $d + 1$               |
++---------------------------------------+-----------------------+
+| `dataTargetPredicaoFinal`             | $\mathrm{fim}(d + h)$ |
++---------------------------------------+-----------------------+
+
+Assim, os preditores de treino terminam no mês imediatamente anterior à janela do alvo
+de treino, o que evita vazamento temporal entre preditores e alvo.
+
+A lista retornada também fixa parâmetros operacionais: `nFoldsValidating = 10L`,
+`nFoldsTuning = 5L`, `nThreadsGenerateFeatureLineage = 4L`,
+`nThreadsTuneHyperparameters = 6L` e `nThreadsTuning = 5L`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- cria, quando não existem, a pasta
+  `{parSys$DirDados}gpc.predictive.factory/Dados/{idModel}` e as subpastas `eda`,
+  `ema`, `_targets`, `vetiver_board`, `reports`, `artifacts`, `logs`, `logs/telemetry`,
+  `logs/traces` e `logs/registry`;
+- grava `_PredictiveModelRunConfig.yaml` na pasta do modelo, sobrescrevendo arquivo
+  existente;
+- define a variável de ambiente `GPC_PREDICTIVE_FACTORY_RUN_CONFIG` com `idModel`, lida
+  depois por `LoadModelRunConfig()`;
+- cria o lock de execução por meio de `CreateRunLock()`;
+- depende do objeto global `parSys`, carregado em `_Setup.R`.
+
+## Retorno
+
+Lista com os elementos `idModel`, `descricao`, `orquestrador`,
+`projeto_preditivo`, `funcao_definicao_target`, `configs` (parâmetros da execução),
+`datas` (datas em texto `"AAAA-MM-DD"`, conforme a tabela de detalhes) e `paths`
+(caminhos das pastas e dos arquivos de configuração `_targets.R`, `.Renviron`,
+`.Rprofile` e `Makevars`).
+
+## Exemplos
+
+```r
+# Pré-condição: ambiente carregado por _Setup.R (objeto parSys disponível)
+modelRunConfig <- ConfigurePredictiveModelRun(
+  targetModel = "DESERCAO",
+  dataReferencia = as.Date("2026-01-01"),
+  horizontePreditivo = 3L,
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L
+)
+modelRunConfig$datas$dataFeatureTreino
+```
+
+## Família
+
+**Orquestração do Pipeline**
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
+- [DefineOptionsSetup](DefineOptionsSetup.qmd)
+- [InitializeTargetExecution](InitializeTargetExecution.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [RunPipeline](RunPipeline.qmd)
+- [ShowStartupBanner](ShowStartupBanner.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Ver também
+
+- [RunPipeline](RunPipeline.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- `lubridate::months`
+- `yaml::write_yaml`
+
+## Referências
+
+- @kaufman2012
+- @yaml12
+- @lubridate
+
+---
+
+*Gerado a partir de `ConfigurePredictiveModelRun.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

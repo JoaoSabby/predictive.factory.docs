@@ -1,0 +1,85 @@
+---
+title: "ShowStartupBanner"
+subtitle: "Exibir o Banner de Inicialização do Motor Preditivo"
+---
+
+## Uso
+
+```r
+ShowStartupBanner(modelRunConfig)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Escreve no console o banner de início da execução do pipeline, com o PID do processo, a
+data e hora, o identificador do modelo e os parâmetros de contexto da execução.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `modelRunConfig` | Lista de configuração do modelo, com a estrutura de `LoadModelRunConfig()`. São usados `configs$targetModel`, `configs$dataReferencia`, `configs$horizontePreditivo`, `configs$janelaAgregacao` e `configs$janelaHistorico`. |
+
+## Detalhes
+
+A função é chamada por `_targets.R` antes da construção do grafo de dependências. A
+largura da linha do banner é obtida do terminal com `tput cols`, descontando dois
+caracteres. O identificador exibido é lido do objeto global `idModel`, publicado por
+`LoadModelRunConfig()`; os demais parâmetros vêm de `modelRunConfig$configs`.
+
+::: {.callout-note}
+<i class="fa-solid fa-terminal"></i> **Dependência de Terminal:**
+A chamada `system2("tput", "cols")` requer terminal compatível. Em sessões sem
+terminal, a largura pode não ser obtida e a construção da linha do banner pode falhar.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console o banner, os parâmetros do modelo e o aviso de resolução do DAG;
+- executa o comando de sistema `tput cols`;
+- imprime, ao final, a lista de estilos de borda de `cli::list_border_styles()`.
+
+## Retorno
+
+`NULL` invisível. A função é usada apenas pelos efeitos no console.
+
+## Exemplos
+
+```r
+# Pré-condição: configuração carregada por LoadModelRunConfig()
+modelRunConfig <- LoadModelRunConfig()
+ShowStartupBanner(modelRunConfig)
+```
+
+## Família
+
+**Orquestração do Pipeline**
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
+- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
+- [DefineOptionsSetup](DefineOptionsSetup.qmd)
+- [InitializeTargetExecution](InitializeTargetExecution.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [RunPipeline](RunPipeline.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Ver também
+
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- `cli::rule`
+
+## Referências
+
+- @cli
+
+---
+
+*Gerado a partir de `ShowStartupBanner.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

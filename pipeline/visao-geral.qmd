@@ -1,0 +1,19 @@
+# Visão geral e arquitetura do pipeline {#pipeline}
+
+## Grafo de dependências com targets
+
+<!-- Conteúdo a ser escrito. -->
+
+## Fases do pipeline
+
+<!-- Conteúdo a ser escrito. -->
+
+## Contrato de dados e prevenção de vazamento
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/contract-dag.qmd >}}
+
+## Funções desta etapa
+
+{{< include _funcoes-construcao-do-pipeline.qmd >}}

@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-roc-auc" class="pf-frame" src="../widgets/roc_auc.html" title="Curva ROC e ROC-AUC" loading="lazy"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Curva ROC e ROC-AUC.*
+:::

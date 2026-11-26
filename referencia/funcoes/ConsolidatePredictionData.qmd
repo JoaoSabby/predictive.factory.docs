@@ -1,0 +1,83 @@
+---
+title: "ConsolidatePredictionData"
+subtitle: "Consolidar a Feature Store de Predição em Memória"
+---
+
+## Uso
+
+```r
+ConsolidatePredictionData(table_FEATURE_STORE)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Lê a feature store de predição do Oracle, seleciona as colunas de contexto e as
+features em ordem alfabética e aplica o preprocessamento dos dados.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `table_FEATURE_STORE` | Vetor de caracteres de comprimento 1 com o nome da feature store de predição (`IM_ML_FEATURE_STORE_PREDICAO`). |
+
+## Detalhes
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Função Fora do Pipeline:**
+A função não é chamada por nenhum pipeline: `BuildPipelinePredicting()` aplica
+`PrepareDataModel()` diretamente sobre `predictionTable_FEATURE_STORE`. Além disso,
+`PreprocessData()` não está definida em nenhum projeto do repositório, e a chamada
+termina com erro.
+:::
+
+As features são todas as colunas da tabela, em ordem alfabética; as colunas de contexto
+da opção `predy_columns_key_context` também fazem parte dessa lista e são posicionadas
+no início.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- transfere a feature store do Oracle para a memória do R;
+- escreve no console as etapas de progresso.
+
+## Retorno
+
+Tibble invisível com os dados preprocessados para predição.
+
+## Exemplos
+
+```r
+# Requer a definição de PreprocessData()
+predictionData <- ConsolidatePredictionData(
+  table_FEATURE_STORE = "IM_ML_FEATURE_STORE_PREDICAO"
+)
+```
+
+## Família
+
+**Feature Store**
+
+- [CheckFeatureStore](CheckFeatureStore.qmd)
+- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
+- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
+- [DefineValidCustomers](DefineValidCustomers.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+
+## Ver também
+
+- [PrepareDataModel](PrepareDataModel.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+
+## Referências
+
+- @dbplyr
+
+---
+
+*Gerado a partir de `ConsolidatePredictionData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

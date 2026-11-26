@@ -1,0 +1,173 @@
+---
+title: "GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA"
+subtitle: "Gerar o Feature Group de Agência do Cliente"
+---
+
+## Uso
+
+```r
+GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA(
+  tabelaClientesValidos,
+  sufixoTabela = "",
+  dataFeature,
+  janelaAgregacao,
+  janelaHistorico,
+  dataAgregacaoInicial,
+  dataAgregacaoFinal,
+  dataHistoricaInicial,
+  dataHistoricaFinal
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Associa a cada cliente válido a superintendência regional, a categoria da agência e o
+indicador de agência digital, na data de referência.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `tabelaClientesValidos` | Vetor de caracteres de comprimento 1 com o nome da tabela de clientes válidos (`IM_ML_CLIENTES_VALIDOS_{SUFIXO}`), usada para restringir a população por `semi_join()`. |
+| `sufixoTabela` | Vetor de caracteres; o primeiro elemento, em maiúsculas, compõe o nome da tabela de saída, como `"TREINO"` ou `"PREDICAO"`. Valor padrão de referência: `""`, sobrescrito pelos pipelines. |
+| `dataFeature` | Data de referência dos preditores, no formato `"AAAA-MM-DD"`. |
+| `janelaAgregacao` | Inteiro com o número de meses da janela de agregação. Não utilizado no corpo da função. |
+| `janelaHistorico` | Inteiro com o número de meses da janela histórica. Não utilizado no corpo da função. |
+| `dataAgregacaoInicial` | Data inicial da janela de agregação, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. |
+| `dataAgregacaoFinal` | Data final da janela de agregação, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. |
+| `dataHistoricaInicial` | Data inicial da janela histórica, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. |
+| `dataHistoricaFinal` | Data final da janela histórica, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. |
+
+## Detalhes
+
+A agência do cliente é obtida de `POS_KPI_CLIENTE_PF_MES` no mês de `dataFeature`. A
+categoria vem de `HISTORICO_AGENCIA` no mesmo mês, por `left_join()` entre
+`COD_AGENCIA` e `COD_VISAO`, considerando apenas categorias não nulas. A agência `1800`
+é tratada como agência digital; quando `COD_AGENCIA` é nulo, o indicador é nulo, pela
+tradução de `ifelse()` em `CASE WHEN` sem ramo `ELSE`.
+
+A função segue o contrato comum dos feature groups: registra
+`on.exit(TerminateTarget())`, monta o nome da tabela de saída
+`IM_ML_HISTORICO_AGENCIA_{SUFIXO}`, executa a consulta no Oracle por meio de `dbplyr` e
+grava o resultado com `DbCreateTableMemoryFromQuery()`, que remove a tabela anterior de
+mesmo nome. A função é descoberta pelos pipelines de dados por meio do prefixo
+`GenerateFeatureLineage_IM_ML_` e executada uma vez para treino e uma vez para
+predição.
+
+A tabela de origem é filtrada no mês de `dataFeature` sem agregação por cliente;
+espera-se um registro por cliente no mês. Clientes ausentes da tabela recebem valor
+nulo nas colunas deste grupo após a junção em `Generate_IM_ML_FEATURE_STORE()`. Se
+`HISTORICO_AGENCIA` tiver mais de uma categoria não nula para a mesma agência no mês, a
+junção replica as linhas do cliente.
+
+Os argumentos `janelaAgregacao`, `janelaHistorico`, `dataAgregacaoInicial`,
+`dataAgregacaoFinal`, `dataHistoricaInicial`, `dataHistoricaFinal` não são usados no
+corpo da função; existem para manter a assinatura comum chamada por `tar_map()`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- fecha as conexões de banco de dados ao final, inclusive em caso de erro, por meio de
+  `on.exit(TerminateTarget())`;
+- remove, se existir, e recria a tabela `IM_ML_HISTORICO_AGENCIA_{SUFIXO}` no Oracle.
+
+## Linhagem de Dados
+
++---------------------+---------------------------------------------------------------+
+| Elemento            | Valor                                                         |
++=====================+===============================================================+
+| Tabelas de origem   | `POS_KPI_CLIENTE_PF_MES`, `HISTORICO_AGENCIA`,                |
+|                     | `tabelaClientesValidos`                                       |
++---------------------+---------------------------------------------------------------+
+| Filtro de período   | `DATA_REFERENCIA == dataFeature` nas duas tabelas             |
++---------------------+---------------------------------------------------------------+
+| Chave de junção     | `SEQUENCIA_CLIENTE`; `COD_AGENCIA` com `COD_VISAO`            |
++---------------------+---------------------------------------------------------------+
+| Tabelas temporárias | nenhuma                                                       |
++---------------------+---------------------------------------------------------------+
+| Tabela de saída     | `IM_ML_HISTORICO_AGENCIA_{SUFIXO}`                            |
++---------------------+---------------------------------------------------------------+
+
+## Dicionário de Features
+
++---------------------+---------------------------------------------------------------+
+| Coluna              | Descrição                                                     |
++=====================+===============================================================+
+| `SEQUENCIA_CLIENTE` | Identificador do cliente                                      |
++---------------------+---------------------------------------------------------------+
+| `Vf4Sureg`          | Código da superintendência regional (`COD_SUREG`); texto de   |
+|                     | até quatro caracteres                                         |
++---------------------+---------------------------------------------------------------+
+| `Vf4Categoria`      | Categoria da agência (`CATEGORIA`); texto de um caractere     |
++---------------------+---------------------------------------------------------------+
+| `AgenciaDigital`    | Lógico: `TRUE` quando `COD_AGENCIA == 1800`                   |
++---------------------+---------------------------------------------------------------+
+
+## Retorno
+
+Vetor de caracteres de comprimento 1, invisível, com o nome da tabela criada
+(`IM_ML_HISTORICO_AGENCIA_{SUFIXO}`).
+
+## Exemplos
+
+```r
+# Pré-condição: conexão Oracle e tabela de clientes válidos criadas
+tabelaFeature <- GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA(
+  tabelaClientesValidos = "IM_ML_CLIENTES_VALIDOS_TREINO",
+  sufixoTabela = "TREINO",
+  dataFeature = "2025-10-01",
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = "2025-05-01",
+  dataAgregacaoFinal = "2025-10-31",
+  dataHistoricaInicial = "2022-11-01",
+  dataHistoricaFinal = "2025-10-31"
+)
+```
+
+## Família
+
+**Geração de Feature Groups**
+
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+
+## Ver também
+
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Referências
+
+- @oracleinmemoryguide19
+- @dbplyr
+
+---
+
+*Gerado a partir de `GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

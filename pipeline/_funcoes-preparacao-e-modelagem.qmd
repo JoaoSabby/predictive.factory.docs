@@ -1,0 +1,18 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Preparação e modelagem**
+
+- [`PrepareDataModel()`](../referencia/funcoes/PrepareDataModel.qmd): Preprocessar os Dados para o Modelo Preditivo
+- [`TuneModel()`](../referencia/funcoes/TuneModel.qmd): Otimizar os Hiperparâmetros do Modelo Binário por Busca Bayesiana
+- [`TuneModelLastGrid()`](../referencia/funcoes/TuneModelLastGrid.qmd): Recuperar a Grade Inicial da Otimização de Hiperparâmetros
+- [`TuneModelBoundsXGBoost()`](../referencia/funcoes/TuneModelBoundsXGBoost.qmd): Definir os Limites da Busca de Hiperparâmetros do XGBoost
+- [`TuneModelResampleFoldsXGBoost()`](../referencia/funcoes/TuneModelResampleFoldsXGBoost.qmd): Preparar os Folds de Validação Cruzada para o Tuning do XGBoost
+- [`BalanceClass()`](../referencia/funcoes/BalanceClass.qmd): Balancear as Classes da Base de Treino
+- [`BalanceClassRandomUnder()`](../referencia/funcoes/BalanceClassRandomUnder.qmd): Balancear Classes por Subamostragem Aleatória
+- [`BalanceClassAdanear()`](../referencia/funcoes/BalanceClassAdanear.qmd): Balancear Classes com ADASYN e NearMiss
+- [`TuneModelEvaluateXGBoostFolds()`](../referencia/funcoes/TuneModelEvaluateXGBoostFolds.qmd): Avaliar um Candidato de Hiperparâmetros na Validação Cruzada
+- [`TuneModelEvaluateXGBoost()`](../referencia/funcoes/TuneModelEvaluateXGBoost.qmd): Avaliar um Candidato de Hiperparâmetros em um Fold
+- [`FitModel()`](../referencia/funcoes/FitModel.qmd): Ajustar o Modelo Preditivo Final
+- [`FitModelXGBoost()`](../referencia/funcoes/FitModelXGBoost.qmd): Ajustar o Modelo Final com XGBoost
+- [`FitModelLightGBM()`](../referencia/funcoes/FitModelLightGBM.qmd): Ajustar um Modelo com LightGBM
+- [`TuneModelBoundsLightGBM()`](../referencia/funcoes/TuneModelBoundsLightGBM.qmd): Definir os Limites da Busca de Hiperparâmetros do LightGBM

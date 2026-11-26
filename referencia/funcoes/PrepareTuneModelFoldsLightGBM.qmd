@@ -1,0 +1,89 @@
+---
+title: "PrepareTuneModelFoldsLightGBM"
+subtitle: "Preparar Folds Nativos do LightGBM"
+---
+
+## Uso
+
+```r
+PrepareTuneModelFoldsLightGBM(tuneData, nFolds = 10L, fitThreads = 1L)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Valida o alvo, cria a matriz esparsa de preditores uma única vez, define folds
+estratificados de validação cruzada e prepara os objetos de cada fold para o tuning com
+LightGBM.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `tuneData` | Data frame com `TARGET` (fator de dois níveis, sem ausentes) e as features. |
+| `nFolds` | Inteiro com o número de folds (padrão: `10L`). |
+| `fitThreads` | Inteiro com o número de threads; sobrescrito por `OMP_NUM_THREADS` no corpo da função (padrão: `1L`). |
+
+## Detalhes
+
+As validações interrompem a execução quando `TARGET` não existe, não é fator, não tem
+exatamente dois níveis, contém valores ausentes ou quando a classe positiva (primeiro
+nível) não tem observações. A matriz esparsa é criada por
+`Matrix::sparse.model.matrix(TARGET ~ . - 1, tuneData)`, que codifica fatores em
+indicadoras. Os folds usam `rsample::vfold_cv()` estratificado, com semente `42`.
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Função Auxiliar Inexistente:**
+Cada fold é preparado por `PrepareTuneModelFoldLightGBM()`, que não está definida em
+nenhum projeto do repositório; a chamada termina com erro. O argumento `fitThreads` é
+substituído pelo valor da variável de ambiente `OMP_NUM_THREADS` (padrão 1). A função
+não é chamada por nenhum pipeline do projeto.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Lista invisível com `tuneModelFolds`, `positive`, `negative`, `features`,
+`nFeatures` e `classRatio`.
+
+## Exemplos
+
+```r
+# Requer a definição de PrepareTuneModelFoldLightGBM()
+preparedTuneModel <- PrepareTuneModelFoldsLightGBM(tuneData = tuneSet, nFolds = 5L)
+```
+
+## Família
+
+**Otimização de Hiperparâmetros**
+
+- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+
+## Ver também
+
+- [FitModelLightGBM](FitModelLightGBM.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- `Matrix::sparse.model.matrix`
+- `rsample::vfold_cv`
+
+## Referências
+
+- @ke2017
+- @lightgbmdocs
+
+---
+
+*Gerado a partir de `PrepareTuneModelFoldsLightGBM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

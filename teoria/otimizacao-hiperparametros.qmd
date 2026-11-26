@@ -1,0 +1,17 @@
+# Ajuste de hiperparâmetros {#hiperparametros}
+
+## Espaço de busca e transformações de escala
+
+<!-- Conteúdo a ser escrito. -->
+
+## Otimização bayesiana
+
+<!-- Conteúdo a ser escrito. -->
+
+## Processo gaussiano e função de aquisição
+
+<!-- Conteúdo a ser escrito. -->
+
+## Validação cruzada aninhada ao tuning
+
+<!-- Conteúdo a ser escrito. -->

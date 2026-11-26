@@ -1,0 +1,31 @@
+# Validação e métricas de desempenho {#validacao}
+
+## Divisão treino e teste
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/split-treino-teste.qmd >}}
+
+## Validação cruzada
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/validacao-cruzada.qmd >}}
+
+## ROC-AUC
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/roc-auc.qmd >}}
+
+## PR-AUC
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/pr-auc.qmd >}}
+
+## Escolha do limiar
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/plot-escores.qmd >}}

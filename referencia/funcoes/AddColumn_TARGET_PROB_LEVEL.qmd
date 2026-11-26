@@ -1,0 +1,83 @@
+---
+title: "AddColumn_TARGET_PROB_LEVEL"
+subtitle: "Adicionar o Nível de Probabilidade da Predição"
+---
+
+## Uso
+
+```r
+AddColumn_TARGET_PROB_LEVEL(database)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Acrescenta a coluna `TARGET_PROB_LEVEL`, que classifica a probabilidade prevista da
+classe positiva em três níveis.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `database` | Data frame com a coluna numérica `TARGET_PROB`. |
+
+## Detalhes
+
+Sendo $p$ o valor de `TARGET_PROB` e $m$ a mediana de $p$ entre os
+registros com $p \ge 0{,}5$:
+
++-------+------------------------------+
+| Nível | Condição                     |
++=======+==============================+
+| `1L`  | $p < 0{,}5$              |
++-------+------------------------------+
+| `2L`  | $0{,}5 \le p < m$        |
++-------+------------------------------+
+| `3L`  | $p \ge m$ e demais casos |
++-------+------------------------------+
+
+::: {.callout-note}
+<i class="fa-solid fa-circle-info"></i> **Casos Particulares:**
+Registros com `TARGET_PROB` ausente recebem o nível `3L`, pelo ramo `TRUE` de
+`case_when()`. Quando nenhum registro tem $p \ge 0{,}5$, $m$ é `NA`, e todos os
+registros com $p \ge 0{,}5$ recebem o nível `3L`. A função não é chamada por nenhum
+pipeline do projeto.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+`database` com a coluna inteira `TARGET_PROB_LEVEL` acrescentada.
+
+## Exemplos
+
+```r
+predicoes <- tibble::tibble(TARGET_PROB = c(0.2, 0.6, 0.9))
+AddColumn_TARGET_PROB_LEVEL(predicoes)
+```
+
+## Família
+
+**Avaliação do Modelo**
+
+- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
+- [EvaluateModel](EvaluateModel.qmd)
+- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- [PredictModel](PredictModel.qmd)
+
+## Ver também
+
+- [PredictModel](PredictModel.qmd)
+
+## Referências
+
+- @dplyr
+
+---
+
+*Gerado a partir de `AddColumn_TARGET_PROB_LEVEL.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

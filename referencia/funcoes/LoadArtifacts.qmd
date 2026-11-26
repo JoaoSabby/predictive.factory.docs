@@ -1,0 +1,87 @@
+---
+title: "LoadArtifacts"
+subtitle: "Carregar um Artefato Persistido em Parquet ou qs2"
+---
+
+## Uso
+
+```r
+LoadArtifacts(fileArtifacts, msgProcess = TRUE)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Localiza e carrega um artefato gravado por `PersistArtifacts()`: tabelas em Parquet,
+lidas por meio do DuckDB, ou demais objetos em formato `qs2`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `fileArtifacts` | Caminho do artefato. O nome do arquivo é tratado como padrão de busca. |
+| `msgProcess` | Lógico: exibe mensagens de progresso (padrão: `TRUE`). |
+
+## Detalhes
+
+#. procura em `dirname(fileArtifacts)` o primeiro arquivo cujo nome corresponde ao
+   padrão `basename(fileArtifacts)`, sem diferenciar maiúsculas e minúsculas;
+#. quando nenhum arquivo é encontrado, emite alerta e retorna `FALSE` invisível;
+#. para arquivos `.parquet`, lê com `read_parquet()` em uma instância DuckDB em
+   memória, converte colunas de texto com até 100 categorias em fator por
+   `ConverterTextoParaFator()` e reordena os níveis de `TARGET` binário;
+#. para os demais arquivos, lê com `qs2::qs_read()` com verificação de checksum.
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Pontos de Atenção:**
+O nome do arquivo é usado como expressão regular em `list.files()`; caracteres como `.`
+são interpretados como curinga. No ramo `qs2`, a leitura usa `fileArtifacts` e não o
+caminho localizado, de modo que `fileArtifacts` deve conter a extensão. A reordenação
+de `TARGET` usa o primeiro nível atual como referência e, portanto, não altera a ordem
+dos níveis. A função não é chamada por nenhum pipeline do projeto.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- abre e encerra uma instância DuckDB em memória para arquivos Parquet;
+- escreve no console as mensagens de progresso quando `msgProcess` é `TRUE`.
+
+## Retorno
+
+O objeto carregado: tibble para Parquet ou o objeto R original para `qs2`.
+Retorna `FALSE` invisível quando o arquivo não é encontrado.
+
+## Exemplos
+
+```r
+dadosTreino <- LoadArtifacts(
+  fileArtifacts = file.path(artifactsPath, "trainingSet.parquet")
+)
+```
+
+## Família
+
+**Persistência de Artefatos**
+
+- [PersistArtifacts](PersistArtifacts.qmd)
+
+## Ver também
+
+- [PersistArtifacts](PersistArtifacts.qmd)
+- `qs2::qs_read`
+
+## Referências
+
+- @raasveldt2019
+- @parquet
+- @qs2
+
+---
+
+*Gerado a partir de `LoadArtifacts.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

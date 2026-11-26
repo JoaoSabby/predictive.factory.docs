@@ -1,0 +1,83 @@
+---
+title: "BuildPipelinePublishing"
+subtitle: "Construir o Pipeline de Publicação do Modelo"
+---
+
+## Uso
+
+```r
+BuildPipelinePublishing()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Esqueleto do pipeline de publicação, armazenamento e registros finais do modelo
+preditivo. O target previsto ainda não tem nome nem comando definidos.
+
+## Detalhes
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Implementação Incompleta:**
+O único `tar_target()` tem `name = ""` e `command` sem valor. Por isso, a chamada da
+função resulta em erro de `tar_target()`. A chamada em `BuildPipeline()` está
+desativada por comentário.
+:::
+
+## Targets do Pipeline
+
++-------------+-----------------------------------------------------------------------+
+| Target      | Descrição, comando e dependências                                     |
++=============+=======================================================================+
+| (não        | Persistência dos resultados no banco de dados. Comando: (não          |
+| definido)   | definido). Depende de: (não definido).                                |
++-------------+-----------------------------------------------------------------------+
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console a etapa de progresso do pipeline, quando a construção da lista não
+  falha.
+
+## Retorno
+
+Lista de objetos `tar_target`. Na implementação atual, a construção da lista
+falha antes do retorno.
+
+## Exemplos
+
+```r
+# Desativada em BuildPipeline() até a definição do target de publicação
+listPipelinePublishing <- BuildPipelinePublishing()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [PublishModelRegistry_ML_FEATURE_STORE](PublishModelRegistry_ML_FEATURE_STORE.qmd)
+
+## Referências
+
+- @targets
+
+---
+
+*Gerado a partir de `BuildPipelinePublishing.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

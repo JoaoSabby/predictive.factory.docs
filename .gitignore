@@ -4,6 +4,7 @@
 .Ruserdata
 /.quarto/
 /_site/
+/_book/
 /public/
 *_files/
 ebook_pdf.tex

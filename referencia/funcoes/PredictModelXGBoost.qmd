@@ -1,0 +1,95 @@
+---
+title: "PredictModelXGBoost"
+subtitle: "Executar a Predição Binária com XGBoost"
+---
+
+## Uso
+
+```r
+PredictModelXGBoost(
+  data,
+  model,
+  positive = "Sim",
+  negative = "Nao",
+  probClassThreshold = 0.5
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Calcula a probabilidade da classe positiva com um modelo XGBoost binário e converte a
+probabilidade em classe predita por um ponto de corte.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `data` | Objeto `xgb.DMatrix` com as mesmas features usadas no ajuste. |
+| `model` | Objeto `xgb.Booster` ajustado com objetivo `binary:logistic`. |
+| `positive` | Rótulo da classe positiva (padrão: `"Sim"`). |
+| `negative` | Rótulo da classe negativa (padrão: `"Nao"`). |
+| `probClassThreshold` | Número em $[0, 1]$ usado como ponto de corte (padrão: `0.5`). |
+
+## Detalhes
+
+Com objetivo `binary:logistic`, a predição do XGBoost é a probabilidade estimada da
+classe positiva:
+
+$$\hat{p}_i = \frac{1}{1 + e^{-F(x_i)}}$$
+
+em que $F(x_i) = \sum_k f_k(x_i)$ é a soma das saídas das árvores. A classe predita
+é `positive` quando $\hat{p}_i \ge c$ e `negative` caso contrário, em que $c$ é
+`probClassThreshold`. A probabilidade da classe negativa é $1 - \hat{p}_i$.
+
+A função mantém a predição separada do ajuste, o que permite aplicar o mesmo modelo com
+pontos de corte operacionais diferentes. O fator `.pred_class` tem `positive` como
+primeiro nível, compatível com `event_level = "first"` do `yardstick`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Tibble com uma linha por observação e as colunas `.pred_positive` (double),
+`.pred_negative` (double) e `.pred_class` (fator com níveis `positive` e `negative`).
+
+## Exemplos
+
+```r
+predictionData <- PredictModelXGBoost(
+  data = xgbHoldoutSet,
+  model = fittedModel,
+  positive = "Sim",
+  negative = "Nao",
+  probClassThreshold = 0.05
+)
+```
+
+## Família
+
+**Avaliação do Modelo**
+
+- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
+- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
+- [EvaluateModel](EvaluateModel.qmd)
+- [PredictModel](PredictModel.qmd)
+
+## Ver também
+
+- [PredictModel](PredictModel.qmd)
+- [EvaluateModel](EvaluateModel.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
+
+## Referências
+
+- @chen2016
+- @friedman2001
+
+---
+
+*Gerado a partir de `PredictModelXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

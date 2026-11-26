@@ -1,0 +1,93 @@
+---
+title: "PredictModel"
+subtitle: "Executar a Predição do Modelo sobre a Base de Inferência"
+---
+
+## Uso
+
+```r
+PredictModel(fileModel, predictionData)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Carrega o modelo XGBoost do arquivo `.zip` gerado no ajuste, aplica-o à base de
+inferência e retorna, para cada cliente, a classe predita e a probabilidade da classe
+positiva junto com os dados de entrada.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `fileModel` | Caminho do arquivo `.zip` com o modelo em JSON, retornado por `FitModelXGBoost()`. |
+| `predictionData` | Tibble preprocessada por `PrepareDataModel()`, com `SEQUENCIA_CLIENTE` e as features. |
+
+## Detalhes
+
+#. extrai o JSON do modelo para `tempdir()` e carrega-o com `xgb.load.raw()`;
+#. constrói a `xgb.DMatrix` com todas as colunas de `predictionData`;
+#. aplica `PredictModelXGBoost()` com ponto de corte `0.5`;
+#. acrescenta `TARGET_PRED` e `TARGET_PROB` às colunas de `predictionData` e posiciona
+   `SEQUENCIA_CLIENTE` em primeiro lugar.
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Colunas da Matriz de Predição:**
+A matriz é construída com todas as colunas de `predictionData`, inclusive as colunas de
+contexto, como `SEQUENCIA_CLIENTE`. O modelo é ajustado sem essas colunas, que são
+removidas por `ConsolidateHistoricalData()`. O XGBoost valida os nomes das features e
+pode rejeitar a predição quando os conjuntos diferem.
+:::
+
+A função está definida no arquivo `PredicteModel.R`, cujo nome difere do nome da
+função.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- extrai o arquivo JSON do modelo em `tempdir()`, sobrescrevendo arquivo existente.
+
+## Retorno
+
+Tibble com `SEQUENCIA_CLIENTE`, `TARGET_PRED` (fator com níveis `"Sim"` e
+`"Nao"`), `TARGET_PROB` (probabilidade de `"Sim"`) e as demais colunas de
+`predictionData`.
+
+## Exemplos
+
+```r
+# Pré-condição: modelo ajustado e base de inferência preprocessada
+predictionResults <- PredictModel(
+  fileModel = fileModel,
+  predictionData = predictionData
+)
+```
+
+## Família
+
+**Avaliação do Modelo**
+
+- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
+- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
+- [EvaluateModel](EvaluateModel.qmd)
+- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+
+## Ver também
+
+- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- `xgboost::xgb.load.raw`
+
+## Referências
+
+- @xgboostio
+
+---
+
+*Gerado a partir de `PredicteModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

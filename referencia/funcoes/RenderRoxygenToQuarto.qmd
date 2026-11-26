@@ -1,0 +1,205 @@
+---
+title: "RenderRoxygenToQuarto"
+subtitle: "Renderizar Cabeçalhos roxygen2 em Páginas Quarto"
+---
+
+## Uso
+
+```r
+RenderRoxygenToQuarto(
+  listFunctions = list.files("Funcoes", pattern = "\\.R$", full.names = TRUE),
+  pathOutputQmd = file.path("docs", "help_functions")
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Lê o cabeçalho roxygen2 de cada arquivo de função informado, converte o conteúdo para
+Markdown do Quarto e grava uma página `.qmd` por função, com o nome da função definida
+no arquivo, além de um índice `index.qmd` agrupado por família. A função também audita
+os cabeçalhos e emite avisos quando encontra divergências entre a documentação e o
+código.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `listFunctions` | Vetor de caracteres ou lista com os caminhos dos arquivos `.R` a documentar. Caminhos repetidos são considerados uma vez, e as páginas são geradas em ordem alfabética de caminho (padrão: todos os arquivos `.R` da pasta `Funcoes`). |
+| `pathOutputQmd` | Vetor de caracteres de comprimento 1 com a pasta de destino das páginas `.qmd`. A pasta é criada recursivamente quando não existe (padrão: `file.path("docs", "help_functions")`). |
+
+## Detalhes
+
+O projeto não é estruturado como pacote R. Por esse motivo, a função não utiliza
+`roxygen2::roxygenise()` nem gera arquivos `.Rd`. A leitura de cada arquivo é feita por
+`roxygen2::parse_file()` com `env = NULL`, modo em que apenas os comentários `#'` são
+interpretados e nenhum código é avaliado.
+
+::: {.callout-note}
+<i class="fa-solid fa-shield-halved"></i> **Execução Segura:**
+Nenhuma função documentada é carregada ou executada. O nome e os argumentos de cada
+função são obtidos por `parse()`, que apenas constrói a árvore sintática do arquivo.
+:::
+
+O processamento segue as etapas:
+
+#. leitura da primeira atribuição de primeiro nível de cada arquivo, que define o nome
+   da página; quando não há atribuição, é usado o nome do arquivo;
+#. leitura dos blocos roxygen2 e das famílias declaradas em `family`;
+#. auditoria e conversão do primeiro bloco de cada arquivo em página `.qmd`;
+#. gravação do índice `index.qmd`, com uma tabela por família.
+
+Cada página começa com um cabeçalho YAML, em que `title` é o nome da função e
+`subtitle` é a tag `title` do roxygen2. As tags são mapeadas para as seções:
+
++-----------------------+----------------------------------------------------+
+| Tag roxygen2          | Seção da página                                    |
++=======================+====================================================+
+| `usage`               | Uso, em bloco de código R                          |
++-----------------------+----------------------------------------------------+
+| `description`         | Descrição                                          |
++-----------------------+----------------------------------------------------+
+| `param`               | Parâmetros, em tabela                              |
++-----------------------+----------------------------------------------------+
+| `details`             | Detalhes                                           |
++-----------------------+----------------------------------------------------+
+| `section`             | Uma seção por ocorrência, com o título da tag      |
++-----------------------+----------------------------------------------------+
+| `return` ou `returns` | Retorno                                            |
++-----------------------+----------------------------------------------------+
+| `examples`            | Exemplos, em bloco de código R não executado       |
++-----------------------+----------------------------------------------------+
+| `family`              | Família, com links para as demais funções do grupo |
++-----------------------+----------------------------------------------------+
+| `seealso`             | Ver também, em lista com links                     |
++-----------------------+----------------------------------------------------+
+| `references`          | Referências                                        |
++-----------------------+----------------------------------------------------+
+
+As marcações Rd são convertidas com tratamento de chaves aninhadas:
+
++------------------------+---------------------------------------------------------+
+| Marcação Rd            | Resultado no Quarto                                     |
++========================+=========================================================+
+| `eqn`                  | Fórmula em linha, entre `$`                             |
++------------------------+---------------------------------------------------------+
+| `deqn`                 | Fórmula em bloco, entre `$$`                            |
++------------------------+---------------------------------------------------------+
+| `link` com pacote      | Referência no formato `pacote::funcao`                  |
++------------------------+---------------------------------------------------------+
+| `link` sem pacote      | Link para a página `.qmd` da função, quando documentada |
++------------------------+---------------------------------------------------------+
+| `code`                 | Código em linha                                         |
++------------------------+---------------------------------------------------------+
+| `href` e `url`         | Link Markdown                                           |
++------------------------+---------------------------------------------------------+
+| `emph` e `strong`      | Itálico e negrito                                       |
++------------------------+---------------------------------------------------------+
+| `dontrun` e `donttest` | Removidas, preservando o código interno                 |
++------------------------+---------------------------------------------------------+
+
+O selo `lifecycle::badge("estagio")` escrito como código R inline vira imagem com link
+para a descrição do estágio; o `.svg` é copiado do pacote lifecycle para a subpasta
+`figures`. Sem o pacote, o selo vira o nome do estágio em negrito. Callouts, ícones,
+tabelas em grade, listas `#.` e fórmulas `$...$` já estão em sintaxe do Quarto e são
+copiados sem alteração.
+
+As citações escritas como `@chave` em `references` são repassadas sem alteração. Na
+renderização, o Quarto resolve cada chave no arquivo `referencias.bib` do livro,
+formata a citação e reúne a obra no apêndice de referências, de modo que cada obra é
+cadastrada uma única vez.
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Seções Omitidas:**
+As seções Fluxo Lógico e Funções Chamadas contêm código R inline, avaliado apenas na
+geração de arquivos `.Rd`, e são omitidas das páginas. As tags `export`, `importFrom` e
+`eval` também são ignoradas, pois dependem da compilação de um pacote.
+:::
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Interrupções e Codificação:**
+A execução é interrompida com erro quando `listFunctions` está vazio, quando algum
+arquivo não existe, quando um arquivo tem erro de sintaxe R ou quando uma marcação Rd
+tem chave sem fechamento. A leitura e a gravação assumem UTF-8; em Linux, a sessão deve
+usar um locale UTF-8.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Auditoria dos Cabeçalhos
+
+A função emite um aviso (`warning`), sem interromper o processamento, quando:
+
+- faltam as tags `title`, `usage`, `description`, `details`, `return` ou `examples`;
+- alguma linha do bloco roxygen2 excede 90 caracteres;
+- o nome do arquivo difere do nome da função definida;
+- existe argumento da função sem `param` ou `param` sem argumento correspondente; a
+  verificação é omitida quando o objeto definido não é uma `function`;
+- o arquivo não contém cabeçalho roxygen2, caso em que nenhuma página é gerada.
+
+## Efeitos Colaterais
+
+- grava uma página `.qmd` por função e o índice `index.qmd` em `pathOutputQmd`,
+  sobrescrevendo arquivos existentes com o mesmo nome;
+- cria `pathOutputQmd` e a subpasta `figures` quando não existem;
+- copia os selos de ciclo de vida usados do pacote lifecycle para `figures`;
+- emite mensagens (`message`) e avisos (`warning`) no console.
+
+Nenhum arquivo de `listFunctions` é alterado, e nenhuma conexão externa é aberta.
+
+## Complexidade Computacional
+
+Sendo $n$ o número de arquivos, $L_i$ o número de caracteres do arquivo $i$
+e $k_i$ o número de marcações Rd do seu cabeçalho, o custo total é:
+
+$$T(n) = O\left(\sum_{i=1}^{n} L_i \, (1 + k_i)\right)$$
+
+O fator $k_i$ decorre da conversão das marcações, que percorre o texto da tag
+novamente a cada substituição.
+
+## Retorno
+
+Retorna invisivelmente (`invisible`) um vetor de caracteres com os caminhos
+dos arquivos gerados: uma página `.qmd` por arquivo com cabeçalho roxygen2, seguida
+do índice `index.qmd`, que é sempre gerado. Os arquivos `.svg` copiados não fazem
+parte do vetor retornado.
+
+## Exemplos
+
+```r
+# A partir da raiz do projeto predictive.factory
+source(file.path("Funcoes", "RenderRoxygenToQuarto.R"))
+
+qmdFiles <- RenderRoxygenToQuarto(
+  listFunctions = list.files("Funcoes", pattern = "\\\\.R$", full.names = TRUE),
+  pathOutputQmd = file.path("docs", "help_functions")
+)
+```
+
+## Família
+
+**Documentação**
+
+## Ver também
+
+- `roxygen2::parse_file`
+- `base::parse`
+- `lifecycle::badge`
+- `tools::file_path_sans_ext`
+
+## Referências
+
+- @knuth1984
+- @roxygen2
+- @rmanual
+- @quarto
+- @pandoc
+- @lifecycle
+
+---
+
+*Gerado a partir de `RenderRoxygenToQuarto.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

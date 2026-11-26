@@ -1,0 +1,79 @@
+etapa,funcao
+Configuração e execução,DefineOptionsSetup
+Configuração e execução,RunPipeline
+Configuração e execução,CheckPredictiveModelExists
+Configuração e execução,ConfigurePredictiveModelRun
+Configuração e execução,LoadModelRunConfig
+Configuração e execução,ShowStartupBanner
+Configuração e execução,CreateCrewControllerGroup
+Construção do pipeline,BuildPipeline
+Construção do pipeline,MsgBuildPipeline
+Construção do pipeline,BuildPipelineBegin
+Construção do pipeline,BuildPipelineHistoricalData
+Construção do pipeline,BuildPipelineModeling
+Construção do pipeline,BuildPipelinePredictingData
+Construção do pipeline,BuildPipelinePredicting
+Construção do pipeline,BuildPipelineFinish
+Execução e registro dos targets,InitializeTargetExecution
+Execução e registro dos targets,LogPipelineExecution
+Execução e registro dos targets,LogPipelineExecutionTraces
+Execução e registro dos targets,LogPipelineExecutionTelemetry
+Execução e registro dos targets,LogPipelineExecutionRegistry
+Execução e registro dos targets,TerminateTarget
+Feature store e população,CheckFeatureStore
+Feature store e população,DefineValidCustomers
+Feature groups,GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO
+Feature groups,GenerateFeatureLineage_IM_ML_CARTAO_CREDITO
+Feature groups,GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META
+Feature groups,GenerateFeatureLineage_IM_ML_CLIENTE
+Feature groups,GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA
+Feature groups,GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO
+Feature groups,GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO
+Feature groups,GenerateFeatureLineage_IM_ML_FONTE_RENDA
+Feature groups,GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA
+Feature groups,GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE
+Feature groups,GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES
+Feature groups,GenerateFeatureLineage_IM_ML_PERFIL_RISCO
+Feature groups,GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO
+Feature groups,GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO
+Feature groups,GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES
+Feature groups,GenerateFeatureLineage_IM_ML_RFM
+Feature groups,GenerateFeatureLineage_IM_ML_RISCO_CLIENTE
+Feature groups,GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ
+Feature groups,GenerateFeatureLineage_IM_ML_SHARE_WALLET
+Feature groups,GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP
+Feature groups,GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO
+Feature groups,GenerateFeatureLineage_IM_ML_USO_DIGITAL
+Consolidação dos dados,Generate_IM_ML_FEATURE_STORE
+Consolidação dos dados,ConsolidateHistoricalData
+Preparação e modelagem,PrepareDataModel
+Preparação e modelagem,TuneModel
+Preparação e modelagem,TuneModelLastGrid
+Preparação e modelagem,TuneModelBoundsXGBoost
+Preparação e modelagem,TuneModelResampleFoldsXGBoost
+Preparação e modelagem,BalanceClass
+Preparação e modelagem,BalanceClassRandomUnder
+Preparação e modelagem,BalanceClassAdanear
+Preparação e modelagem,TuneModelEvaluateXGBoostFolds
+Preparação e modelagem,TuneModelEvaluateXGBoost
+Preparação e modelagem,FitModel
+Preparação e modelagem,FitModelXGBoost
+Preparação e modelagem,FitModelLightGBM
+Preparação e modelagem,TuneModelBoundsLightGBM
+Avaliação do modelo,EvaluateModel
+Avaliação do modelo,PredictModelXGBoost
+Avaliação do modelo,EstimateBinaryPerformance
+Predição,PredictModel
+Fora do pipeline,AddColumn_TARGET_PROB_LEVEL
+Fora do pipeline,BuildPipelinePublishing
+Fora do pipeline,ConsolidatePredictionData
+Fora do pipeline,CreateTable_IM_ML_FEATURE_CATALOG
+Fora do pipeline,LoadArtifacts
+Fora do pipeline,PersistArtifacts
+Fora do pipeline,PrepareFitModelXGBoost
+Fora do pipeline,PrepareTuneModelFoldsXGBoost
+Fora do pipeline,PrepareTuneModelFoldXGBoost
+Fora do pipeline,PrepareTuneModelFoldsLightGBM
+Fora do pipeline,PublishModelRegistry_ML_FEATURE_STORE
+Fora do pipeline,RegisterPredictiveModel
+Fora do pipeline,RenderRoxygenToQuarto

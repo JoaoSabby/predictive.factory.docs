@@ -1,0 +1,87 @@
+---
+title: "FitModel"
+subtitle: "Ajustar o Modelo Preditivo Final"
+---
+
+## Uso
+
+```r
+FitModel(trainingSet, hyperParams)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Ajusta o modelo preditivo final com a base de treino e os hiperparâmetros otimizados,
+delegando ao motor definido pela opção `predy_engine_model`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `trainingSet` | Tibble de treino preprocessada, com `TARGET` e as features. |
+| `hyperParams` | Lista de hiperparâmetros retornada por `TuneModel()`, com o elemento `results`. |
+
+## Detalhes
+
++----------------------+----------------------------------------------+
+| `predy_engine_model` | Função chamada                               |
++======================+==============================================+
+| `"xgboost"`          | `FitModelXGBoost(trainingSet, hyperParams)`  |
++----------------------+----------------------------------------------+
+| `"lightgbm"`         | `FitModelLightGBM(trainingSet, hyperParams)` |
++----------------------+----------------------------------------------+
+| outro valor          | erro `FitModel: Engine não implementada`     |
++----------------------+----------------------------------------------+
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Assinatura do LightGBM:**
+`FitModelLightGBM()` é definida com os argumentos `dataTrain`, `dataValid` e
+`hyperParam`. A chamada com `trainingSet` e `hyperParams` termina com erro de argumento
+não utilizado. A mensagem de erro para motor não implementado usa
+`hyperParams$engine_model`, que pode não corresponder à opção lida.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Valor invisível retornado pela função do motor. Para XGBoost, o caminho do
+arquivo `.zip` do modelo, usado pelo target `fileModel` com `format = "file"`.
+
+## Exemplos
+
+```r
+# Pré-condição: opção predy_engine_model definida e hiperparâmetros otimizados
+fileModel <- FitModel(trainingSet = trainingSet, hyperParams = hyperParams)
+```
+
+## Família
+
+**Modelagem Preditiva**
+
+- [FitModelLightGBM](FitModelLightGBM.qmd)
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [PrepareDataModel](PrepareDataModel.qmd)
+- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+
+## Ver também
+
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [FitModelLightGBM](FitModelLightGBM.qmd)
+- [TuneModel](TuneModel.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+
+## Referências
+
+- @chen2016
+- @ke2017
+- @lightgbmdocs
+
+---
+
+*Gerado a partir de `FitModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

@@ -1,0 +1,92 @@
+---
+title: "TuneModelEvaluateXGBoost"
+subtitle: "Avaliar um Candidato de Hiperparâmetros em um Fold"
+---
+
+## Uso
+
+```r
+TuneModelEvaluateXGBoost(xgbTuneSetTrain, xgbTuneSetValid, xgbTuneSetTest, params)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Ajusta um modelo XGBoost com os hiperparâmetros candidatos na porção de treino do fold,
+com parada antecipada na porção de validação, e mede a área sob a curva precisão-recall
+na porção de teste.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `xgbTuneSetTrain` | `xgb.DMatrix` de treino do fold, balanceada e com pesos. |
+| `xgbTuneSetValid` | `xgb.DMatrix` de validação do fold, usada na parada antecipada. |
+| `xgbTuneSetTest` | `xgb.DMatrix` de teste do fold (observações fora do fold), com rótulos. |
+| `params` | Lista com os hiperparâmetros candidatos, `innerThreads`, `positiveClass` e `negativeClass`. |
+
+## Detalhes
+
+O ajuste usa até 2.000 rodadas, `early_stopping_rounds = 50`, métrica `aucpr`, árvores
+`gbtree`, método `hist`, `max_bin = 512` e semente `42`. O desempenho do fold é a área
+sob a curva precisão-recall da classe positiva na porção de teste:
+
+$$\mathrm{AUC\text{-}PR} = \int_0^1 P(R) \, dR$$
+
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Coluna Removida antes do Cálculo:**
+A seleção `dplyr::select(TARGET, .pred_class)` remove `.pred_positive`, usada em
+seguida por `yardstick::pr_auc_vec()`. O acesso `predictionData$.pred_positive` retorna
+`NULL` e o cálculo da métrica termina com erro.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Número com a AUC-PR do fold.
+
+## Exemplos
+
+```r
+performanceResult <- TuneModelEvaluateXGBoost(
+  xgbTuneSetTrain = xgboost::xgb.DMatrix(params$splits[[1]]$Train),
+  xgbTuneSetValid = xgboost::xgb.DMatrix(params$splits[[1]]$Valid),
+  xgbTuneSetTest = xgboost::xgb.DMatrix(params$splits[[1]]$Test),
+  params = params
+)
+```
+
+## Família
+
+**Otimização de Hiperparâmetros**
+
+- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
+- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+
+## Ver também
+
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- `yardstick::pr_auc_vec`
+
+## Referências
+
+- @davis2006
+- @prechelt1998
+
+---
+
+*Gerado a partir de `TuneModelEvaluateXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

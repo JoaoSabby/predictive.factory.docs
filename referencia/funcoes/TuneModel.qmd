@@ -1,0 +1,137 @@
+---
+title: "TuneModel"
+subtitle: "Otimizar os Hiperparâmetros do Modelo Binário por Busca Bayesiana"
+---
+
+## Uso
+
+```r
+TuneModel(trainingSet)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Executa a otimização bayesiana de hiperparâmetros do XGBoost, avaliando cada candidato
+pela média da área sob a curva precisão-recall em validação cruzada estratificada, e
+retorna o melhor conjunto já convertido para a escala do modelo.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `trainingSet` | Tibble de treino preprocessada, com `TARGET` (fator cujo primeiro nível é a classe positiva) e as features. |
+
+## Detalhes
+
+As etapas são:
+
+#. remoção das colunas de contexto (`predy_columns_key_context`) e montagem de `params`
+   com motor, limites de threads, número de folds, classes e contagens;
+#. criação de um cluster PSOCK aninhado por `CreateNestedCluster()`, com
+   `predy_tune_threads_outer` workers externos, e registro como backend `future`;
+#. preparação dos folds em disco por `TuneModelResampleFoldsXGBoost()` e dos limites de
+   busca por `TuneModelBoundsXGBoost()`;
+#. otimização por `rBayesianOptimization::BayesianOptimization()`, com processo
+   gaussiano de núcleo exponencial de potência 2 e aquisição por melhoria esperada
+   (`acq = "ei"`, `eps = 0`);
+#. conversão do melhor ponto para a escala do XGBoost em `results`.
+
+A busca ocorre em escalas transformadas, revertidas por:
+
+$$\eta = 10^{u_1}, \quad w = 2^{u_2}$$
+
+
+$$\gamma = e^{u_3} - 1, \quad \lambda = 2^{u_4}$$
+
+em que $u_1$, $u_2$, $u_3$ e $u_4$ são `learning_rate_log10`,
+`min_child_weight_log2`, `min_split_loss_log1p` e `reg_lambda_log2`. Os parâmetros
+`max_delta_step` e `reg_alpha` são fixos e vêm de `predy_engine_model_xgboost`.
+
+::: {.callout-note}
+<i class="fa-solid fa-circle-info"></i> **Número de Avaliações:**
+Como `TuneModelLastGrid()` retorna `NULL`, a busca usa `init_points = 2` e `n_iter =
+1`, isto é, três avaliações de candidatos. Com uma grade inicial, os valores passam a
+`0` e `10`.
+:::
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Motor LightGBM:**
+O ramo `"lightgbm"` compara a variável `engine_model`, que não existe no escopo da
+função (o valor está em `params$engine_model`), e não define a função objetivo. Apenas
+o motor `"xgboost"` é operacional.
+:::
+
+Quando `predy_tune_debug` é `TRUE`, cada avaliação é registrada pelo pacote `logger` em
+`/soft/bdq/log/ufrgs/gpc.predictive.factory/debugger.log`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- cria um cluster PSOCK e altera o plano `future`; no `on.exit()`, restaura o plano
+  sequencial, encerra o cluster e restaura a afinidade de CPU original;
+- grava matrizes `xgb.DMatrix` em `tempdir()`, por meio de
+  `TuneModelResampleFoldsXGBoost()`;
+- altera a opção `tmpCount`, usada como contador de iterações;
+- com depuração ativa, remove e recria o arquivo de log de depuração;
+- depende do objeto global `dataFeatureTreino`.
+
+## Complexidade Computacional
+
+Sendo $K$ o número de folds, $I$ o número de avaliações e $T$ o custo de um
+ajuste XGBoost com parada antecipada, o custo é $O(I \cdot K \cdot T)$, com os
+$K$ folds de cada avaliação executados em paralelo.
+
+## Retorno
+
+Lista retornada por `BayesianOptimization()` (`Best_Par`, `Best_Value`,
+`History` e `Pred`), acrescida de `results`: lista com `colsample_bytree`,
+`learning_rate`, `max_delta_step`, `max_depth`, `min_child_weight`, `min_split_loss`,
+`reg_alpha`, `reg_lambda` e `subsample` na escala do XGBoost.
+
+## Exemplos
+
+```r
+# Pré-condição: opções definidas por DefineOptionsSetup() e dataFeatureTreino global
+hyperParams <- TuneModel(trainingSet = trainingSet)
+hyperParams$results
+```
+
+## Família
+
+**Otimização de Hiperparâmetros**
+
+- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
+- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+
+## Ver também
+
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- `rBayesianOptimization::BayesianOptimization`
+
+## Referências
+
+- @mockus1975
+- @jones1998
+- @snoek2012
+- @shahriari2016
+- @rbayesopt
+
+---
+
+*Gerado a partir de `TuneModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

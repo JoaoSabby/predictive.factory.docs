@@ -1,0 +1,6 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Consolidação dos dados**
+
+- [`Generate_IM_ML_FEATURE_STORE()`](../referencia/funcoes/Generate_IM_ML_FEATURE_STORE.qmd): Consolidar os Feature Groups na Feature Store In-Memory
+- [`ConsolidateHistoricalData()`](../referencia/funcoes/ConsolidateHistoricalData.qmd): Consolidar Alvo e Preditores para Modelagem

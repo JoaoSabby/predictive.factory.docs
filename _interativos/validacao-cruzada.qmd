@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-validacao-cruzada" class="pf-frame" src="../widgets/validacao_cruzada.html" title="Validação cruzada K-fold" loading="lazy"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Validação cruzada K-fold.*
+:::

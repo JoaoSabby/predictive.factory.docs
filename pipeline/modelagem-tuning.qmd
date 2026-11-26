@@ -1,0 +1,25 @@
+# Treino e tuning {#modelagem}
+
+## Preparação da base de modelagem
+
+<!-- Conteúdo a ser escrito. -->
+
+## Divisão treino e teste
+
+<!-- Conteúdo a ser escrito. -->
+
+## Balanceamento de classes
+
+<!-- Conteúdo a ser escrito. -->
+
+## Otimização de hiperparâmetros
+
+<!-- Conteúdo a ser escrito. -->
+
+## Ajuste do modelo final
+
+<!-- Conteúdo a ser escrito. -->
+
+## Funções desta etapa
+
+{{< include _funcoes-preparacao-e-modelagem.qmd >}}

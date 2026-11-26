@@ -1,0 +1,125 @@
+---
+title: "BuildPipelineHistoricalData"
+subtitle: "Construir o Pipeline de Dados Históricos para Modelagem"
+---
+
+## Uso
+
+```r
+BuildPipelineHistoricalData()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria os targets de feature engineering da base de treino: verificação da feature store,
+definição dos clientes válidos, geração de cada feature group, consolidação na feature
+store de treino, geração do alvo e consolidação dos dados históricos.
+
+## Detalhes
+
+Os feature groups são descobertos dinamicamente: `tar_map()` cria um target para cada
+função do ambiente global cujo nome começa com `GenerateFeatureLineage_IM_ML_`. O nome
+de cada target é `trainingFeatureGroupTable_{GRUPO}`, em que `{GRUPO}` é o sufixo da
+função (por exemplo, `RFM`). Assim, um novo feature group passa a fazer parte do
+pipeline apenas pela criação da função correspondente em `Funcoes/`.
+
+Os targets de geração usam `tar_skip()` com `skip = featureStoreProcessedTreino`:
+quando a feature store de treino já existe, a geração é ignorada. Todos os targets usam
+`deployment = "worker"`, e os feature groups usam o controlador `crew`
+`GenerateFeatureLineage`.
+
+::: {.callout-note}
+<i class="fa-solid fa-link"></i> **Dependência Externa:**
+`GenerateTarget()` não pertence ao predictive.factory: deve ser definida pelo projeto
+cliente (por exemplo, `predictive.desercao/Funcoes`).
+:::
+
+## Targets do Pipeline
+
++-------------------------------------+-----------------------------------------------+
+| Target                              | Descrição, comando e dependências             |
++=====================================+===============================================+
+| `featureStoreProcessedTreino`       | Verifica a feature store de treino. Comando:  |
+|                                     | `CheckFeatureStore()`. Depende de:            |
+|                                     | `pipelineBegin`.                              |
++-------------------------------------+-----------------------------------------------+
+| `tabelaClientesValidosTreino`       | Define os clientes válidos de treino.         |
+|                                     | Comando: `DefineValidCustomers()`. Depende    |
+|                                     | de: configuração.                             |
++-------------------------------------+-----------------------------------------------+
+| `trainingFeatureGroupTable_{GRUPO}` | Gera cada feature group de treino. Comando:   |
+|                                     | `GenerateFeatureLineage_IM_ML_{GRUPO}()`.     |
+|                                     | Depende de: `tabelaClientesValidosTreino`.    |
++-------------------------------------+-----------------------------------------------+
+| `modelingTable_FEATURE_STORE`       | Consolida `IM_ML_FEATURE_STORE_TREINO`.       |
+|                                     | Comando: `Generate_IM_ML_FEATURE_STORE()`.    |
+|                                     | Depende de: feature groups de treino.         |
++-------------------------------------+-----------------------------------------------+
+| `table_TARGET`                      | Gera o alvo de treino. Comando:               |
+|                                     | `GenerateTarget()`. Depende de:               |
+|                                     | `tabelaClientesValidosTreino`.                |
++-------------------------------------+-----------------------------------------------+
+| `historicalData`                    | Consolida preditores e alvo. Comando:         |
+|                                     | `ConsolidateHistoricalData()`. Depende de:    |
+|                                     | `table_TARGET`,                               |
+|                                     | `modelingTable_FEATURE_STORE`.                |
++-------------------------------------+-----------------------------------------------+
+
+Nenhum target informa `format`; vale o padrão `"qs"` de `_targets.R`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console a etapa de progresso por meio de `MsgBuildPipeline()`;
+- depende dos objetos globais de datas e janelas publicados por `LoadModelRunConfig()`
+  (por exemplo, `dataFeatureTreino` e `janelaAgregacao`).
+
+## Retorno
+
+Lista invisível de objetos `tar_target`, incluindo os targets gerados por
+`tar_map()`.
+
+## Exemplos
+
+```r
+# Pré-condição: funções carregadas e configuração publicada por LoadModelRunConfig()
+listPipelineTrainingData <- BuildPipelineHistoricalData()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [CheckFeatureStore](CheckFeatureStore.qmd)
+- [DefineValidCustomers](DefineValidCustomers.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
+- `tarchetypes::tar_map`
+- `tarchetypes::tar_skip`
+
+## Referências
+
+- @landau2021
+- @tarchetypes
+
+---
+
+*Gerado a partir de `BuildPipelineHistoricalData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

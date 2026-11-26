@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distribuição dos escores por classe (Observable Plot, offline)</title>
+<link rel="stylesheet" href="pf-metrics.css">
+<!-- Bibliotecas locais em versao UMD: carregam com script classico, inclusive em file:// -->
+<script src="../recursos/js/d3.v7.9.2.min.js"></script>
+<script src="../recursos/js/plot.v0.6.19.umd.min.js"></script>
+<script src="pf-metrics.js"></script>
+<style>
+  #grafico svg { max-width: 100%; height: auto; background: transparent; }
+  #grafico figure { margin: 0; }
+</style>
+</head>
+<body>
+<div class="pf-wrap">
+  <div class="pf-title">Distribuição dos escores por classe</div>
+  <div class="pf-sub">Exemplo de gráfico com Observable Plot e d3 em cópias locais, sem servidor e sem
+    internet. Os dados são sintéticos e gerados na própria página. Mova o limiar e acompanhe a matriz
+    de confusão.</div>
+
+  <div class="pf-controls">
+    <label><span class="row">Separação entre classes (d) <b id="d-val"></b></span>
+      <input type="range" id="d" min="0" max="3.5" step="0.1" value="1.5"></label>
+    <label><span class="row">Prevalência <b id="prev-val"></b></span>
+      <input type="range" id="prev" min="0.02" max="0.5" step="0.01" value="0.10"></label>
+    <label><span class="row">Limiar de decisão <b id="thr-val"></b></span>
+      <input type="range" id="thr" min="-3" max="5" step="0.05" value="1.0"></label>
+  </div>
+
+  <div class="pf-grid2">
+    <div class="pf-panel">
+      <h3>Histograma dos escores</h3>
+      <div id="grafico"></div>
+    </div>
+    <div class="pf-panel">
+      <h3>Matriz de confusão no limiar</h3>
+      <div id="matriz"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // Dados sinteticos deterministicos embutidos na pagina (gerador binormal do pf-metrics.js)
+  var nTotal = 2000;
+
+  // Controles e rotulos
+  var getD = PF.bindRange('d', function(v){ return PF.fmt(v, 1); }, render);
+  var getPrev = PF.bindRange('prev', function(v){ return PF.pct(v, 0); }, render);
+  var getThr = PF.bindRange('thr', function(v){ return PF.fmt(v, 2); }, render);
+
+  function render(){
+    var data = PF.binormal(nTotal, getPrev(), getD(), 42).map(function(p){
+      return { escore: p.s, classe: p.y === 1 ? 'Sim' : 'Nao' };
+    });
+    var thr = getThr();
+
+    // Histograma por classe com a regra vertical do limiar
+    var chart = Plot.plot({
+      height: 300,
+      marginLeft: 48,
+      x: { label: 'Escore' },
+      y: { label: 'Frequência', grid: true },
+      color: { domain: ['Sim', 'Nao'], range: [PF.COLORS.pos, PF.COLORS.neg], legend: true },
+      marks: [
+        Plot.rectY(data, Plot.binX({ y: 'count' }, { x: 'escore', fill: 'classe', mixBlendMode: 'screen', fillOpacity: 0.75, thresholds: 40 })),
+        Plot.ruleX([thr], { stroke: PF.COLORS.accent, strokeWidth: 2 }),
+        Plot.ruleY([0])
+      ]
+    });
+    var alvo = document.getElementById('grafico');
+    alvo.replaceChildren(chart);
+
+    // Matriz de confusao calculada com d3
+    var tp = d3.sum(data, function(p){ return p.classe === 'Sim' && p.escore >= thr ? 1 : 0; });
+    var fn = d3.sum(data, function(p){ return p.classe === 'Sim' && p.escore < thr ? 1 : 0; });
+    var fp = d3.sum(data, function(p){ return p.classe === 'Nao' && p.escore >= thr ? 1 : 0; });
+    var tn = d3.sum(data, function(p){ return p.classe === 'Nao' && p.escore < thr ? 1 : 0; });
+    var sens = tp + fn ? tp / (tp + fn) : 0;
+    var prec = tp + fp ? tp / (tp + fp) : 0;
+    document.getElementById('matriz').innerHTML =
+      '<table class="pf-table"><thead><tr><th></th><th>Previsto Sim</th><th>Previsto Nao</th></tr></thead>' +
+      '<tbody><tr><th>Real Sim</th><td>' + tp + '</td><td>' + fn + '</td></tr>' +
+      '<tr><th>Real Nao</th><td>' + fp + '</td><td>' + tn + '</td></tr></tbody></table>' +
+      '<p>Sensibilidade: <b>' + PF.pct(sens, 1) + '</b> &middot; Precisão: <b>' + PF.pct(prec, 1) + '</b></p>';
+  }
+
+  render();
+  PF.autoResize('plot-escores');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+---
+title: "FitModelLightGBM"
+subtitle: "Ajustar um Modelo com LightGBM"
+---
+
+## Uso
+
+```r
+FitModelLightGBM(dataTrain, dataValid, hyperParam)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Ajusta um modelo LightGBM binário com parada antecipada, a partir de conjuntos
+`lgb.Dataset` de treino e validação e de hiperparâmetros na nomenclatura do
+`tidymodels`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `dataTrain` | Objeto `lgb.Dataset` de treino com o atributo `nFeatures`. |
+| `dataValid` | Objeto `lgb.Dataset` de validação, usado na parada antecipada. |
+| `hyperParam` | Lista ou linha de tibble com `mtry`, `tree_depth`, `learn_rate`, `loss_reduction`, `sample_size`, `trees` e `stop_iter`. |
+
+## Detalhes
+
+Os hiperparâmetros são convertidos para o LightGBM:
+
++-------------------------+-----------------------------------------------------------+
+| Hiperparâmetro recebido | Parâmetro do LightGBM                                     |
++=========================+===========================================================+
+| `learn_rate`            | `learning_rate`                                           |
++-------------------------+-----------------------------------------------------------+
+| `tree_depth`            | `max_depth`, arredondado, e `num_leaves` $= 2^{d} -   |
+|                         | 1$                                                        |
++-------------------------+-----------------------------------------------------------+
+| `loss_reduction`        | `min_gain_to_split`                                       |
++-------------------------+-----------------------------------------------------------+
+| `sample_size`           | `bagging_fraction`, com `bagging_freq = 1`                |
++-------------------------+-----------------------------------------------------------+
+| `mtry`                  | `feature_fraction` $= \min(\max(\mathrm{round}(mtry), |
+|                         | 1) / p, 1)$                                               |
++-------------------------+-----------------------------------------------------------+
+| `trees`                 | `nrounds`                                                 |
++-------------------------+-----------------------------------------------------------+
+| `stop_iter`             | `early_stopping_rounds`                                   |
++-------------------------+-----------------------------------------------------------+
+
+em que $p$ é o atributo `nFeatures` de `dataTrain`. O treinamento é determinístico
+(`deterministic = TRUE` e sementes `42`), usa as métricas `average_precision` e
+`binary_logloss` e o número de threads da variável de ambiente `OMP_NUM_THREADS`
+(padrão 1).
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Integração com o Pipeline:**
+`FitModel()` chama esta função com os argumentos `trainingSet` e `hyperParams`, que não
+existem na assinatura. O motor `"lightgbm"` não está operacional no pipeline atual.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Objeto `lgb.Booster` invisível.
+
+## Exemplos
+
+```r
+fittedModel <- FitModelLightGBM(
+  dataTrain = lgbTrain,
+  dataValid = lgbValid,
+  hyperParam = list(
+    mtry = 20, tree_depth = 6, learn_rate = 0.05, loss_reduction = 0,
+    sample_size = 0.8, trees = 1000, stop_iter = 50
+  )
+)
+```
+
+## Família
+
+**Modelagem Preditiva**
+
+- [FitModel](FitModel.qmd)
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [PrepareDataModel](PrepareDataModel.qmd)
+- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+
+## Ver também
+
+- [FitModel](FitModel.qmd)
+- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- `lightgbm::lgb.train`
+
+## Referências
+
+- @ke2017
+- @lightgbmdocs
+
+---
+
+*Gerado a partir de `FitModelLightGBM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

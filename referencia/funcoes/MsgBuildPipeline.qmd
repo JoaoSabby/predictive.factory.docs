@@ -1,0 +1,78 @@
+---
+title: "MsgBuildPipeline"
+subtitle: "Exibir Mensagem de Construção de Pipeline"
+---
+
+## Uso
+
+```r
+MsgBuildPipeline(pipelineName)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Exibe no console uma etapa de progresso com o nome da função construtora que fez a
+chamada e a descrição do pipeline em construção.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `pipelineName` | Vetor de caracteres de comprimento 1 com a descrição do pipeline exibida na mensagem. |
+
+## Detalhes
+
+O nome da função construtora é obtido de `sys.call(-1)`, isto é, da chamada que invocou
+`MsgBuildPipeline()`. Por isso, a função deve ser chamada diretamente dentro da função
+construtora do pipeline, como em `BuildPipelineHistoricalData()`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- inicia uma etapa de progresso com `cli::cli_progress_step()`, encerrada por
+  `cli_progress_cleanup()` em `BuildPipeline()`.
+
+## Retorno
+
+`NULL` invisível.
+
+## Exemplos
+
+```r
+BuildPipelineExemplo <- function(){
+  MsgBuildPipeline("feature engineering dos dados usados na modelagem")
+}
+BuildPipelineExemplo()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- `cli::cli_progress_step`
+
+## Referências
+
+- @cli
+
+---
+
+*Gerado a partir de `MsgBuildPipeline.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

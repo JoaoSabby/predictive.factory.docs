@@ -1,129 +1,138 @@
-# Gera uma pagina Quarto por funcao a partir da documentacao roxygen2
+# Gera e organiza a Parte IV do livro (Referência das funções)
 #
-# Uso no console R, a partir da raiz deste projeto:
+# Uso, a partir da raiz deste projeto:
+#   Rscript scripts/funcoes.R ../predictive.factory   # gera as paginas e atualiza os indices
+#   Rscript scripts/funcoes.R                          # so atualiza os indices
+# No console R:
+#   Sys.setenv(PF_PROJETO = "../predictive.factory")
 #   source("scripts/funcoes.R", encoding = "UTF-8")
-# ou no terminal:
-#   Rscript scripts/funcoes.R ../predictive.factory
 #
-# Entrada (primeiro argumento ou variavel PF_PACOTE):
-#   - raiz do pacote (pasta com DESCRIPTION): executa roxygen2::roxygenise()
-#     e le <pacote>/man/*.Rd. Defina PF_ROXYGENISE=false para apenas ler man/;
-#   - ou uma pasta contendo arquivos .Rd ja gerados.
+# Entrada:
+#   - pasta do projeto predictive.factory (primeiro argumento ou variavel PF_PROJETO). Quando
+#     informada, a funcao RenderRoxygenToQuarto() do proprio projeto gera uma pagina .qmd por
+#     funcao em referencia/funcoes/. Sem a pasta, as paginas ja copiadas para referencia/funcoes/
+#     sao mantidas e apenas os indices sao refeitos;
+#   - referencia/ordem-pipeline.csv: etapa de cada funcao, na ordem do pipeline.
 # Saida:
-#   referencia/<funcao>.qmd    uma pagina por topico Rd (listadas no menu lateral)
-#   _referencia-indice.qmd     tabela de funcoes incluida no capitulo 18
-#   _referencia-pdf.qmd        mesmas paginas, como secoes, para o ebook_pdf.qmd
-# Requisitos: R (pacote tools, nativo) e Quarto CLI no PATH (usa o pandoc embutido).
+#   referencia/funcoes/<Funcao>.qmd          paginas de ajuda (geradas pela RenderRoxygenToQuarto)
+#   _quarto.yml                              lista de capitulos da Parte IV, entre os marcadores
+#   referencia/_indice-funcoes.qmd           tabelas por etapa, incluidas em referencia/index.qmd
+#   pipeline/_funcoes-<etapa>.qmd            listas de funcoes incluidas nos capitulos do pipeline
+#   _referencia-pdf.qmd                      paginas das funcoes como secoes, para o ebook_pdf.qmd
 
+# Garante leitura e gravacao em UTF-8
 if(!isTRUE(l10n_info()[["UTF-8"]])){
   invisible(Sys.setlocale("LC_CTYPE", "C.UTF-8"))
 }
-commandArgs <- commandArgs(trailingOnly = TRUE)
-sourcePath <- if(length(commandArgs) > 0L) commandArgs[1L] else Sys.getenv("PF_PACOTE", "../predictive.factory")
-runRoxygen <- !identical(tolower(Sys.getenv("PF_ROXYGENISE", "true")), "false")
-generatedMark <- "<!-- Gerado por scripts/funcoes.R. Edite o roxygen2 da funcao, nao este arquivo. -->"
 
-if(!dir.exists(sourcePath)){
-  message("Pasta de origem nao encontrada: ", sourcePath, ". Paginas de funcoes mantidas sem alteracao.")
-} else {
-  rdDir <- sourcePath
-  if(file.exists(file.path(sourcePath, "DESCRIPTION"))){
-    if(runRoxygen && requireNamespace("roxygen2", quietly = TRUE)){
-      roxygen2::roxygenise(sourcePath, roclets = "rd")
-    }
-    rdDir <- file.path(sourcePath, "man")
-  }
-  rdFiles <- sort(list.files(rdDir, pattern = "\\.[Rr]d$", full.names = TRUE))
+# Parametros de entrada e caminhos fixos do livro
+argumentos <- commandArgs(trailingOnly = TRUE)
+projetoPath <- if(length(argumentos) > 0L) argumentos[1L] else Sys.getenv("PF_PROJETO", "")
+funcoesDir <- file.path("referencia", "funcoes")
+ordemPath <- file.path("referencia", "ordem-pipeline.csv")
+marcadorInicio <- "# >>> funcoes: lista gerada por scripts/funcoes.R"
+marcadorFim <- "# <<< funcoes"
+avisoGerado <- "<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->"
 
-  quartoPath <- Sys.which("quarto")
-  if(!nzchar(quartoPath)){
-    stop("Quarto CLI nao encontrado no PATH da sessao R.")
-  }
-
-  sectionNames <- c(
-    "Description" = "Descri\u00e7\u00e3o", "Usage" = "Uso", "Arguments" = "Argumentos",
-    "Details" = "Detalhes", "Value" = "Valor", "Note" = "Observa\u00e7\u00e3o",
-    "Author(s)" = "Autoria", "References" = "Refer\u00eancias", "See Also" = "Veja tamb\u00e9m",
-    "Examples" = "Exemplos", "Format" = "Formato", "Source" = "Fonte")
-
-  dir.create("referencia", showWarnings = FALSE)
-  generatedFiles <- character()
-  indexRows <- character()
-  pdfLines <- character()
-
-  for(rdPath in rdFiles){
-    rdObject <- tools::parse_Rd(rdPath, encoding = "UTF-8")
-    tags <- vapply(rdObject, function(node) attr(node, "Rd_tag"), character(1))
-    docType <- paste(unlist(rdObject[tags == "\\docType"]), collapse = "")
-    isPackageDoc <- grepl("package", docType)
-    if(any(tags == "\\keyword") && any(grepl("internal", unlist(rdObject[tags == "\\keyword"])))){
-      next
-    }
-    rdName <- trimws(paste(unlist(rdObject[tags == "\\name"]), collapse = ""))
-    rdTitle <- trimws(gsub("\\s+", " ", paste(unlist(rdObject[tags == "\\title"]), collapse = "")))
-    fileStem <- gsub("[^A-Za-z0-9_-]", "-", rdName)
-
-    htmlFile <- tempfile(fileext = ".html")
-    mdFile <- tempfile(fileext = ".md")
-    tools::Rd2HTML(rdPath, out = htmlFile, no_links = TRUE, outputEncoding = "UTF-8")
-    status <- system2(quartoPath, c("pandoc", shQuote(htmlFile), "-f", "html",
-      "-t", "gfm",
-      "--wrap=none", "-o", shQuote(mdFile)))
-    if(status != 0L){
-      stop("Falha na conversao do topico ", rdName, ".")
-    }
-    bodyLines <- readLines(mdFile, warn = FALSE, encoding = "UTF-8")
-
-    # Remove a tabela de cabecalho e o titulo gerados pelo Rd2HTML
-    titleLine <- grep("^## ", bodyLines)[1L]
-    if(!is.na(titleLine)){
-      bodyLines <- bodyLines[-seq_len(titleLine)]
-    }
-    # Secoes em portugues e no nivel 2
-    for(englishName in names(sectionNames)){
-      pattern <- sprintf("^#{2,4} %s\\s*$", gsub("([()])", "\\\\\\1", englishName))
-      bodyLines <- sub(pattern, sprintf("## %s", sectionNames[[englishName]]), bodyLines)
-    }
-    bodyLines <- sub("^#{3,4} ", "## ", bodyLines)
-    bodyLines <- sub("^``` *R$", "``` r", bodyLines)
-    bodyLines <- bodyLines[!grepl("^</?div[^>]*>$", bodyLines)]
-
-    pageLines <- c(
-      generatedMark,
-      "",
-      sprintf("# `%s` {#fn-%s}", rdName, fileStem),
-      "",
-      sprintf("::: {.pf-fn-title}\n%s\n:::", rdTitle),
-      "",
-      bodyLines)
-    targetPath <- file.path("referencia", sprintf("%s.qmd", fileStem))
-    writeLines(pageLines, targetPath, useBytes = TRUE)
-    generatedFiles <- c(generatedFiles, targetPath)
-
-    rowLabel <- if(isPackageDoc) "pacote" else "fun\u00e7\u00e3o"
-    indexRows <- c(indexRows, sprintf("| [`%s`](referencia/%s.qmd) | %s | %s |",
-      rdName, fileStem, rdTitle, rowLabel))
-    # No PDF cada funcao vira secao do capitulo de referencia (titulos um nivel abaixo)
-    pdfPage <- pageLines[-1L]
-    pdfPage <- sub("^(#+) ", "#\\1 ", pdfPage)
-    pdfLines <- c(pdfLines, pdfPage, "")
-  }
-
-  # Remove paginas geradas anteriormente cujo topico deixou de existir
-  previousFiles <- list.files("referencia", pattern = "\\.qmd$", full.names = TRUE)
-  for(previousPath in setdiff(previousFiles, generatedFiles)){
-    firstLine <- readLines(previousPath, n = 1L, warn = FALSE, encoding = "UTF-8")
-    if(identical(firstLine, generatedMark)){
-      unlink(previousPath)
-    }
-  }
-
-  if(length(indexRows) == 0L){
-    indexLines <- c(generatedMark, "", "Nenhuma fun\u00e7\u00e3o documentada foi encontrada.")
-  } else {
-    indexLines <- c(generatedMark, "", "| Fun\u00e7\u00e3o | Descri\u00e7\u00e3o | Tipo |", "|---|---|---|", indexRows)
-  }
-  writeLines(indexLines, "_referencia-indice.qmd", useBytes = TRUE)
-  writeLines(c(generatedMark, "", pdfLines), "_referencia-pdf.qmd", useBytes = TRUE)
-  message("Paginas de funcoes geradas: ", length(generatedFiles), ".")
+# Le o valor de um campo do cabecalho YAML de uma pagina gerada
+LerCampoYaml <- function(linhas, campo){
+  valor <- sub(paste0("^", campo, ":\\s*"), "", grep(paste0("^", campo, ":"), linhas, value = TRUE))
+  if(length(valor) == 0L) return("")
+  valor <- sub('^"(.*)"$', "\\1", valor[1L])
+  gsub('\\\\"', '"', valor)
 }
+
+# Converte o nome da etapa em identificador de arquivo (sem acentos e espacos)
+SlugEtapa <- function(etapa){
+  slug <- iconv(tolower(etapa), "UTF-8", "ASCII//TRANSLIT")
+  slug <- gsub("[^a-z0-9]+", "-", slug)
+  gsub("^-|-$", "", slug)
+}
+
+# Gera as paginas a partir do projeto, quando a pasta e informada
+if(nzchar(projetoPath)){
+  renderPath <- file.path(projetoPath, "Funcoes", "RenderRoxygenToQuarto.R")
+  if(!file.exists(renderPath)){
+    stop("RenderRoxygenToQuarto.R nao encontrado em ", renderPath)
+  }
+  source(renderPath, encoding = "UTF-8")
+  RenderRoxygenToQuarto(
+    listFunctions = list.files(file.path(projetoPath, "Funcoes"), pattern = "\\.R$",
+                               full.names = TRUE),
+    pathOutputQmd = funcoesDir
+  )
+  # O indice por familia gerado pela funcao e substituido pelo indice por etapa do livro
+  unlink(file.path(funcoesDir, "index.qmd"))
+}
+
+# Paginas disponiveis e ordem definida no CSV
+paginas <- tools::file_path_sans_ext(list.files(funcoesDir, pattern = "\\.qmd$"))
+paginas <- setdiff(paginas, "index")
+ordem <- read.csv(ordemPath, encoding = "UTF-8", stringsAsFactors = FALSE)
+
+# Funcoes do CSV sem pagina sao ignoradas; paginas fora do CSV entram em "Fora do pipeline"
+semPagina <- setdiff(ordem$funcao, paginas)
+if(length(semPagina) > 0L){
+  warning("Sem pagina em referencia/funcoes: ", paste(semPagina, collapse = ", "), call. = FALSE)
+}
+ordem <- ordem[ordem$funcao %in% paginas, , drop = FALSE]
+foraCsv <- setdiff(paginas, ordem$funcao)
+if(length(foraCsv) > 0L){
+  warning("Fora de referencia/ordem-pipeline.csv (incluidas em 'Fora do pipeline'): ",
+          paste(foraCsv, collapse = ", "), call. = FALSE)
+  ordem <- rbind(ordem, data.frame(etapa = "Fora do pipeline", funcao = sort(foraCsv)))
+}
+
+# Titulo de cada pagina, lido do subtitulo YAML
+ordem$titulo <- vapply(ordem$funcao, function(funcao){
+  LerCampoYaml(readLines(file.path(funcoesDir, paste0(funcao, ".qmd")), encoding = "UTF-8"),
+               "subtitle")
+}, character(1L))
+
+# Atualiza a lista de capitulos da Parte IV no _quarto.yml, entre os marcadores
+quartoYml <- readLines("_quarto.yml", encoding = "UTF-8")
+posInicio <- which(trimws(quartoYml) == marcadorInicio)
+posFim <- which(trimws(quartoYml) == marcadorFim)
+if(length(posInicio) != 1L || length(posFim) != 1L || posFim < posInicio){
+  stop("Marcadores da lista de funcoes nao encontrados no _quarto.yml")
+}
+recuo <- sub("#.*$", "", quartoYml[posInicio])
+capitulos <- paste0(recuo, "- ", funcoesDir, "/", ordem$funcao, ".qmd")
+quartoYml <- c(quartoYml[seq_len(posInicio)], capitulos, quartoYml[posFim:length(quartoYml)])
+writeLines(enc2utf8(quartoYml), "_quarto.yml", useBytes = TRUE)
+
+# Indice da Parte IV: uma tabela por etapa, na ordem do pipeline
+etapas <- unique(ordem$etapa)
+indice <- avisoGerado
+for(etapa in etapas){
+  bloco <- ordem[ordem$etapa == etapa, , drop = FALSE]
+  indice <- c(indice, "", paste0("## ", etapa), "", "| Função | Descrição |", "|---|---|",
+              paste0("| [", bloco$funcao, "](funcoes/", bloco$funcao, ".qmd) | ",
+                     gsub("|", "\\|", bloco$titulo, fixed = TRUE), " |"))
+}
+writeLines(enc2utf8(indice), file.path("referencia", "_indice-funcoes.qmd"), useBytes = TRUE)
+
+# Listas por etapa incluidas nos capitulos do pipeline (links relativos a pipeline/)
+for(etapa in etapas){
+  bloco <- ordem[ordem$etapa == etapa, , drop = FALSE]
+  lista <- c(avisoGerado, "", paste0("**", etapa, "**"), "",
+             paste0("- [`", bloco$funcao, "()`](../referencia/funcoes/", bloco$funcao, ".qmd): ",
+                    bloco$titulo))
+  writeLines(enc2utf8(lista), file.path("pipeline", paste0("_funcoes-", SlugEtapa(etapa), ".qmd")),
+             useBytes = TRUE)
+}
+
+# Versao para o PDF: cada pagina vira uma secao, sem o cabecalho YAML
+pdf <- avisoGerado
+for(funcao in ordem$funcao){
+  linhas <- readLines(file.path(funcoesDir, paste0(funcao, ".qmd")), encoding = "UTF-8")
+  fimYaml <- which(linhas == "---")[2L]
+  corpo <- linhas[(fimYaml + 1L):length(linhas)]
+  corpo <- sub("^## ", "### ", corpo)
+  corpo <- corpo[!grepl("^\\[!\\[", corpo)]
+  pdf <- c(pdf, "", paste0("## ", funcao, " {.unnumbered}"), "",
+           paste0("*", ordem$titulo[ordem$funcao == funcao], "*"), corpo)
+}
+writeLines(enc2utf8(pdf), "_referencia-pdf.qmd", useBytes = TRUE)
+
+message("Parte IV atualizada: ", nrow(ordem), " funções em ", length(etapas), " etapas.")

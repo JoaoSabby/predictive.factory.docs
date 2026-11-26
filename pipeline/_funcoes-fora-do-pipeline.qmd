@@ -2,6 +2,7 @@
 
 **Fora do pipeline**
 
+::: {.content-visible when-format="html"}
 - [`AddColumn_TARGET_PROB_LEVEL()`](../referencia/funcoes/AddColumn_TARGET_PROB_LEVEL.qmd): Adicionar o Nível de Probabilidade da Predição
 - [`BuildPipelinePublishing()`](../referencia/funcoes/BuildPipelinePublishing.qmd): Construir o Pipeline de Publicação do Modelo
 - [`ConsolidatePredictionData()`](../referencia/funcoes/ConsolidatePredictionData.qmd): Consolidar a Feature Store de Predição em Memória
@@ -15,3 +16,20 @@
 - [`PublishModelRegistry_ML_FEATURE_STORE()`](../referencia/funcoes/PublishModelRegistry_ML_FEATURE_STORE.qmd): Publicar a Feature Store In-Memory na Tabela Persistente
 - [`RegisterPredictiveModel()`](../referencia/funcoes/RegisterPredictiveModel.qmd): Registrar os Metadados do Modelo Preditivo
 - [`RenderRoxygenToQuarto()`](../referencia/funcoes/RenderRoxygenToQuarto.qmd): Renderizar Cabeçalhos roxygen2 em Páginas Quarto
+:::
+
+::: {.content-visible unless-format="html"}
+- [`AddColumn_TARGET_PROB_LEVEL()`](#fn-AddColumn_TARGET_PROB_LEVEL): Adicionar o Nível de Probabilidade da Predição
+- [`BuildPipelinePublishing()`](#fn-BuildPipelinePublishing): Construir o Pipeline de Publicação do Modelo
+- [`ConsolidatePredictionData()`](#fn-ConsolidatePredictionData): Consolidar a Feature Store de Predição em Memória
+- [`CreateTable_IM_ML_FEATURE_CATALOG()`](#fn-CreateTable_IM_ML_FEATURE_CATALOG): Criar a Tabela do Catálogo de Features
+- [`LoadArtifacts()`](#fn-LoadArtifacts): Carregar um Artefato Persistido em Parquet ou qs2
+- [`PersistArtifacts()`](#fn-PersistArtifacts): Persistir um Artefato em Parquet ou qs2
+- [`PrepareFitModelXGBoost()`](#fn-PrepareFitModelXGBoost): Preparar as Matrizes Esparsas de Ajuste do XGBoost
+- [`PrepareTuneModelFoldsXGBoost()`](#fn-PrepareTuneModelFoldsXGBoost): Preparar Folds Nativos do XGBoost em Memória
+- [`PrepareTuneModelFoldXGBoost()`](#fn-PrepareTuneModelFoldXGBoost): Preparar as Matrizes Quantizadas de um Fold do XGBoost
+- [`PrepareTuneModelFoldsLightGBM()`](#fn-PrepareTuneModelFoldsLightGBM): Preparar Folds Nativos do LightGBM
+- [`PublishModelRegistry_ML_FEATURE_STORE()`](#fn-PublishModelRegistry_ML_FEATURE_STORE): Publicar a Feature Store In-Memory na Tabela Persistente
+- [`RegisterPredictiveModel()`](#fn-RegisterPredictiveModel): Registrar os Metadados do Modelo Preditivo
+- [`RenderRoxygenToQuarto()`](#fn-RenderRoxygenToQuarto): Renderizar Cabeçalhos roxygen2 em Páginas Quarto
+:::

@@ -115,9 +115,14 @@ writeLines(enc2utf8(indice), file.path("referencia", "_indice-funcoes.qmd"), use
 # Listas por etapa incluidas nos capitulos do pipeline (links relativos a pipeline/)
 for(etapa in etapas){
   bloco <- ordem[ordem$etapa == etapa, , drop = FALSE]
+  # HTML: link para a pagina da funcao; PDF: link para a secao da funcao no proprio PDF
   lista <- c(avisoGerado, "", paste0("**", etapa, "**"), "",
+             "::: {.content-visible when-format=\"html\"}",
              paste0("- [`", bloco$funcao, "()`](../referencia/funcoes/", bloco$funcao, ".qmd): ",
-                    bloco$titulo))
+                    bloco$titulo),
+             ":::", "", "::: {.content-visible unless-format=\"html\"}",
+             paste0("- [`", bloco$funcao, "()`](#fn-", bloco$funcao, "): ", bloco$titulo),
+             ":::")
   writeLines(enc2utf8(lista), file.path("pipeline", paste0("_funcoes-", SlugEtapa(etapa), ".qmd")),
              useBytes = TRUE)
 }

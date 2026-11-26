@@ -1,0 +1,135 @@
+---
+title: "LogPipelineExecutionRegistry"
+subtitle: "Gravar a Linha de Auditoria da Execução de um Target"
+---
+
+## Uso
+
+```r
+LogPipelineExecutionRegistry(
+  logsRegistryPath,
+  targetName,
+  masterPid,
+  workerPid,
+  horarioInicio,
+  horarioFim,
+  ramInicial,
+  ramFinal,
+  statusExecucao,
+  mensagemErro
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Acrescenta ao arquivo de auditoria do dia uma linha delimitada por `|` com o nome do
+target, os PIDs, os horários, a duração, a memória disponível e o status da execução.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `logsRegistryPath` | Caminho da pasta do registro de auditoria. |
+| `targetName` | Nome do target. |
+| `masterPid` | PID do processo mestre, lido de `MASTER_PID`; texto vazio quando não definido. |
+| `workerPid` | PID do processo que executou o target. |
+| `horarioInicio` | Instante de início (`POSIXct`). |
+| `horarioFim` | Instante de término (`POSIXct`). |
+| `ramInicial` | Memória disponível no início, em MB, como texto, ou `"NA"`. |
+| `ramFinal` | Memória disponível no término, em MB, como texto, ou `"NA"`. |
+| `statusExecucao` | `"success"` ou `"error"`. |
+| `mensagemErro` | Mensagem de erro sem quebras de linha e sem `\|`; texto vazio em caso de sucesso. |
+
+## Detalhes
+
+O arquivo é `execution_ledger_AAAAMMDD.txt` em `logsRegistryPath`, um por dia. Cada
+linha contém, nesta ordem:
+
++---------+---------------------------------------------------+
+| Posição | Campo                                             |
++=========+===================================================+
+| 1       | `targetName`                                      |
++---------+---------------------------------------------------+
+| 2       | `masterPid`                                       |
++---------+---------------------------------------------------+
+| 3       | `workerPid`                                       |
++---------+---------------------------------------------------+
+| 4       | `horarioInicio`, no formato `AAAA-MM-DD HH:MM:SS` |
++---------+---------------------------------------------------+
+| 5       | `horarioFim`, no mesmo formato                    |
++---------+---------------------------------------------------+
+| 6       | duração em minutos, com três casas decimais       |
++---------+---------------------------------------------------+
+| 7       | `ramInicial`, memória disponível em MB            |
++---------+---------------------------------------------------+
+| 8       | `ramFinal`, memória disponível em MB              |
++---------+---------------------------------------------------+
+| 9       | `statusExecucao`                                  |
++---------+---------------------------------------------------+
+| 10      | `mensagemErro`                                    |
++---------+---------------------------------------------------+
+
+A duração é:
+
+$$\Delta t = \mathrm{round}\left(\frac{t_{fim} - t_{inicio}}{60}, 3\right)$$
+
+com tempos em segundos. A linha é escrita com `cat(..., "\n")`, que insere um espaço
+antes da quebra de linha.
+
+::: {.callout-note}
+<i class="fa-solid fa-circle-info"></i> **Escritas Concorrentes:**
+Workers paralelos escrevem no mesmo arquivo em modo de acréscimo. Cada chamada grava
+uma linha curta, mas não há bloqueio explícito de arquivo.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- cria ou acrescenta uma linha ao arquivo `execution_ledger_AAAAMMDD.txt`.
+
+## Retorno
+
+`NULL` invisível.
+
+## Exemplos
+
+```r
+LogPipelineExecutionRegistry(
+  logsRegistryPath = tempdir(),
+  targetName = "exemplo",
+  masterPid = "",
+  workerPid = Sys.getpid(),
+  horarioInicio = Sys.time() - 60,
+  horarioFim = Sys.time(),
+  ramInicial = "1024",
+  ramFinal = "1000",
+  statusExecucao = "success",
+  mensagemErro = ""
+)
+```
+
+## Família
+
+**Registro de Execução**
+
+- [LogPipelineExecution](LogPipelineExecution.qmd)
+- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
+- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
+
+## Ver também
+
+- [LogPipelineExecution](LogPipelineExecution.qmd)
+
+## Referências
+
+- @rfc4180
+
+---
+
+*Gerado a partir de `LogPipelineExecutionRegistry.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

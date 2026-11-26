@@ -1,0 +1,10 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Execução e registro dos targets**
+
+- [`InitializeTargetExecution()`](../referencia/funcoes/InitializeTargetExecution.qmd): Inicializar a Execução de um Target
+- [`LogPipelineExecution()`](../referencia/funcoes/LogPipelineExecution.qmd): Executar um Target com Registro de Traces, Telemetria e Auditoria
+- [`LogPipelineExecutionTraces()`](../referencia/funcoes/LogPipelineExecutionTraces.qmd): Redirecionar a Saída do Console de um Target para Arquivo
+- [`LogPipelineExecutionTelemetry()`](../referencia/funcoes/LogPipelineExecutionTelemetry.qmd): Iniciar a Telemetria de Hardware de um Target
+- [`LogPipelineExecutionRegistry()`](../referencia/funcoes/LogPipelineExecutionRegistry.qmd): Gravar a Linha de Auditoria da Execução de um Target
+- [`TerminateTarget()`](../referencia/funcoes/TerminateTarget.qmd): Finalizar a Execução de um Target

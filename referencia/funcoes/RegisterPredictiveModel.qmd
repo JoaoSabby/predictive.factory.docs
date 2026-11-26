@@ -1,0 +1,74 @@
+---
+title: "RegisterPredictiveModel"
+subtitle: "Registrar os Metadados do Modelo Preditivo"
+---
+
+## Uso
+
+```r
+RegisterPredictiveModel(predictiveModel, modelRunConfig)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Registra metadados do ambiente de execução do modelo preditivo. Na implementação atual,
+consulta apenas as versões dos pacotes carregados na sessão.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `predictiveModel` | Modelo preditivo final treinado. Não utilizado na implementação atual. |
+| `modelRunConfig` | Lista de configuração da execução, com a estrutura de `LoadModelRunConfig()`. Não utilizada na implementação atual. |
+
+## Detalhes
+
+A função chama `ConsultarVersoesPacotes()` com o vetor de pacotes carregados por
+`pacman::p_loaded()` e retorna `TRUE` de forma invisível.
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Implementação Parcial:**
+Os argumentos `predictiveModel` e `modelRunConfig` são recebidos, mas não são
+utilizados no corpo da função, e o resultado de `ConsultarVersoesPacotes()` não é
+persistido nem retornado. A função está definida no arquivo `PublishModelRegistry.R`,
+cujo nome difere do nome da função, e não é chamada por nenhum pipeline do projeto.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+`TRUE` invisível.
+
+## Exemplos
+
+```r
+RegisterPredictiveModel(
+  predictiveModel = NULL,
+  modelRunConfig = LoadModelRunConfig()
+)
+```
+
+## Família
+
+**Publicação do Modelo**
+
+- [PublishModelRegistry_ML_FEATURE_STORE](PublishModelRegistry_ML_FEATURE_STORE.qmd)
+
+## Ver também
+
+- [PublishModelRegistry_ML_FEATURE_STORE](PublishModelRegistry_ML_FEATURE_STORE.qmd)
+- `pacman::p_loaded`
+
+## Referências
+
+- @pacman
+
+---
+
+*Gerado a partir de `PublishModelRegistry.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

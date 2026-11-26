@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-sby-avx512" class="pf-frame" src="../widgets/sbyadanear_avx512.html" title="Motor numérico AVX-512 e oneMKL" loading="lazy" style="min-height:780px"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Motor numérico AVX-512 e oneMKL.*
+:::

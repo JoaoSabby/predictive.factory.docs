@@ -1,0 +1,7 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Avaliação do modelo**
+
+- [`EvaluateModel()`](../referencia/funcoes/EvaluateModel.qmd): Avaliar o Desempenho do Modelo na Base de Teste
+- [`PredictModelXGBoost()`](../referencia/funcoes/PredictModelXGBoost.qmd): Executar a Predição Binária com XGBoost
+- [`EstimateBinaryPerformance()`](../referencia/funcoes/EstimateBinaryPerformance.qmd): Estimar o Desempenho de um Modelo Preditivo Binário

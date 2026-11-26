@@ -1,19 +1,20 @@
 project:
-  type: website
-  output-dir: _site
-  render:
-    - "*.qmd"
-    - "referencia/*.qmd"
-    - "!ebook_pdf.qmd"
+  type: book
+  output-dir: _book
   resources:
     - widgets/
     - images/
+    - recursos/
+  post-render:
+    - scripts/busca-offline.R
 
-website:
+book:
   title: "predictive.factory"
+  subtitle: "Documentação técnica, arquitetura e guias interativos"
+  author:
+    - name: "João Batista Gonçalves de Brito"
   description: "Documentação técnica, arquitetura e guias interativos da Fábrica Preditiva."
   favicon: images/favicon.png
-  site-url: ""
   search:
     location: sidebar
     type: textbox
@@ -21,59 +22,131 @@ website:
   page-navigation: true
   back-to-top-navigation: true
   bread-crumbs: true
-  navbar:
-    background: primary
-    left:
-      - text: "Início"
-        href: index.qmd
-      - text: "Funções"
-        href: 18-referencia-funcoes.qmd
-      - text: "Recursos interativos"
-        href: 90-recursos-interativos.qmd
-    right:
-      - icon: file-earmark-pdf
-        href: ebook_pdf.pdf
-        aria-label: "Baixar PDF"
   sidebar:
     style: floating
     logo: images/icon.png
-    pinned: true
     collapse-level: 1
-    contents:
-      - index.qmd
-      - section: "Fundamentos e arquitetura"
-        contents:
-          - 01-fundamentos.qmd
-          - 02-qualidade-dados.qmd
-          - 03-modelagem-dados.qmd
-          - 04-infraestrutura-hpc.qmd
-          - 05-governanca-bancaria.qmd
-          - 06-padroes-metadados.qmd
-          - 07-engenharia-software.qmd
-          - 08-persistencia-oracle.qmd
-          - 09-preservacao-modelo.qmd
-          - 10-evolucao-tecnologica.qmd
-          - 11-matriz-aderencia.qmd
-      - section: "Métodos"
-        contents:
-          - 12-balanceamento-adanear.qmd
-          - 13-arvores-boosting.qmd
-          - 14-validacao-metricas.qmd
-          - 15-avaliacao-leaderboard.qmd
-      - section: "Modelagem e pipeline"
-        contents:
-          - 16-modelagem.qmd
-          - 17-pipeline.qmd
-      - section: "Referência de funções"
-        href: 18-referencia-funcoes.qmd
-        contents: "referencia/*.qmd"
-      - section: "Apêndices"
-        contents:
-          - 90-recursos-interativos.qmd
-          - 99-referencias.qmd
   page-footer:
     left: "predictive.factory · Documentação técnica"
-    right: "Construído com [Quarto](https://quarto.org) · funciona sem internet"
+    right: "Construído com Quarto · funciona sem internet e sem servidor"
+  chapters:
+    - index.qmd
+    - part: "Introdução"
+      chapters:
+        - introducao/fundamentos-arquitetura.qmd
+        - introducao/qualidade-dados.qmd
+        - introducao/modelagem-dados.qmd
+        - introducao/infraestrutura-hpc.qmd
+        - introducao/governanca-bancaria.qmd
+        - introducao/padroes-metadados.qmd
+        - introducao/engenharia-software.qmd
+        - introducao/persistencia-oracle.qmd
+        - introducao/preservacao-modelo.qmd
+        - introducao/evolucao-tecnologica.qmd
+        - introducao/matriz-aderencia.qmd
+    - part: "Fundamentação teórica"
+      chapters:
+        - teoria/aprendizado-supervisionado.qmd
+        - teoria/arvores-boosting.qmd
+        - teoria/validacao-metricas.qmd
+        - teoria/otimizacao-hiperparametros.qmd
+        - teoria/desbalanceamento-classes.qmd
+        - teoria/avaliacao-leaderboard.qmd
+    - part: "Funcionamento do pipeline"
+      chapters:
+        - pipeline/visao-geral.qmd
+        - pipeline/configuracao-execucao.qmd
+        - pipeline/dados-features.qmd
+        - pipeline/modelagem-tuning.qmd
+        - pipeline/avaliacao-predicao.qmd
+        - pipeline/publicacao-registro.qmd
+    - part: "Referência das funções"
+      chapters:
+        - referencia/index.qmd
+        # >>> funcoes: lista gerada por scripts/funcoes.R
+        - referencia/funcoes/DefineOptionsSetup.qmd
+        - referencia/funcoes/RunPipeline.qmd
+        - referencia/funcoes/CheckPredictiveModelExists.qmd
+        - referencia/funcoes/ConfigurePredictiveModelRun.qmd
+        - referencia/funcoes/LoadModelRunConfig.qmd
+        - referencia/funcoes/ShowStartupBanner.qmd
+        - referencia/funcoes/CreateCrewControllerGroup.qmd
+        - referencia/funcoes/BuildPipeline.qmd
+        - referencia/funcoes/MsgBuildPipeline.qmd
+        - referencia/funcoes/BuildPipelineBegin.qmd
+        - referencia/funcoes/BuildPipelineHistoricalData.qmd
+        - referencia/funcoes/BuildPipelineModeling.qmd
+        - referencia/funcoes/BuildPipelinePredictingData.qmd
+        - referencia/funcoes/BuildPipelinePredicting.qmd
+        - referencia/funcoes/BuildPipelineFinish.qmd
+        - referencia/funcoes/InitializeTargetExecution.qmd
+        - referencia/funcoes/LogPipelineExecution.qmd
+        - referencia/funcoes/LogPipelineExecutionTraces.qmd
+        - referencia/funcoes/LogPipelineExecutionTelemetry.qmd
+        - referencia/funcoes/LogPipelineExecutionRegistry.qmd
+        - referencia/funcoes/TerminateTarget.qmd
+        - referencia/funcoes/CheckFeatureStore.qmd
+        - referencia/funcoes/DefineValidCustomers.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_CLIENTE.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_RFM.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd
+        - referencia/funcoes/GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd
+        - referencia/funcoes/Generate_IM_ML_FEATURE_STORE.qmd
+        - referencia/funcoes/ConsolidateHistoricalData.qmd
+        - referencia/funcoes/PrepareDataModel.qmd
+        - referencia/funcoes/TuneModel.qmd
+        - referencia/funcoes/TuneModelLastGrid.qmd
+        - referencia/funcoes/TuneModelBoundsXGBoost.qmd
+        - referencia/funcoes/TuneModelResampleFoldsXGBoost.qmd
+        - referencia/funcoes/BalanceClass.qmd
+        - referencia/funcoes/BalanceClassRandomUnder.qmd
+        - referencia/funcoes/BalanceClassAdanear.qmd
+        - referencia/funcoes/TuneModelEvaluateXGBoostFolds.qmd
+        - referencia/funcoes/TuneModelEvaluateXGBoost.qmd
+        - referencia/funcoes/FitModel.qmd
+        - referencia/funcoes/FitModelXGBoost.qmd
+        - referencia/funcoes/FitModelLightGBM.qmd
+        - referencia/funcoes/TuneModelBoundsLightGBM.qmd
+        - referencia/funcoes/EvaluateModel.qmd
+        - referencia/funcoes/PredictModelXGBoost.qmd
+        - referencia/funcoes/EstimateBinaryPerformance.qmd
+        - referencia/funcoes/PredictModel.qmd
+        - referencia/funcoes/AddColumn_TARGET_PROB_LEVEL.qmd
+        - referencia/funcoes/BuildPipelinePublishing.qmd
+        - referencia/funcoes/ConsolidatePredictionData.qmd
+        - referencia/funcoes/CreateTable_IM_ML_FEATURE_CATALOG.qmd
+        - referencia/funcoes/LoadArtifacts.qmd
+        - referencia/funcoes/PersistArtifacts.qmd
+        - referencia/funcoes/PrepareFitModelXGBoost.qmd
+        - referencia/funcoes/PrepareTuneModelFoldsXGBoost.qmd
+        - referencia/funcoes/PrepareTuneModelFoldXGBoost.qmd
+        - referencia/funcoes/PrepareTuneModelFoldsLightGBM.qmd
+        - referencia/funcoes/PublishModelRegistry_ML_FEATURE_STORE.qmd
+        - referencia/funcoes/RegisterPredictiveModel.qmd
+        - referencia/funcoes/RenderRoxygenToQuarto.qmd
+        # <<< funcoes
+  appendices:
+    - apendices/glossario.qmd
+    - apendices/recursos-interativos.qmd
+    - apendices/referencias.qmd
 
 format:
   html:
@@ -81,12 +154,15 @@ format:
       light: [cosmo, estilo/tema-claro.scss]
       dark: [cyborg, estilo/tema-escuro.scss]
     respect-user-color-scheme: true
-    css: estilo/pf.css
+    css:
+      - estilo/pf.css
+      - recursos/fontawesome/css/all.min.css
     toc: true
     toc-depth: 3
     toc-expand: 2
     toc-title: "Nesta página"
     number-sections: false
+    # MathML: as formulas sao desenhadas pelo proprio navegador, sem MathJax e sem internet
     html-math-method: mathml
     code-copy: true
     code-overflow: wrap
@@ -98,32 +174,8 @@ format:
     lightbox: auto
     link-external-newwindow: true
     date-modified: last-modified
-    # Ajuste de altura dos iframes (inline para
-    # funcionar em qualquer nivel de pasta, inclusive referencia/)
     include-after-body:
-      - text: |
-          <script>
-          /* Script local offline para ajuste automatico de altura dos iframes interativos.
-             O widget informa a altura do proprio conteudo via postMessage; o iframe recebe
-             exatamente essa altura, o que evita ciclos de crescimento. */
-          window.addEventListener('message', function(event){
-            var data = event.data;
-            if(!data || typeof data.height !== 'number') return;
-            var id = null;
-            if(data.type === 'pf-widget-resize' && data.id) id = 'frame-' + data.id;
-            if(data.type === 'sby-conceptual-resize') id = 'frame-sby-conceptual';
-            if(data.type === 'sby-avx512-resize') id = 'frame-sby-avx512';
-            if(!id) return;
-            var el = document.getElementById(id);
-            if(!el) return;
-            var target = Math.ceil(data.height);
-            var current = el.getBoundingClientRect().height;
-            if(Math.abs(current - target) > 4){
-              el.style.minHeight = '0';
-              el.style.height = target + 'px';
-            }
-          });
-          </script>
+      - file: recursos/ajuste-iframes.html
 
 lang: pt-BR
 date-format: "DD/MM/YYYY"

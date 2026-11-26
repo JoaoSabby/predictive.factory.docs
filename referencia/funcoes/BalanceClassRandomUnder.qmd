@@ -1,0 +1,77 @@
+---
+title: "BalanceClassRandomUnder"
+subtitle: "Balancear Classes por Subamostragem Aleatória"
+---
+
+## Uso
+
+```r
+BalanceClassRandomUnder(database, balanceClassConfig)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Reduz a classe majoritária (`TARGET == "Nao"`) por amostragem aleatória sem reposição,
+em proporção ao tamanho da classe minoritária, e mantém todos os registros da classe
+minoritária (`TARGET == "Sim"`).
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `database` | Data frame com `TARGET` (níveis `"Sim"` e `"Nao"`) e as features. |
+| `balanceClassConfig` | Lista com o elemento numérico `under_sampling`, razão entre registros majoritários mantidos e registros minoritários. |
+
+## Detalhes
+
+Sendo $n_{min}$ o número de registros com `TARGET == "Sim"` e $u$ o valor de
+`balanceClassConfig$under_sampling`, o número de registros da classe majoritária
+mantidos é:
+
+$$n_{maj} = \lfloor n_{min} \cdot u \rfloor$$
+
+limitado ao total disponível. A semente é fixada em `42` por `set.seed(42)`. O
+resultado contém primeiro os registros majoritários amostrados e depois os
+minoritários.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Data frame com $n_{maj} + n_{min}$ linhas e as mesmas colunas de
+`database`.
+
+## Exemplos
+
+```r
+balancedDataset <- BalanceClassRandomUnder(
+  database = trainingSet,
+  balanceClassConfig = list(under_sampling = 3)
+)
+```
+
+## Família
+
+**Balanceamento de Classes**
+
+- [BalanceClass](BalanceClass.qmd)
+- [BalanceClassAdanear](BalanceClassAdanear.qmd)
+
+## Ver também
+
+- [BalanceClass](BalanceClass.qmd)
+- [BalanceClassAdanear](BalanceClassAdanear.qmd)
+- `dplyr::slice_sample`
+
+## Referências
+
+- @he2009
+
+---
+
+*Gerado a partir de `BalanceClassRandomUnder.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

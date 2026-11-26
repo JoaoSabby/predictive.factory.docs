@@ -1,0 +1,91 @@
+---
+title: "PersistArtifacts"
+subtitle: "Persistir um Artefato em Parquet ou qs2"
+---
+
+## Uso
+
+```r
+PersistArtifacts(objeto, fileArtifacts, msgProcess = TRUE)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Grava um objeto em disco: tibbles em Parquet, por meio do DuckDB, e demais objetos em
+formato `qs2`, ajustando a extensão do arquivo ao formato.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `objeto` | Objeto R a persistir. |
+| `fileArtifacts` | Caminho do arquivo de destino, com ou sem extensão. |
+| `msgProcess` | Lógico: exibe mensagens de progresso (padrão: `TRUE`). |
+
+## Detalhes
+
+A extensão `.qs` ou `.parquet` informada em `fileArtifacts` é removida e substituída
+conforme o tipo do objeto:
+
++-------------+------------+----------------------------------------------------------+
+| Tipo do     | Formato    | Gravação                                                 |
+| objeto      |            |                                                          |
++=============+============+==========================================================+
+| tibble      | `.parquet` | `COPY ... TO` do DuckDB, com `ROW_GROUP_SIZE 250000` e   |
+|             |            | compressão ZSTD                                          |
++-------------+------------+----------------------------------------------------------+
+| demais      | `.qs`      | `qs2::qs_save()`, com `compress_level = 5` e `shuffle =  |
+|             |            | TRUE`                                                    |
++-------------+------------+----------------------------------------------------------+
+
+Data frames que não são tibbles são gravados em `qs2`. O número de threads do `qs2` vem
+da opção `threadsQS` ou, na ausência dela, de `QtdCores()`. As variáveis locais
+`nomeObjeto` e `funcaoChamadora` são calculadas, mas não usadas. A função não é chamada
+por nenhum pipeline do projeto.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- cria ou sobrescreve o arquivo `.parquet` ou `.qs`;
+- abre e desconecta uma instância DuckDB em memória para tibbles;
+- escreve no console as mensagens de progresso quando `msgProcess` é `TRUE`.
+
+## Retorno
+
+`NULL` invisível.
+
+## Exemplos
+
+```r
+PersistArtifacts(
+  objeto = trainingSet,
+  fileArtifacts = file.path(artifactsPath, "trainingSet")
+)
+```
+
+## Família
+
+**Persistência de Artefatos**
+
+- [LoadArtifacts](LoadArtifacts.qmd)
+
+## Ver também
+
+- [LoadArtifacts](LoadArtifacts.qmd)
+- `qs2::qs_save`
+
+## Referências
+
+- @raasveldt2019
+- @parquet
+- @qs2
+
+---
+
+*Gerado a partir de `PersistArtifacts.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

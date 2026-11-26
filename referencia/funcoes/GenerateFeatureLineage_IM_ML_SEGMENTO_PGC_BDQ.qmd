@@ -1,0 +1,171 @@
+---
+title: "GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ"
+subtitle: "Gerar o Feature Group de Segmento PGC"
+---
+
+## Uso
+
+```r
+GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ(
+  tabelaClientesValidos = "IM_ML_CLIENTES_VALIDOS_TREINO",
+  sufixoTabela = "TREINO",
+  dataFeature = "2026-01-01",
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = "2025-08-01",
+  dataAgregacaoFinal = "2026-01-31",
+  dataHistoricaInicial = "2023-02-01",
+  dataHistoricaFinal = "2026-01-31"
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Seleciona, na data de referência, a descrição do segmento PGC de cada cliente válido em
+`POS_CLIENTE_SEGMENTO_PGC_BDQ`, com espaços substituídos por underline.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `tabelaClientesValidos` | Vetor de caracteres de comprimento 1 com o nome da tabela de clientes válidos (`IM_ML_CLIENTES_VALIDOS_{SUFIXO}`), usada para restringir a população por `semi_join()`. Valor padrão de referência: `"IM_ML_CLIENTES_VALIDOS_TREINO"`, sobrescrito pelos pipelines. |
+| `sufixoTabela` | Vetor de caracteres; o primeiro elemento, em maiúsculas, compõe o nome da tabela de saída, como `"TREINO"` ou `"PREDICAO"`. Valor padrão de referência: `"TREINO"`, sobrescrito pelos pipelines. |
+| `dataFeature` | Data de referência dos preditores, no formato `"AAAA-MM-DD"`. Valor padrão de referência: `"2026-01-01"`, sobrescrito pelos pipelines. |
+| `janelaAgregacao` | Inteiro com o número de meses da janela de agregação. Não utilizado no corpo da função. Valor padrão de referência: `6L`, sobrescrito pelos pipelines. |
+| `janelaHistorico` | Inteiro com o número de meses da janela histórica. Não utilizado no corpo da função. Valor padrão de referência: `36L`, sobrescrito pelos pipelines. |
+| `dataAgregacaoInicial` | Data inicial da janela de agregação, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `"2025-08-01"`, sobrescrito pelos pipelines. |
+| `dataAgregacaoFinal` | Data final da janela de agregação, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `"2026-01-31"`, sobrescrito pelos pipelines. |
+| `dataHistoricaInicial` | Data inicial da janela histórica, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `"2023-02-01"`, sobrescrito pelos pipelines. |
+| `dataHistoricaFinal` | Data final da janela histórica, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `"2026-01-31"`, sobrescrito pelos pipelines. |
+
+## Detalhes
+
+Antes da consulta, `ConferirETL("POS_KPI_C")` verifica a carga da tabela de origem. São
+excluídos os registros com `COD_SEGMENTO_PGC == 999`. A descrição é convertida para
+texto de até 22 caracteres.
+
+A função segue o contrato comum dos feature groups: registra
+`on.exit(TerminateTarget())`, monta o nome da tabela de saída
+`IM_ML_SEGMENTO_PGC_BDQ_{SUFIXO}`, executa a consulta no Oracle por meio de `dbplyr` e
+grava o resultado com `DbCreateTableMemoryFromQuery()`, que remove a tabela anterior de
+mesmo nome. A função é descoberta pelos pipelines de dados por meio do prefixo
+`GenerateFeatureLineage_IM_ML_` e executada uma vez para treino e uma vez para
+predição.
+
+Espera-se um registro por cliente no mês. Clientes ausentes da tabela recebem valor
+nulo nas colunas deste grupo após a junção em `Generate_IM_ML_FEATURE_STORE()`.
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Encadeamento Interrompido:**
+A linha `arrange(desc(DATA_REFERENCIA))` não termina com o operador `|>`. O R
+interpreta a consulta como duas expressões: a primeira ordena a tabela e é descartada;
+a segunda chama `filter()` sem dados de entrada, o que termina com erro. Por isso, a
+tabela de saída não é criada.
+:::
+
+Os argumentos `janelaAgregacao`, `janelaHistorico`, `dataAgregacaoInicial`,
+`dataAgregacaoFinal`, `dataHistoricaInicial`, `dataHistoricaFinal` não são usados no
+corpo da função; existem para manter a assinatura comum chamada por `tar_map()`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- fecha as conexões de banco de dados ao final, inclusive em caso de erro, por meio de
+  `on.exit(TerminateTarget())`;
+- remove, se existir, e recria a tabela `IM_ML_SEGMENTO_PGC_BDQ_{SUFIXO}` no Oracle.
+
+## Linhagem de Dados
+
++---------------------+---------------------------------------------------------+
+| Elemento            | Valor                                                   |
++=====================+=========================================================+
+| Tabelas de origem   | `POS_CLIENTE_SEGMENTO_PGC_BDQ`, `tabelaClientesValidos` |
++---------------------+---------------------------------------------------------+
+| Filtro de período   | `DATA_REFERENCIA == dataFeature`                        |
++---------------------+---------------------------------------------------------+
+| Chave de junção     | `SEQUENCIA_CLIENTE`                                     |
++---------------------+---------------------------------------------------------+
+| Tabelas temporárias | nenhuma                                                 |
++---------------------+---------------------------------------------------------+
+| Tabela de saída     | `IM_ML_SEGMENTO_PGC_BDQ_{SUFIXO}`                       |
++---------------------+---------------------------------------------------------+
+
+## Dicionário de Features
+
++---------------------+---------------------------------------------------------------+
+| Coluna              | Descrição                                                     |
++=====================+===============================================================+
+| `SEQUENCIA_CLIENTE` | Identificador do cliente                                      |
++---------------------+---------------------------------------------------------------+
+| `Segmento`          | Descrição do segmento PGC com underline no lugar de espaços;  |
+|                     | texto de até 22 caracteres                                    |
++---------------------+---------------------------------------------------------------+
+
+## Retorno
+
+Vetor de caracteres de comprimento 1, invisível, com o nome da tabela criada
+(`IM_ML_SEGMENTO_PGC_BDQ_{SUFIXO}`).
+
+## Exemplos
+
+```r
+# Pré-condição: conexão Oracle e tabela de clientes válidos criadas
+tabelaFeature <- GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ(
+  tabelaClientesValidos = "IM_ML_CLIENTES_VALIDOS_TREINO",
+  sufixoTabela = "TREINO",
+  dataFeature = "2025-10-01",
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = "2025-05-01",
+  dataAgregacaoFinal = "2025-10-31",
+  dataHistoricaInicial = "2022-11-01",
+  dataHistoricaFinal = "2025-10-31"
+)
+```
+
+## Família
+
+**Geração de Feature Groups**
+
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+
+## Ver também
+
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Referências
+
+- @oracleinmemoryguide19
+- @dbplyr
+
+---
+
+*Gerado a partir de `GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

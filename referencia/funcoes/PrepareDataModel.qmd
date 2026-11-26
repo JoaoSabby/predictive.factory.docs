@@ -1,0 +1,107 @@
+---
+title: "PrepareDataModel"
+subtitle: "Preprocessar os Dados para o Modelo Preditivo"
+---
+
+## Uso
+
+```r
+PrepareDataModel(dataset)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Prepara uma base tabular para modelagem ou predição: imputa valores ausentes numéricos
+com zero, codifica variáveis de texto em indicadoras (one-hot), converte colunas
+binárias em lógicas e remove features constantes, com moda excessivamente frequente ou
+altamente correlacionadas.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `dataset` | Data frame ou tibble com a coluna `TARGET` (quando houver), as colunas de contexto e as features. |
+
+## Detalhes
+
+O número de threads é $\min(12, \text{predy\_threads\_limit})$ e configura
+`collapse`, `data.table` e `sbyops`. As etapas são:
+
+#. colunas inteiras: ausentes substituídos por `0L`;
+#. colunas `double` que não são datas: ausentes substituídos por `0` e valores
+   arredondados a seis casas;
+#. colunas de texto: convertidas em indicadoras por `mltools::one_hot()`, com remoção
+   da coluna original;
+#. colunas cujos valores pertencem a $\{0, 1\}$: convertidas para lógicas;
+#. remoção de colunas constantes por `sbyops::sby_select_non_constant()`, preservando
+   `TARGET` e as colunas de contexto (`predy_columns_key_context`);
+#. remoção de colunas cuja moda ocorre em proporção igual ou superior a
+   `predy_features_modal_frequency_threshold`;
+#. remoção de colunas com correlação igual ou superior a
+   `predy_features_correlation_threshold`.
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Exclusão por Posição:**
+Nas duas últimas etapas, a exclusão usa `-!!opt("predy_threads_limit")`. Como a opção é
+numérica, o `tidyselect` interpreta o valor como posição de coluna: é preservada a
+coluna nessa posição, e não as colunas de contexto.
+:::
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Treino e Predição:**
+A codificação one-hot e as três seleções de features são recalculadas a cada chamada,
+com base nos dados recebidos. Aplicada separadamente à base de treino e à base de
+predição, a função pode produzir conjuntos de colunas diferentes.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- altera a configuração global de threads de `collapse` e `data.table`;
+- altera a configuração de `sbyops` (limiares de uso de Fortran e BLAS e número de
+  threads);
+- escreve no console as etapas de progresso.
+
+## Retorno
+
+Tibble com as features preprocessadas, `TARGET` e as colunas de contexto que
+não forem removidas pelas etapas de moda e correlação.
+
+## Exemplos
+
+```r
+# Pré-condição: opções definidas por DefineOptionsSetup()
+dataModel <- PrepareDataModel(dataset = historicalData)
+```
+
+## Família
+
+**Modelagem Preditiva**
+
+- [FitModel](FitModel.qmd)
+- [FitModelLightGBM](FitModelLightGBM.qmd)
+- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+
+## Ver também
+
+- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- `mltools::one_hot`
+
+## Referências
+
+- @kuhn2019
+- @guyon2003
+- @collapse
+
+---
+
+*Gerado a partir de `PrepareDataModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

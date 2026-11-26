@@ -5,60 +5,88 @@
 ![Intel oneAPI](images/badges/tec-oneapi.svg) ![oneMKL](images/badges/tec-mkl.svg)
 ![DuckDB](images/badges/tec-duckdb.svg) ![Oracle Database](images/badges/tec-oracle.svg)
 
-Site Quarto da Fábrica Preditiva, com tema claro/escuro, busca local, widgets interativos e
-exportação PDF. Funciona **sem internet**: nenhuma dependência de CDN, fontes remotas ou shields.io.
+Livro Quarto da Fábrica Preditiva, com tema claro e escuro, busca, componentes interativos e
+exportação PDF. Funciona **100% offline**: depois de renderizar, basta abrir `_book/index.html`
+com dois cliques, sem servidor local e sem internet. d3, Observable Plot e Font Awesome ficam em
+`recursos/`; as fórmulas usam MathML, nativo do navegador.
 
 ## Construir
 
-Requisitos: Quarto CLI 1.5 ou posterior no PATH. Para o PDF: XeLaTeX, `fvextra` e fontes DejaVu.
-Para a referência de funções: R e, opcionalmente, `roxygen2`.
+Requisitos: Quarto CLI 1.5 ou posterior no PATH e R. Para o PDF: XeLaTeX, `fvextra` e fontes DejaVu.
 
 ```r
 # RStudio Server, na raiz deste projeto
-Sys.setenv(PF_PACOTE = "../predictive.factory")  # pasta do pacote com os roxygen2
-source("build.R", encoding = "UTF-8")             # funções + site em _site/
-source("buildPdf.R", encoding = "UTF-8")          # PDF em ebook_pdf.pdf
+Sys.setenv(PF_PROJETO = "../predictive.factory")  # pasta do projeto com Funcoes/*.R
+source("build.R", encoding = "UTF-8")              # funções + livro em _book/
+source("buildPdf.R", encoding = "UTF-8")           # PDF em ebook_pdf.pdf
 ```
 
 ```bash
 # Terminal
 Rscript scripts/funcoes.R ../predictive.factory
-quarto render                      # site em _site/
+quarto render                      # livro em _book/
 quarto render ebook_pdf.qmd        # PDF
-quarto preview                     # servidor local com recarga automática
 ```
 
-> O Observable JS usa módulos JavaScript, que o navegador bloqueia em `file://`. Para ver o site
-> localmente use `quarto preview` ou qualquer servidor estático (por exemplo,
-> `python -m http.server -d _site`). Em servidor interno, basta publicar `_site/`.
+Ao final do `quarto render`, `scripts/busca-offline.R` embute o índice de busca no próprio
+JavaScript do livro, para que a busca funcione em `file://`.
 
 ## Estrutura
 
 | Caminho | Conteúdo |
 |---|---|
-| `_quarto.yml` | Navegação, tema, menu lateral e opções globais |
-| `index.qmd` | Página inicial com shields e cartões de navegação |
-| `01`–`17-*.qmd` | Capítulos (esqueleto de títulos e seções) |
-| `18-referencia-funcoes.qmd` | Índice das funções; páginas em `referencia/` |
-| `90-recursos-interativos.qmd` | Catálogo de widgets, Observable JS e componentes, com código para copiar |
-| `99-referencias.qmd` | Bibliografia completa (ABNT) |
+| `_quarto.yml` | Livro: partes, apêndices, tema e opções globais |
+| `index.qmd` | Página inicial com cartões de navegação |
+| `introducao/` | Parte I: Introdução |
+| `teoria/` | Parte II: Fundamentação teórica |
+| `pipeline/` | Parte III: Funcionamento do pipeline, com as funções de cada etapa |
+| `referencia/` | Parte IV: Referência das funções (`index.qmd`, `ordem-pipeline.csv`) |
+| `referencia/funcoes/` | Páginas `.qmd` geradas pela `RenderRoxygenToQuarto`, uma por função |
+| `apendices/` | Glossário, recursos interativos (demonstração) e referências bibliográficas |
+| `_interativos/` | Um arquivo por componente interativo, usado com `include` nos capítulos |
+| `widgets/` | Páginas HTML dos componentes e o núcleo `pf-metrics.js`/`pf-metrics.css` |
+| `recursos/` | Cópias locais de d3, Plot e Font Awesome; ajuste de altura dos iframes |
 | `ebook_pdf.qmd` | Ordem dos capítulos no PDF |
-| `widgets/` | Widgets HTML offline e o núcleo `pf-metrics.js`/`pf-metrics.css` |
-| `estilo/` | Temas claro/escuro (SCSS) e estilos comuns (`pf.css`) |
-| `images/` | Logo, favicon, figuras e `badges/` |
-| `scripts/funcoes.R` | roxygen2 → uma página `.qmd` por função |
-| `scripts/badges.R` | Gera os shields SVG locais e `_badges.qmd` |
-| `referencias.bib`, `abnt.csl` | Bibliografia e estilo ABNT |
-| `schemas/`, `examples/` | Contratos JSON Schema e exemplos |
+| `estilo/` | Temas claro e escuro (SCSS) e estilos comuns (`pf.css`) |
+| `scripts/funcoes.R` | Gera as páginas de funções e os índices na ordem do pipeline |
+| `scripts/busca-offline.R` | Habilita a busca em `file://` após a renderização |
+| `referencias.bib`, `abnt.csl` | Bibliografia única do livro e estilo ABNT |
 
-## Referência de funções
+## Referência das funções
 
-`scripts/funcoes.R` recebe a raiz do pacote, executa `roxygen2::roxygenise()` (desative com
-`PF_ROXYGENISE=false`) e converte cada `man/*.Rd` em `referencia/<função>.qmd`, com seções em
-português (Descrição, Uso, Argumentos, Valor, Exemplos). Tópicos com `@keywords internal` são
-ignorados. O menu lateral lista `referencia/*.qmd` automaticamente; o capítulo 18 recebe uma tabela
-com todas as funções; no PDF, cada função vira uma seção do capítulo. Páginas de funções removidas
-do pacote são apagadas na execução seguinte. Edite sempre o roxygen2, não os `.qmd` gerados.
+As páginas ficam em `referencia/funcoes/` e são geradas pela função `RenderRoxygenToQuarto` do
+projeto predictive.factory. O caminho mais simples é:
+
+```bash
+Rscript scripts/funcoes.R ../predictive.factory
+```
+
+O script carrega `Funcoes/RenderRoxygenToQuarto.R` do projeto, gera um `.qmd` por função em
+`referencia/funcoes/` e depois:
+
+- monta o índice da Parte IV na ordem do pipeline, conforme `referencia/ordem-pipeline.csv`;
+  as funções sem uso ficam na seção **Fora do pipeline**;
+- atualiza a lista de páginas no `_quarto.yml` (entre os marcadores `# >>> funcoes` e `# <<< funcoes`);
+- gera `pipeline/_funcoes-<etapa>.qmd`, a tabela de funções incluída em cada capítulo do pipeline;
+- gera `_referencia-pdf.qmd` para o PDF.
+
+Também é possível rodar a `RenderRoxygenToQuarto` direto no projeto, com
+`pathOutputQmd = "<este repositório>/referencia/funcoes"`, e depois `Rscript scripts/funcoes.R`
+sem argumentos para refazer os índices. Uma função nova que não esteja no CSV entra em
+**Fora do pipeline** até ser adicionada a ele. Edite sempre o roxygen2, não os `.qmd` gerados.
+
+As citações do roxygen2 (`@references` com `- @chave`) são resolvidas pelo `referencias.bib`, que
+é a bibliografia única do livro.
+
+## Componentes interativos
+
+Cada componente tem um arquivo em `_interativos/` e entra no capítulo com uma linha:
+
+```markdown
+{{< include ../_interativos/roc-auc.qmd >}}
+```
+
+A página **Recursos interativos**, no apêndice, mostra todos eles.
 
 ## Shields
 
@@ -72,6 +100,5 @@ na página inicial, link para o site ou repositório oficial. Para editar, alter
 
 ## Publicação no GitLab Pages
 
-`.gitlab-ci.yml` renderiza o site e publica `_site/` como `public/`. A imagem do runner precisa ter
-o Quarto CLI; para incluir a referência de funções gerada, faça commit da pasta `referencia/`
-ou instale R no runner.
+`.gitlab-ci.yml` renderiza o livro e publica `_book/` como `public/`. A imagem do runner precisa ter
+o Quarto CLI e R; faça commit da pasta `referencia/funcoes/` com as páginas geradas.

@@ -1,0 +1,80 @@
+---
+title: "CreateCrewControllerGroup"
+subtitle: "Criar o Grupo de Controladores de Paralelismo crew"
+---
+
+## Uso
+
+```r
+CreateCrewControllerGroup()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria o grupo de controladores `crew` usado pelo pipeline `targets`: um controlador de
+contingência com um worker e um controlador dedicado à geração dos feature groups.
+
+## Detalhes
+
+O grupo contém dois controladores criados por `CreateCrewController()`:
+
++--------------------------+--------------------------+-------------------------------+
+| Controlador              | Workers                  | Uso                           |
++==========================+==========================+===============================+
+| `Fallback`               | 1                        | Contingência                  |
++--------------------------+--------------------------+-------------------------------+
+| `GenerateFeatureLineage` | $\min(6,                 | Targets                       |
+|                          | \text{threads\_limit})$  | `GenerateFeatureLineage_*`    |
++--------------------------+--------------------------+-------------------------------+
+
+O controlador `GenerateFeatureLineage` usa `Fallback` como `backup`. A opção
+`threads_limit` é lida com `getOption()`, sem prefixo `predy_`. O grupo é passado a
+`tar_option_set(controller = ...)` em `_targets.R`, e os targets são associados ao
+controlador por `tar_resources_crew(controller = "GenerateFeatureLineage")`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Objeto `crew_class_controller_group` com os controladores `Fallback` e
+`GenerateFeatureLineage`.
+
+## Exemplos
+
+```r
+# Pré-condição: opção threads_limit definida
+crewControllerGroup <- CreateCrewControllerGroup()
+targets::tar_option_set(controller = crewControllerGroup)
+```
+
+## Família
+
+**Orquestração do Pipeline**
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
+- [DefineOptionsSetup](DefineOptionsSetup.qmd)
+- [InitializeTargetExecution](InitializeTargetExecution.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [RunPipeline](RunPipeline.qmd)
+- [ShowStartupBanner](ShowStartupBanner.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Ver também
+
+- `crew::crew_controller_group`
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+
+## Referências
+
+- @crew
+- @targets
+
+---
+
+*Gerado a partir de `CreateCrewControllerGroup.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

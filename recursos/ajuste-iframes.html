@@ -1,0 +1,22 @@
+<script>
+/* Script local offline para ajuste automatico de altura dos iframes interativos.
+   O widget informa a altura do proprio conteudo via postMessage; o iframe recebe
+   exatamente essa altura, o que evita ciclos de crescimento. */
+window.addEventListener('message', function(event){
+  var data = event.data;
+  if(!data || typeof data.height !== 'number') return;
+  var id = null;
+  if(data.type === 'pf-widget-resize' && data.id) id = 'frame-' + data.id;
+  if(data.type === 'sby-conceptual-resize') id = 'frame-sby-conceptual';
+  if(data.type === 'sby-avx512-resize') id = 'frame-sby-avx512';
+  if(!id) return;
+  var el = document.getElementById(id);
+  if(!el) return;
+  var target = Math.ceil(data.height);
+  var current = el.getBoundingClientRect().height;
+  if(Math.abs(current - target) > 4){
+    el.style.minHeight = '0';
+    el.style.height = target + 'px';
+  }
+});
+</script>

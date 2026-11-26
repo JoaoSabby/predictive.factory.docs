@@ -1,8 +1,0 @@
----
-title: "Referências"
-nocite: |
-  @*
----
-
-::: {#refs}
-:::

@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-plot-escores" class="pf-frame" src="../widgets/plot_distribuicao_scores.html" title="Distribuição dos escores por classe" loading="lazy" style="min-height:520px"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Distribuição dos escores por classe.*
+:::

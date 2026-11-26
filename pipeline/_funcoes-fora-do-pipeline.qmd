@@ -1,0 +1,17 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Fora do pipeline**
+
+- [`AddColumn_TARGET_PROB_LEVEL()`](../referencia/funcoes/AddColumn_TARGET_PROB_LEVEL.qmd): Adicionar o Nível de Probabilidade da Predição
+- [`BuildPipelinePublishing()`](../referencia/funcoes/BuildPipelinePublishing.qmd): Construir o Pipeline de Publicação do Modelo
+- [`ConsolidatePredictionData()`](../referencia/funcoes/ConsolidatePredictionData.qmd): Consolidar a Feature Store de Predição em Memória
+- [`CreateTable_IM_ML_FEATURE_CATALOG()`](../referencia/funcoes/CreateTable_IM_ML_FEATURE_CATALOG.qmd): Criar a Tabela do Catálogo de Features
+- [`LoadArtifacts()`](../referencia/funcoes/LoadArtifacts.qmd): Carregar um Artefato Persistido em Parquet ou qs2
+- [`PersistArtifacts()`](../referencia/funcoes/PersistArtifacts.qmd): Persistir um Artefato em Parquet ou qs2
+- [`PrepareFitModelXGBoost()`](../referencia/funcoes/PrepareFitModelXGBoost.qmd): Preparar as Matrizes Esparsas de Ajuste do XGBoost
+- [`PrepareTuneModelFoldsXGBoost()`](../referencia/funcoes/PrepareTuneModelFoldsXGBoost.qmd): Preparar Folds Nativos do XGBoost em Memória
+- [`PrepareTuneModelFoldXGBoost()`](../referencia/funcoes/PrepareTuneModelFoldXGBoost.qmd): Preparar as Matrizes Quantizadas de um Fold do XGBoost
+- [`PrepareTuneModelFoldsLightGBM()`](../referencia/funcoes/PrepareTuneModelFoldsLightGBM.qmd): Preparar Folds Nativos do LightGBM
+- [`PublishModelRegistry_ML_FEATURE_STORE()`](../referencia/funcoes/PublishModelRegistry_ML_FEATURE_STORE.qmd): Publicar a Feature Store In-Memory na Tabela Persistente
+- [`RegisterPredictiveModel()`](../referencia/funcoes/RegisterPredictiveModel.qmd): Registrar os Metadados do Modelo Preditivo
+- [`RenderRoxygenToQuarto()`](../referencia/funcoes/RenderRoxygenToQuarto.qmd): Renderizar Cabeçalhos roxygen2 em Páginas Quarto

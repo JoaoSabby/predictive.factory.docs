@@ -1,0 +1,73 @@
+---
+title: "TerminateTarget"
+subtitle: "Finalizar a Execução de um Target"
+---
+
+## Uso
+
+```r
+TerminateTarget()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Executa as finalizações de segurança de um target ou de uma execução do pipeline,
+encerrando todas as conexões de banco de dados abertas.
+
+## Detalhes
+
+É registrada com `on.exit(TerminateTarget())` em `RunPipeline()` e nas 22 funções
+`GenerateFeatureLineage_IM_ML_*`. Dessa forma, as conexões são fechadas também quando a
+função chamadora termina com erro.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- fecha todas as conexões de banco de dados abertas no processo, por meio de
+  `DbDisconnectAll()`.
+
+## Retorno
+
+`NULL` invisível.
+
+## Exemplos
+
+```r
+funcaoComBanco <- function(){
+  on.exit(TerminateTarget())
+  # consultas ao banco de dados
+}
+```
+
+## Família
+
+**Orquestração do Pipeline**
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
+- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
+- [DefineOptionsSetup](DefineOptionsSetup.qmd)
+- [InitializeTargetExecution](InitializeTargetExecution.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [RunPipeline](RunPipeline.qmd)
+- [ShowStartupBanner](ShowStartupBanner.qmd)
+
+## Ver também
+
+- [InitializeTargetExecution](InitializeTargetExecution.qmd)
+- [RunPipeline](RunPipeline.qmd)
+- `base::on.exit`
+
+## Referências
+
+- @dbi
+
+---
+
+*Gerado a partir de `TerminateTarget.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

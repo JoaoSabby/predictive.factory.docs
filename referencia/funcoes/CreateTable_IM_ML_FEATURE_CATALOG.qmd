@@ -1,0 +1,90 @@
+---
+title: "CreateTable_IM_ML_FEATURE_CATALOG"
+subtitle: "Criar a Tabela do Catálogo de Features"
+---
+
+## Uso
+
+```r
+CreateTable_IM_ML_FEATURE_CATALOG()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria no Oracle a tabela in-memory `IM_ML_FEATURE_CATALOG`, destinada a catalogar o
+escopo, o tipo e o nome de cada feature, quando a tabela ainda não existe.
+
+## Detalhes
+
+A tabela prevista tem três colunas:
+
++-----------------+-----------------+-------------------------------------------------+
+| Coluna          | Tipo            | Conteúdo                                        |
++=================+=================+=================================================+
+| `FEATURE_SCOPE` | `VARCHAR2(30    | Escopo: global (`FACTORY`) ou local             |
+|                 | CHAR)`          | (`DESERCAO`, `OF_INFLOW`, `OF_OUTFLOW`)         |
++-----------------+-----------------+-------------------------------------------------+
+| `FEATURE_TYPE`  | `CHAR(1)`       | Tipo: `B` binária, `I` inteira, `C` contínua,   |
+|                 |                 | `E` enumerada, `T` texto                        |
++-----------------+-----------------+-------------------------------------------------+
+| `FEATURE_NAME`  | `VARCHAR2(30    | Nome da variável                                |
+|                 | CHAR)`          |                                                 |
++-----------------+-----------------+-------------------------------------------------+
+
+As opções de armazenamento são `NOLOGGING`, `PCTFREE 0`, `COMPRESS BASIC`, `INMEMORY
+PRIORITY CRITICAL`, `MEMCOMPRESS FOR QUERY HIGH` e `CLUSTERING BY LINEAR ORDER
+(FEATURE_SCOPE, FEATURE_TYPE)`.
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Instrução DDL Inválida:**
+A instrução `CREATE TABLE` contém vírgula após a última coluna (`FEATURE_NAME`), o que
+o Oracle rejeita como erro de sintaxe. Nesse caso, a função interrompe a execução com a
+mensagem `ERRO FATAL ao criar tabela IM_ML_FEATURE_CATALOG`. A função não é chamada por
+nenhum pipeline do projeto.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- executa `CREATE TABLE IM_ML_FEATURE_CATALOG` no Oracle quando a tabela não existe.
+
+## Retorno
+
+`TRUE` invisível, tanto quando a tabela já existe quanto após a criação.
+
+## Exemplos
+
+```r
+# Pré-condição: conexão Oracle com permissão de criação de tabelas
+CreateTable_IM_ML_FEATURE_CATALOG()
+```
+
+## Família
+
+**Feature Store**
+
+- [CheckFeatureStore](CheckFeatureStore.qmd)
+- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
+- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
+- [DefineValidCustomers](DefineValidCustomers.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+
+## Ver também
+
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- `DBI::dbExecute`
+
+## Referências
+
+- @oraclesqlref19
+- @oracleinmemoryguide19
+
+---
+
+*Gerado a partir de `CreateTable_IM_ML_FEATURE_CATALOG.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

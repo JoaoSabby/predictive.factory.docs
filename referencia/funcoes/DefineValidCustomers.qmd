@@ -1,0 +1,159 @@
+---
+title: "DefineValidCustomers"
+subtitle: "Definir a Tabela de Clientes Válidos"
+---
+
+## Uso
+
+```r
+DefineValidCustomers(
+  featureProcessed = FALSE,
+  sufixoTabela = "TREINO",
+  dataReferencia = "2026-05-01",
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = "2025-12-01",
+  dataAgregacaoFinal = "2026-05-31",
+  dataHistoricaInicial = "2023-06-01",
+  dataHistoricaFinal = "2026-05-31"
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria no Oracle a tabela in-memory `IM_ML_CLIENTES_VALIDOS_{SUFIXO}` com a população de
+clientes pessoa física elegíveis à modelagem ou à predição, isto é, ativos em todos os
+meses da janela de agregação.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `featureProcessed` | Lógico de comprimento 1. Quando `TRUE`, indica que a feature store já existe e a tabela não é recriada (padrão: `FALSE`). |
+| `sufixoTabela` | Vetor de caracteres; o primeiro elemento, em maiúsculas, compõe o nome da tabela, como `"TREINO"` ou `"PREDICAO"` (padrão: `"TREINO"`). |
+| `dataReferencia` | Data de referência usada no filtro de `CONTA_BANRISUL` (valor de referência: `"2026-05-01"`). |
+| `janelaAgregacao` | Inteiro com o número de meses que o cliente deve estar ativo (padrão: `6L`). |
+| `janelaHistorico` | Inteiro com a janela histórica. Não utilizado no corpo da função (padrão: `36L`). |
+| `dataAgregacaoInicial` | Data inicial da janela de agregação (valor de referência: `"2025-12-01"`). |
+| `dataAgregacaoFinal` | Data final da janela de agregação, também usada no critério de óbito (valor de referência: `"2026-05-31"`). |
+| `dataHistoricaInicial` | Data inicial da janela histórica. Não utilizada no corpo da função (valor de referência: `"2023-06-01"`). |
+| `dataHistoricaFinal` | Data final da janela histórica. Não utilizada no corpo da função (valor de referência: `"2026-05-31"`). |
+
+## Detalhes
+
+A consulta é montada com `dbplyr` e executada integralmente no banco. Um cliente é
+válido quando atende a todos os critérios:
+
+#. em `POS_KPI_CLIENTE_PF_MES`, possui `IND_ATIVO == "S"` e `IDADE` entre 0 e 120 em
+   meses entre `dataAgregacaoInicial` e `dataAgregacaoFinal`;
+#. em `CLIENTE`, possui `SEXO` igual a `"F"` ou `"M"`, `DATA_NASC_FUND` posterior a
+   1905-12-31 e `DATA_OBITO` posterior a `dataAgregacaoFinal`;
+#. em `HISTORICO_CLIENTE`, possui registro no mesmo mês de referência;
+#. em `CONTA_BANRISUL` na `dataReferencia`, não aparece somente como segundo titular
+   (`SEQUENCIA_CLIENTE_TIT2`) sem nenhuma conta como titular;
+#. o número de meses distintos que atendem aos critérios anteriores é igual a
+   `janelaAgregacao`.
+
+Sendo $M_c$ o conjunto de meses válidos do cliente $c$ na janela, a condição
+final é:
+
+$$|M_c| = a$$
+
+em que $a$ é `janelaAgregacao`.
+
+::: {.callout-warning}
+<i class="fa-solid fa-triangle-exclamation"></i> **Comparações com Nulos:**
+Em SQL, a comparação `DATA_OBITO > dataAgregacaoFinal` não é verdadeira quando
+`DATA_OBITO` é nulo. Clientes sem data de óbito preenchida só permanecem na população
+se a coluna usar uma data sentinela no lugar de nulo.
+:::
+
+Quando `featureProcessed` é `TRUE`, a função retorna o nome da tabela sem executar a
+consulta. Os argumentos `janelaHistorico`, `dataHistoricaInicial` e
+`dataHistoricaFinal` não são usados no corpo da função; os valores padrão são de
+referência e são sobrescritos pelos targets `tabelaClientesValidosTreino` e
+`tabelaClientesValidosPredicao`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- remove, se existir, e recria a tabela `IM_ML_CLIENTES_VALIDOS_{SUFIXO}` no Oracle,
+  por meio de `DbCreateTableMemoryFromQuery()`.
+
+## Linhagem de Dados
+
++---------------------+---------------------------------------------------------------+
+| Elemento            | Valor                                                         |
++=====================+===============================================================+
+| Tabelas de origem   | `POS_KPI_CLIENTE_PF_MES`, `CLIENTE`, `HISTORICO_CLIENTE`,     |
+|                     | `CONTA_BANRISUL`                                              |
++---------------------+---------------------------------------------------------------+
+| Filtro de período   | `DATA_REFERENCIA` entre `dataAgregacaoInicial` e              |
+|                     | `dataAgregacaoFinal`; `CONTA_BANRISUL` em `dataReferencia`    |
++---------------------+---------------------------------------------------------------+
+| Chave de junção     | `SEQUENCIA_CLIENTE` (e `DATA_REFERENCIA` com                  |
+|                     | `HISTORICO_CLIENTE`)                                          |
++---------------------+---------------------------------------------------------------+
+| Tabelas temporárias | nenhuma                                                       |
++---------------------+---------------------------------------------------------------+
+| Tabela de saída     | `IM_ML_CLIENTES_VALIDOS_{SUFIXO}`                             |
++---------------------+---------------------------------------------------------------+
+
+## Dicionário de Features
+
++---------------------+---------------------------------------------------------------+
+| Coluna              | Descrição                                                     |
++=====================+===============================================================+
+| `SEQUENCIA_CLIENTE` | Identificador do cliente válido, convertido por               |
+|                     | `DbCastTo_SEQUENCIA_CLIENTE()`                                |
++---------------------+---------------------------------------------------------------+
+
+## Retorno
+
+Vetor de caracteres de comprimento 1, invisível, com o nome da tabela
+`IM_ML_CLIENTES_VALIDOS_{SUFIXO}`.
+
+## Exemplos
+
+```r
+# Pré-condição: conexão Oracle disponível
+tabelaClientesValidos <- DefineValidCustomers(
+  featureProcessed = FALSE,
+  sufixoTabela = "TREINO",
+  dataReferencia = "2025-10-01",
+  janelaAgregacao = 6L,
+  dataAgregacaoInicial = "2025-05-01",
+  dataAgregacaoFinal = "2025-10-31"
+)
+```
+
+## Família
+
+**Feature Store**
+
+- [CheckFeatureStore](CheckFeatureStore.qmd)
+- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
+- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
+- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+
+## Ver também
+
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- `dbplyr::dbplyr-package`
+
+## Referências
+
+- @oracleinmemoryguide19
+- @dbplyr
+
+---
+
+*Gerado a partir de `DefineValidCustomers.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

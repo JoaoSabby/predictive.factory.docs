@@ -1,0 +1,114 @@
+---
+title: "LogPipelineExecution"
+subtitle: "Executar um Target com Registro de Traces, Telemetria e Auditoria"
+---
+
+## Uso
+
+```r
+LogPipelineExecution(
+  targetCommand,
+  targetName,
+  logsTracesPath,
+  logsTelemetryPath,
+  logsRegistryPath
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Envolve o comando de um target do pipeline: ativa a captura da saída do console
+(traces) e a telemetria de hardware, avalia o comando, registra o status, a duração e a
+memória em um arquivo de auditoria diário e devolve o resultado do target.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `targetCommand` | Expressão do comando do target, inserida por `tar_hook_outer()`. É avaliada apenas dentro da função. |
+| `targetName` | Vetor de caracteres de comprimento 1 com o nome do target, obtido por `targets::tar_name()`. |
+| `logsTracesPath` | Caminho da pasta de traces (`logs/traces` do modelo). |
+| `logsTelemetryPath` | Caminho da pasta de telemetria (`logs/telemetry` do modelo). |
+| `logsRegistryPath` | Caminho da pasta do registro de auditoria (`logs/registry` do modelo). |
+
+## Detalhes
+
+`BuildPipeline()` aplica esta função a todos os targets por meio de
+`tarchetypes::tar_hook_outer()`, que substitui `targetCommand` pela expressão original
+do target (`.x`). Como os argumentos do R são avaliados sob demanda, o comando só é
+executado dentro do `tryCatch()`, depois que o monitoramento foi ativado.
+
+A sequência é:
+
+#. coleta do instante de início, do PID do processo, do PID mestre (variável de
+   ambiente `MASTER_PID`) e da memória disponível, obtida com `free -m` (coluna
+   `available`, em MB);
+#. ativação dos traces por `LogPipelineExecutionTraces()` e da telemetria por
+   `LogPipelineExecutionTelemetry()`;
+#. registro, em `on.exit()`, do encerramento da telemetria, dos `sink()` e da conexão
+   de trace, e da gravação da linha de auditoria por `LogPipelineExecutionRegistry()`;
+#. avaliação do comando; em caso de erro, o status passa a `"error"`, a mensagem é
+   gravada sem quebras de linha e sem o caractere `|`, e o erro é relançado para o
+   `targets`.
+
+O processo é considerado worker quando `MASTER_PID` está definido e difere do PID
+atual.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- cria um arquivo de trace e um arquivo de telemetria por execução de target;
+- redireciona a saída padrão e as mensagens para o arquivo de trace durante a execução
+  do comando;
+- acrescenta uma linha ao arquivo de auditoria diário em `logsRegistryPath`;
+- executa o comando de sistema `free -m` no início e no fim.
+
+## Retorno
+
+O valor produzido pelo comando do target. Em caso de erro, a condição original
+é relançada.
+
+## Exemplos
+
+```r
+# Uso típico, por meio de tar_hook_outer() em BuildPipeline()
+resultado <- LogPipelineExecution(
+  targetCommand = sum(1:10),
+  targetName = "exemplo",
+  logsTracesPath = tempdir(),
+  logsTelemetryPath = tempdir(),
+  logsRegistryPath = tempdir()
+)
+```
+
+## Família
+
+**Registro de Execução**
+
+- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
+- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
+- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
+
+## Ver também
+
+- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
+- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
+- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
+- [BuildPipeline](BuildPipeline.qmd)
+- `tarchetypes::tar_hook_outer`
+
+## Referências
+
+- @sigelman2010
+- @tarchetypes
+- @autometric
+
+---
+
+*Gerado a partir de `LogPipelineExecution.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

@@ -1,0 +1,100 @@
+---
+title: "BuildPipeline"
+subtitle: "Construir o Pipeline Completo de Modelagem Preditiva"
+---
+
+## Uso
+
+```r
+BuildPipeline()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Monta a lista completa de targets do pipeline preditivo, concatenando os pipelines de
+cada fase e aplicando a todos os targets os ganchos de inicialização e de registro de
+logs.
+
+## Detalhes
+
+É a última expressão de `_targets.R` e, portanto, define o grafo de dependências (DAG)
+executado por `tar_make()`. As fases são concatenadas na ordem:
+
+#. `BuildPipelineBegin()`: inicialização e metadados do ambiente;
+#. `BuildPipelineHistoricalData()`: feature engineering e alvo para modelagem;
+#. `BuildPipelineModeling()`: preparação, divisão, tuning, ajuste e avaliação;
+#. `BuildPipelinePredictingData()`: feature engineering para predição;
+#. `BuildPipelinePredicting()`: preparação dos dados e inferência;
+#. `BuildPipelineFinish()`: registro do término.
+
+`BuildPipelinePublishing()` está desativada por comentário. Em seguida:
+
+- `tar_hook_before()` insere `InitializeTargetExecution()` antes do comando de cada
+  target;
+- `tar_hook_outer()` envolve o comando de cada target (`.x`) em
+  `LogPipelineExecution()`, que registra traces, telemetria e registro de execução nas
+  pastas `logsTracesPath`, `logsTelemetryPath` e `logsRegistryPath`;
+- `purrr::compact()` remove elementos vazios da lista.
+
+::: {.callout-note}
+<i class="fa-solid fa-sitemap"></i> **Objetos Globais:**
+Os caminhos de log são lidos do ambiente global, onde foram publicados por
+`LoadModelRunConfig()` em `_Setup.R`.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console as etapas de progresso de cada fase e as encerra com
+  `cli_progress_cleanup()`.
+
+## Retorno
+
+Lista de objetos `tar_target` com os ganchos aplicados, pronta para ser
+retornada por `_targets.R`.
+
+## Exemplos
+
+```r
+# Em _targets.R, após _Setup.R e tar_option_set()
+BuildPipeline()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [LogPipelineExecution](LogPipelineExecution.qmd)
+- `tarchetypes::tar_hook_outer`
+
+## Referências
+
+- @landau2021
+- @tarchetypes
+
+---
+
+*Gerado a partir de `BuildPipeline.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

@@ -1,0 +1,84 @@
+---
+title: "TuneModelEvaluateXGBoostFolds"
+subtitle: "Avaliar um Candidato de Hiperparâmetros na Validação Cruzada"
+---
+
+## Uso
+
+```r
+TuneModelEvaluateXGBoostFolds(params)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Avalia um conjunto candidato de hiperparâmetros em todos os folds, em paralelo, e
+retorna a média do desempenho no formato exigido por `BayesianOptimization()`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `params` | Lista montada em `TuneModel()`, com `splits` (lista de caminhos `Train`, `Valid` e `Test` por fold), `innerThreads`, as classes positiva e negativa e os hiperparâmetros do candidato na escala do XGBoost. |
+
+## Detalhes
+
+Para cada fold $k$, carrega as matrizes de treino, validação e teste gravadas em
+disco por `TuneModelResampleFoldsXGBoost()` (`xgb.DMatrix()` recebe o caminho do
+arquivo) e chama `TuneModelEvaluateXGBoost()`. O escore do candidato é:
+
+$$S = \frac{1}{K} \sum_{k=1}^{K} \mathrm{AUC\text{-}PR}_k$$
+
+
+A execução usa `furrr::future_map()` com `chunk_size = 1`, de modo que cada fold é uma
+tarefa independente do plano `future` registrado em `TuneModel()`, e `seed = 42L` para
+fluxos de números aleatórios reprodutíveis.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Lista com `Score` (média do desempenho nos folds) e `Pred` (`0L`), estrutura
+exigida pela função objetivo de `BayesianOptimization()`.
+
+## Exemplos
+
+```r
+# Pré-condição: params montado em TuneModel() e plano future registrado
+tuneResult <- TuneModelEvaluateXGBoostFolds(params)
+tuneResult$Score
+```
+
+## Família
+
+**Otimização de Hiperparâmetros**
+
+- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
+- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+
+## Ver também
+
+- [TuneModel](TuneModel.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- `furrr::future_map`
+
+## Referências
+
+- @kohavi1995
+- @furrr
+
+---
+
+*Gerado a partir de `TuneModelEvaluateXGBoostFolds.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

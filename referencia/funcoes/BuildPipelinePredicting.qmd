@@ -1,0 +1,86 @@
+---
+title: "BuildPipelinePredicting"
+subtitle: "Construir o Pipeline de Inferência das Predições"
+---
+
+## Uso
+
+```r
+BuildPipelinePredicting()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria os targets que preparam a feature store de predição e aplicam o modelo ajustado
+para gerar as predições do horizonte preditivo.
+
+## Detalhes
+
+A predição é aplicada sobre a feature store de predição consolidada por
+`BuildPipelinePredictingData()`, com o mesmo preprocessamento usado na modelagem
+(`PrepareDataModel()`), e sobre o arquivo do modelo `fileModel` gerado por
+`BuildPipelineModeling()`.
+
+## Targets do Pipeline
+
++---------------------+---------------------------------------------------------------+
+| Target              | Descrição, comando e dependências                             |
++=====================+===============================================================+
+| `predictionData`    | Preprocessamento dos dados de inferência. Comando:            |
+|                     | `PrepareDataModel()`. Depende de:                             |
+|                     | `predictionTable_FEATURE_STORE`.                              |
++---------------------+---------------------------------------------------------------+
+| `predictionResults` | Inferência das predições do horizonte. Comando:               |
+|                     | `PredictModel()`. Depende de: `fileModel`, `predictionData`.  |
++---------------------+---------------------------------------------------------------+
+
+A descrição de `predictionResults` informa `idModel` e o intervalo de
+`dataTargetPredicaoInicial` a `dataTargetPredicaoFinal`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console a etapa de progresso do pipeline.
+
+## Retorno
+
+Lista invisível com dois objetos `tar_target`.
+
+## Exemplos
+
+```r
+listPipelinePredicting <- BuildPipelinePredicting()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [PrepareDataModel](PrepareDataModel.qmd)
+- [PredictModel](PredictModel.qmd)
+
+## Referências
+
+- @targets
+
+---
+
+*Gerado a partir de `BuildPipelinePredicting.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

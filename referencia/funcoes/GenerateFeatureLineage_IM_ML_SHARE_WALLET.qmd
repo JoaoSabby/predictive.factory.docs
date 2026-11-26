@@ -1,0 +1,215 @@
+---
+title: "GenerateFeatureLineage_IM_ML_SHARE_WALLET"
+subtitle: "Gerar o Feature Group de Participação na Carteira de Crédito"
+---
+
+## Uso
+
+```r
+GenerateFeatureLineage_IM_ML_SHARE_WALLET(
+  tabelaClientesValidos = "IM_ML_CLIENTES_VALIDOS_TREINO",
+  sufixoTabela = "TREINO",
+  dataFeature = ymd("2025-11-01"),
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = ymd("2025-06-01"),
+  dataAgregacaoFinal = ymd("2025-11-01"),
+  dataHistoricaInicial = ymd("2022-12-01"),
+  dataHistoricaFinal = ymd("2025-11-01")
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Calcula, para cada cliente válido e na data de referência, os montantes de crédito no
+Sistema Financeiro Nacional e no Banrisul por grupo de modalidade Bacen, a participação
+do Banrisul (share of wallet) por grupo e geral, e as quantidades de operações e de
+instituições no SFN.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `tabelaClientesValidos` | Vetor de caracteres de comprimento 1 com o nome da tabela de clientes válidos (`IM_ML_CLIENTES_VALIDOS_{SUFIXO}`), usada para restringir a população por `semi_join()`. Valor padrão de referência: `"IM_ML_CLIENTES_VALIDOS_TREINO"`, sobrescrito pelos pipelines. |
+| `sufixoTabela` | Vetor de caracteres; o primeiro elemento, em maiúsculas, compõe o nome da tabela de saída, como `"TREINO"` ou `"PREDICAO"`. Valor padrão de referência: `"TREINO"`, sobrescrito pelos pipelines. |
+| `dataFeature` | Data de referência dos preditores, no formato `"AAAA-MM-DD"`. Valor padrão de referência: `ymd("2025-11-01")`, sobrescrito pelos pipelines. |
+| `janelaAgregacao` | Inteiro com o número de meses da janela de agregação. Não utilizado no corpo da função. Valor padrão de referência: `6L`, sobrescrito pelos pipelines. |
+| `janelaHistorico` | Inteiro com o número de meses da janela histórica. Não utilizado no corpo da função. Valor padrão de referência: `36L`, sobrescrito pelos pipelines. |
+| `dataAgregacaoInicial` | Data inicial da janela de agregação, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `ymd("2025-06-01")`, sobrescrito pelos pipelines. |
+| `dataAgregacaoFinal` | Data final da janela de agregação, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `ymd("2025-11-01")`, sobrescrito pelos pipelines. |
+| `dataHistoricaInicial` | Data inicial da janela histórica, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `ymd("2022-12-01")`, sobrescrito pelos pipelines. |
+| `dataHistoricaFinal` | Data final da janela histórica, no formato `"AAAA-MM-DD"`. Não utilizado no corpo da função. Valor padrão de referência: `ymd("2025-11-01")`, sobrescrito pelos pipelines. |
+
+## Detalhes
+
+Quando a tabela `BACEN_TAXONOMIA_MODALIDADE` não existe, ela é carregada por
+`LoadAppendix_bacen_taxonomia_modalidade()`. As etapas são:
+
+#. montante no SFN por cliente e grupo (`DESC_GRUPO`), somando `VLR_VENCIDO`,
+   `VLR_VINCENDO` e `VLR_LIMITE` de `OPERACAO_SFN_BMZ`, mantendo montantes positivos;
+#. montante no Banrisul pela mesma regra em `OPERACAO_BANRI`, excluindo operações sem
+   saldo e operações apenas com valor baixado e mais de $5 \times 365$ dias de
+   atraso;
+#. união completa por cliente e grupo, com zero para o montante ausente, e cálculo da
+   participação;
+#. totais por cliente, participação geral e pivotamento por grupo;
+#. junção das quantidades de `RESP_CLIENTE_SFN`.
+
+Sendo $B$ e $S$ os montantes no Banrisul e no SFN, a participação do Banrisul
+é:
+
+- $SoW = 1$, quando $B > S$;
+- $SoW = \mathrm{round}(B / S, 6)$, quando $B \le S$ e $S > 0$;
+- $SoW = 0$, nos demais casos.
+
+::: {.callout-note}
+<i class="fa-solid fa-table-columns"></i> **Colunas Dinâmicas:**
+As colunas por grupo são criadas a partir dos valores de `DESC_GRUPO` presentes no mês.
+Grupos sem ocorrência não geram coluna, e o conjunto de colunas pode variar entre
+treino e predição.
+:::
+
+A função segue o contrato comum dos feature groups: registra
+`on.exit(TerminateTarget())`, monta o nome da tabela de saída
+`IM_ML_SHARE_WALLET_{SUFIXO}`, executa a consulta no Oracle por meio de `dbplyr` e
+grava o resultado com `DbCreateTableMemoryFromQuery()`, que remove a tabela anterior de
+mesmo nome. A função é descoberta pelos pipelines de dados por meio do prefixo
+`GenerateFeatureLineage_IM_ML_` e executada uma vez para treino e uma vez para
+predição.
+
+Clientes ausentes da tabela recebem valor nulo nas colunas deste grupo após a junção em
+`Generate_IM_ML_FEATURE_STORE()`.
+
+Os argumentos `janelaAgregacao`, `janelaHistorico`, `dataAgregacaoInicial`,
+`dataAgregacaoFinal`, `dataHistoricaInicial`, `dataHistoricaFinal` não são usados no
+corpo da função; existem para manter a assinatura comum chamada por `tar_map()`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- fecha as conexões de banco de dados ao final, inclusive em caso de erro, por meio de
+  `on.exit(TerminateTarget())`;
+- remove, se existir, e recria a tabela `IM_ML_SHARE_WALLET_{SUFIXO}` no Oracle.
+- cria e remove as tabelas temporárias `IM_TMP_ML_SHARE_WALLET_{SUFIXO}_SFN`,
+  `IM_TMP_ML_SHARE_WALLET_{SUFIXO}_BAN` e `IM_TMP_ML_SHARE_WALLET_{SUFIXO}_SHW`;
+- pode criar a tabela `BACEN_TAXONOMIA_MODALIDADE`, por meio de
+  `LoadAppendix_bacen_taxonomia_modalidade()`.
+
+## Linhagem de Dados
+
++---------------------+---------------------------------------------------------------+
+| Elemento            | Valor                                                         |
++=====================+===============================================================+
+| Tabelas de origem   | `OPERACAO_SFN_BMZ`, `OPERACAO_BANRI`,                         |
+|                     | `BACEN_TAXONOMIA_MODALIDADE`, `RESP_CLIENTE_SFN`,             |
+|                     | `tabelaClientesValidos`                                       |
++---------------------+---------------------------------------------------------------+
+| Filtro de período   | `DATA_REFERENCIA == dataFeature`                              |
++---------------------+---------------------------------------------------------------+
+| Chave de junção     | `SEQUENCIA_CLIENTE`; `COD_MODALIDADE`; `DESC_GRUPO`           |
++---------------------+---------------------------------------------------------------+
+| Tabelas temporárias | `IM_TMP_ML_SHARE_WALLET_{SUFIXO}_SFN`, `..._BAN`, `..._SHW`   |
++---------------------+---------------------------------------------------------------+
+| Tabela de saída     | `IM_ML_SHARE_WALLET_{SUFIXO}`                                 |
++---------------------+---------------------------------------------------------------+
+
+## Dicionário de Features
+
++-------------------------+-----------------------------------------------------------+
+| Coluna                  | Descrição                                                 |
++=========================+===========================================================+
+| `SEQUENCIA_CLIENTE`     | Identificador do cliente                                  |
++-------------------------+-----------------------------------------------------------+
+| `Montante_BAN`          | Soma dos montantes no Banrisul em todos os grupos         |
++-------------------------+-----------------------------------------------------------+
+| `Montante_SFN`          | Soma dos montantes no SFN em todos os grupos              |
++-------------------------+-----------------------------------------------------------+
+| `ShareOfWallet_GERAL`   | Participação geral do Banrisul, pela fórmula de detalhes  |
++-------------------------+-----------------------------------------------------------+
+| `Montante_SFN_{GRUPO}`  | Montante no SFN por grupo de modalidade; zero quando      |
+|                         | ausente                                                   |
++-------------------------+-----------------------------------------------------------+
+| `Montante_BAN_{GRUPO}`  | Montante no Banrisul por grupo de modalidade; zero quando |
+|                         | ausente                                                   |
++-------------------------+-----------------------------------------------------------+
+| `ShareOfWallet_{GRUPO}` | Participação do Banrisul por grupo de modalidade          |
++-------------------------+-----------------------------------------------------------+
+| `QtdOperacoesSFN`       | Quantidade de operações no SFN; inteiro de quatro dígitos |
++-------------------------+-----------------------------------------------------------+
+| `QtdInstituicoesSFN`    | Quantidade de instituições financeiras no SFN; inteiro de |
+|                         | quatro dígitos                                            |
++-------------------------+-----------------------------------------------------------+
+| `QtdInstituicoesOUTRAS` | $\max(\mathrm{QtdInstituicoesSFN} - 1, 0)$; inteiro   |
+|                         | de quatro dígitos                                         |
++-------------------------+-----------------------------------------------------------+
+
+## Retorno
+
+Vetor de caracteres de comprimento 1, invisível, com o nome da tabela criada
+(`IM_ML_SHARE_WALLET_{SUFIXO}`).
+
+## Exemplos
+
+```r
+# Pré-condição: conexão Oracle e tabela de clientes válidos criadas
+tabelaFeature <- GenerateFeatureLineage_IM_ML_SHARE_WALLET(
+  tabelaClientesValidos = "IM_ML_CLIENTES_VALIDOS_TREINO",
+  sufixoTabela = "TREINO",
+  dataFeature = "2025-10-01",
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = "2025-05-01",
+  dataAgregacaoFinal = "2025-10-31",
+  dataHistoricaInicial = "2022-11-01",
+  dataHistoricaFinal = "2025-10-31"
+)
+```
+
+## Família
+
+**Geração de Feature Groups**
+
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+
+## Ver também
+
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Referências
+
+- @bcbscr
+- @cooil2007
+- @oracleinmemoryguide19
+- @dbplyr
+
+---
+
+*Gerado a partir de `GenerateFeatureLineage_IM_ML_SHARE_WALLET.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

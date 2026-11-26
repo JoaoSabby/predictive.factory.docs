@@ -1,0 +1,21 @@
+# Configuração e execução {#configuracao}
+
+## Opções de configuração
+
+<!-- Conteúdo a ser escrito. -->
+
+## Identificação do modelo e cálculo das janelas
+
+<!-- Conteúdo a ser escrito. -->
+
+## Execução e idempotência
+
+<!-- Conteúdo a ser escrito. -->
+
+## Paralelismo com crew
+
+<!-- Conteúdo a ser escrito. -->
+
+## Funções desta etapa
+
+{{< include _funcoes-configuracao-e-execucao.qmd >}}

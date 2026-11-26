@@ -1,0 +1,13 @@
+# Glossário {#glossario}
+
+Termos usados ao longo do livro, em ordem alfabética.
+
+| Termo | Definição |
+|---|---|
+| AUC-PR | *A definir.* |
+| Feature group | *A definir.* |
+| Feature store | *A definir.* |
+| Horizonte preditivo | *A definir.* |
+| Janela de agregação | *A definir.* |
+| Janela histórica | *A definir.* |
+| Target (targets) | *A definir.* |

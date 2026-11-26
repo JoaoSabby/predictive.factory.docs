@@ -2,10 +2,11 @@
 #
 #   source("build.R", encoding = "UTF-8")
 #
-# 1. Gera as paginas de funcoes a partir do roxygen2 do pacote (scripts/funcoes.R).
-#    Informe a pasta do pacote em PF_PACOTE; o padrao e ../predictive.factory.
-# 2. Renderiza o site em _site/ com o Quarto CLI.
-# 3. Opcionalmente gera o PDF e o copia para _site/ (PF_PDF=true).
+# 1. Gera as paginas de funcoes em referencia/funcoes/ (scripts/funcoes.R).
+#    Informe a pasta do projeto predictive.factory em PF_PROJETO; sem ela, apenas
+#    reorganiza os indices a partir dos .qmd ja existentes em referencia/funcoes/.
+# 2. Renderiza o livro em _book/ com o Quarto CLI.
+# 3. Opcionalmente gera o PDF (PF_PDF=true).
 # Nao instala pacotes e nao acessa a internet.
 
 if(!file.exists("_quarto.yml")){
@@ -20,10 +21,10 @@ source("scripts/funcoes.R", encoding = "UTF-8")
 
 renderStatus <- system2(quartoPath, "render")
 if(renderStatus != 0L){
-  stop("A renderizacao do site nao foi concluida.")
+  stop("A renderizacao do livro nao foi concluida.")
 }
 
 if(identical(tolower(Sys.getenv("PF_PDF", "false")), "true")){
   source("buildPdf.R", encoding = "UTF-8")
 }
-message("Site gerado em _site/index.html.")
+message("Livro gerado em _book/index.html (abra com dois cliques).")

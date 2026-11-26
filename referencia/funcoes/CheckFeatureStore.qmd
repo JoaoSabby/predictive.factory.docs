@@ -1,0 +1,96 @@
+---
+title: "CheckFeatureStore"
+subtitle: "Verificar a Existência da Feature Store para o Contexto"
+---
+
+## Uso
+
+```r
+CheckFeatureStore(
+  pipelineBegin,
+  dataFeature,
+  janelaAgregacao,
+  janelaHistorico
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Consulta a tabela `ML_FEATURE_STORE` para saber se os preditores já foram processados e
+persistidos para a data de referência e as janelas informadas.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `pipelineBegin` | Valor do target `pipelineBegin` (lista de metadados de inicialização). Usado apenas como dependência no grafo do `targets`. |
+| `dataFeature` | Data de referência dos preditores (`Date` ou texto `"AAAA-MM-DD"`). |
+| `janelaAgregacao` | Inteiro com o número de meses de sumarização. |
+| `janelaHistorico` | Inteiro com o número de meses de profundidade histórica. |
+
+## Detalhes
+
+A busca usa a chave `DATA_REFERENCIA == dataFeature`, `SUMMARY_WINDOW ==
+janelaAgregacao` e `LANDMARK_WINDOW == janelaHistorico`, traduzida para SQL por
+`dbplyr` e avaliada por `DbExists()` no banco Oracle.
+
+O resultado alimenta o argumento `skip` de `tar_skip()` nos pipelines de dados: quando
+`TRUE`, a definição dos clientes válidos (em predição), a geração dos feature groups e
+a consolidação da feature store são ignoradas.
+
+O argumento `pipelineBegin` não é usado no corpo da função. Ele existe para criar a
+dependência entre o target de verificação e o target `pipelineBegin`, que é executado
+em toda chamada de `tar_make()`. Assim, a verificação é refeita a cada execução.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- abre ou reutiliza a conexão com o banco Oracle por meio de `Db()`.
+
+## Retorno
+
+Vetor lógico de comprimento 1: `TRUE` quando já existem registros em
+`ML_FEATURE_STORE` para o contexto, `FALSE` caso contrário.
+
+## Exemplos
+
+```r
+# Pré-condição: conexão Oracle disponível
+featureStoreProcessed <- CheckFeatureStore(
+  pipelineBegin = list(),
+  dataFeature = as.Date("2025-10-01"),
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L
+)
+```
+
+## Família
+
+**Feature Store**
+
+- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
+- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
+- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
+- [DefineValidCustomers](DefineValidCustomers.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+
+## Ver também
+
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- `tarchetypes::tar_skip`
+
+## Referências
+
+- @hermann2017
+- @dbplyr
+
+---
+
+*Gerado a partir de `CheckFeatureStore.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

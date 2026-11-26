@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-supertree" class="pf-frame" src="../widgets/supertree_inspector.html" title="SuperTree: inspeção de árvores" loading="lazy" style="min-height:580px"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: SuperTree: inspeção de árvores.*
+:::

@@ -1,0 +1,72 @@
+---
+title: "InitializeTargetExecution"
+subtitle: "Inicializar a Execução de um Target"
+---
+
+## Uso
+
+```r
+InitializeTargetExecution()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Prepara o processo antes da execução de cada target do pipeline, encerrando todas as
+conexões de banco de dados abertas.
+
+## Detalhes
+
+`BuildPipeline()` registra esta função com `tarchetypes::tar_hook_before()` em todos os
+targets. Como os targets podem executar em workers `crew` que reaproveitam processos, a
+desconexão prévia evita o uso de conexões herdadas de targets anteriores, inválidas ou
+ligadas a outro contexto.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- fecha todas as conexões de banco de dados abertas no processo, por meio de
+  `DbDisconnectAll()`.
+
+## Retorno
+
+`NULL` invisível.
+
+## Exemplos
+
+```r
+InitializeTargetExecution()
+```
+
+## Família
+
+**Orquestração do Pipeline**
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
+- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
+- [DefineOptionsSetup](DefineOptionsSetup.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [RunPipeline](RunPipeline.qmd)
+- [ShowStartupBanner](ShowStartupBanner.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Ver também
+
+- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipeline](BuildPipeline.qmd)
+- `tarchetypes::tar_hook_before`
+
+## Referências
+
+- @tarchetypes
+- @dbi
+
+---
+
+*Gerado a partir de `InitializeTargetExecution.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

@@ -1,0 +1,261 @@
+---
+title: "GenerateFeatureLineage_IM_ML_RFM"
+subtitle: "Gerar o Feature Group de Recência, Frequência e Valor Monetário"
+---
+
+## Uso
+
+```r
+GenerateFeatureLineage_IM_ML_RFM(
+  sufixoTabela = "TREINO",
+  tabelaClientesValidos = "IM_ML_CLIENTES_VALIDOS_TREINO",
+  dataFeature = "2026-05-01",
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = "2025-12-01",
+  dataAgregacaoFinal = "2026-05-31",
+  dataHistoricaInicial = "2023-06-01",
+  dataHistoricaFinal = "2026-05-31"
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Calcula, para cada cliente válido, indicadores de recência, frequência e valor
+monetário (RFM) de movimentações de crédito, de captação e de compras, a partir da
+série mensal da janela histórica, resumidos na janela de agregação e na data de
+referência.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `sufixoTabela` | Vetor de caracteres; o primeiro elemento, em maiúsculas, compõe o nome da tabela de saída, como `"TREINO"` ou `"PREDICAO"`. Valor padrão de referência: `"TREINO"`, sobrescrito pelos pipelines. |
+| `tabelaClientesValidos` | Vetor de caracteres de comprimento 1 com o nome da tabela de clientes válidos (`IM_ML_CLIENTES_VALIDOS_{SUFIXO}`), usada para restringir a população por `semi_join()`. Valor padrão de referência: `"IM_ML_CLIENTES_VALIDOS_TREINO"`, sobrescrito pelos pipelines. |
+| `dataFeature` | Data de referência dos preditores, no formato `"AAAA-MM-DD"`. Valor padrão de referência: `"2026-05-01"`, sobrescrito pelos pipelines. |
+| `janelaAgregacao` | Inteiro com o número de meses da janela de agregação. Valor padrão de referência: `6L`, sobrescrito pelos pipelines. |
+| `janelaHistorico` | Inteiro com o número de meses da janela histórica. Valor padrão de referência: `36L`, sobrescrito pelos pipelines. |
+| `dataAgregacaoInicial` | Data inicial da janela de agregação, no formato `"AAAA-MM-DD"`. Valor padrão de referência: `"2025-12-01"`, sobrescrito pelos pipelines. |
+| `dataAgregacaoFinal` | Data final da janela de agregação, no formato `"AAAA-MM-DD"`. Valor padrão de referência: `"2026-05-31"`, sobrescrito pelos pipelines. |
+| `dataHistoricaInicial` | Data inicial da janela histórica, no formato `"AAAA-MM-DD"`. Valor padrão de referência: `"2023-06-01"`, sobrescrito pelos pipelines. |
+| `dataHistoricaFinal` | Data final da janela histórica, no formato `"AAAA-MM-DD"`. Valor padrão de referência: `"2026-05-31"`, sobrescrito pelos pipelines. |
+
+## Detalhes
+
+O cálculo usa variáveis de ligação (`DbBindVariables()`) e cinco tabelas temporárias,
+todas removidas ao final:
+
+#. `..._RFM_1_`: por cliente e mês da janela histórica, soma de `VALOR_PARCELA` de
+   `MTB_EFETIVO_MENSAL` com `IND_VALOR_PARCELA == 1`, separada em crédito (`IND_CONTA
+   == "A"`) e captação (`IND_CONTA == "C"`) por `TAXONOMIA_MISTA3`;
+#. `..._RFM_2_`: meses com compra em `TRANSACOES` (`IND_VALOR == 1`);
+#. `..._RFM_3_`: grade de meses de `HISTORICO_CLIENTE` do cliente, completada com zero
+   nos meses sem movimento, e saldos defasados em um mês;
+#. `..._RFM_4_`: recências e contagens de redução por cliente, em ordem de mês;
+#. `..._RFM_5_`: frequências acumuladas, restritas à janela de agregação.
+
+Sendo $t$ a posição do mês na série do cliente e $e_s$ o indicador do evento no
+mês $s$, a recência é o número de meses desde a última ocorrência:
+
+$$R_t = t - \max(\{s \le t : e_s = 1\} \cup \{0\})$$
+
+A quantidade de reduções aplica a mesma fórmula ao evento $y_s \ge y_{s-1}$, em que
+$y$ é o saldo; mede, portanto, os meses consecutivos de redução do saldo. As
+frequências acumuladas são:
+
+$$F_t = \sum_{s \le t} e_s, \qquad F^{rel}_t = \mathrm{round}(F_t / t, 6)$$
+
+
+A tabela de saída combina as medianas aproximadas dos saldos e do volume na janela de
+agregação com os demais indicadores do mês de `dataFeature`.
+
+::: {.callout-note}
+<i class="fa-solid fa-circle-info"></i> **Limites de Tipo:**
+As recências e as contagens de redução são convertidas para `NUMBER(2)`, o que comporta
+séries de até 99 meses. A janela histórica deve respeitar esse limite.
+:::
+
+A função segue o contrato comum dos feature groups: registra
+`on.exit(TerminateTarget())`, monta o nome da tabela de saída `IM_ML_RFM_{SUFIXO}`,
+executa a consulta no Oracle por meio de `dbplyr` e grava o resultado com
+`DbCreateTableMemoryFromQuery()`, que remove a tabela anterior de mesmo nome. A função
+é descoberta pelos pipelines de dados por meio do prefixo
+`GenerateFeatureLineage_IM_ML_` e executada uma vez para treino e uma vez para
+predição.
+
+Clientes ausentes da tabela recebem valor nulo nas colunas deste grupo após a junção em
+`Generate_IM_ML_FEATURE_STORE()`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- fecha as conexões de banco de dados ao final, inclusive em caso de erro, por meio de
+  `on.exit(TerminateTarget())`;
+- remove, se existir, e recria a tabela `IM_ML_RFM_{SUFIXO}` no Oracle.
+- cria e remove as tabelas temporárias `IM_TMP_ML_RFM_1_{SUFIXO}` a
+  `IM_TMP_ML_RFM_5_{SUFIXO}`, por meio de `DbDropMemoryTable()`;
+- consulta a tabela final com `hintRESULT_CACHE = TRUE`, carregando o resultado no
+  cache de resultados do Oracle.
+
+## Linhagem de Dados
+
++-----------------+-------------------------------------------------------------------+
+| Elemento        | Valor                                                             |
++=================+===================================================================+
+| Tabelas de      | `MTB_EFETIVO_MENSAL`, `TAXONOMIA_MISTA3`, `TRANSACOES`,           |
+| origem          | `HISTORICO_CLIENTE`, `tabelaClientesValidos`                      |
++-----------------+-------------------------------------------------------------------+
+| Filtro de       | Série em `dataHistoricaInicial` a `dataHistoricaFinal`; medianas  |
+| período         | em `dataAgregacaoInicial` a `dataAgregacaoFinal`; demais          |
+|                 | indicadores em `dataFeature`                                      |
++-----------------+-------------------------------------------------------------------+
+| Chave de junção | `SEQUENCIA_CLIENTE` e `DATA_REFERENCIA`; `COD_CONTA_BIB` com      |
+|                 | `COD_CONTA`                                                       |
++-----------------+-------------------------------------------------------------------+
+| Tabelas         | `IM_TMP_ML_RFM_1_{SUFIXO}` a `IM_TMP_ML_RFM_5_{SUFIXO}`           |
+| temporárias     |                                                                   |
++-----------------+-------------------------------------------------------------------+
+| Tabela de saída | `IM_ML_RFM_{SUFIXO}`                                              |
++-----------------+-------------------------------------------------------------------+
+
+## Dicionário de Features
+
++-------------------------------------------+-----------------------------------------+
+| Coluna                                    | Descrição                               |
++===========================================+=========================================+
+| `SEQUENCIA_CLIENTE`                       | Identificador do cliente                |
++-------------------------------------------+-----------------------------------------+
+| `VeqCreditoSaldo`                         | Mediana mensal do saldo de crédito na   |
+|                                           | janela de agregação; decimal (14, 2)    |
++-------------------------------------------+-----------------------------------------+
+| `VeqCaptacaoSaldo`                        | Mediana mensal do saldo de captação na  |
+|                                           | janela de agregação; decimal (14, 2)    |
++-------------------------------------------+-----------------------------------------+
+| `VeqVolumeTransacoesMensaisTotal`         | Mediana mensal do volume total; decimal |
+|                                           | (14, 2)                                 |
++-------------------------------------------+-----------------------------------------+
+| `VeqIncidenciaCompra`                     | Lógico: movimento em                    |
+|                                           | `MTB_EFETIVO_MENSAL` no mês de          |
+|                                           | referência                              |
++-------------------------------------------+-----------------------------------------+
+| `VfpIncidenciaCompraUso`                  | Lógico: compra em `TRANSACOES` no mês   |
+|                                           | de referência                           |
++-------------------------------------------+-----------------------------------------+
+| `VeqCreditoIncidencia`                    | Lógico: saldo de crédito diferente de   |
+|                                           | zero no mês de referência               |
++-------------------------------------------+-----------------------------------------+
+| `VeqCaptacaoIncidencia`                   | Lógico: saldo de captação diferente de  |
+|                                           | zero no mês de referência               |
++-------------------------------------------+-----------------------------------------+
+| `VeqQtdTransacoesMensaisUnica`            | Número de registros de movimento no mês |
+|                                           | de referência; inteiro                  |
++-------------------------------------------+-----------------------------------------+
+| `VeqRecenciaCompra`                       | Meses desde o último movimento; inteiro |
++-------------------------------------------+-----------------------------------------+
+| `VeqCreditoRecencia`                      | Meses desde a última incidência de      |
+|                                           | crédito; inteiro                        |
++-------------------------------------------+-----------------------------------------+
+| `VeqCaptacaoRecencia`                     | Meses desde a última incidência de      |
+|                                           | captação; inteiro                       |
++-------------------------------------------+-----------------------------------------+
+| `VfpRecenciaCompraUso`                    | Meses desde a última compra; inteiro    |
++-------------------------------------------+-----------------------------------------+
+| `VeqCreditoQtdReducao`                    | Meses consecutivos de redução do saldo  |
+|                                           | de crédito; inteiro                     |
++-------------------------------------------+-----------------------------------------+
+| `VeqCaptacaoQtdReducao`                   | Meses consecutivos de redução do saldo  |
+|                                           | de captação; inteiro                    |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumulada`                  | Meses acumulados com movimento          |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumuladaRelativa`          | Fração dos meses da série com           |
+|                                           | movimento; decimal (7, 6)               |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumuladaCredito`           | Meses acumulados com incidência de      |
+|                                           | crédito                                 |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumuladaCreditoRelativa`   | Fração dos meses com incidência de      |
+|                                           | crédito                                 |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumuladaCaptacao`          | Meses acumulados com incidência de      |
+|                                           | captação                                |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumuladaCaptacaoRelativa`  | Fração dos meses com incidência de      |
+|                                           | captação                                |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumuladaCompraUso`         | Meses acumulados com compra             |
++-------------------------------------------+-----------------------------------------+
+| `VeqFreqMensalAcumuladaCompraUsoRelativa` | Fração dos meses com compra             |
++-------------------------------------------+-----------------------------------------+
+
+## Retorno
+
+Vetor de caracteres de comprimento 1, invisível, com o nome da tabela criada
+(`IM_ML_RFM_{SUFIXO}`).
+
+## Exemplos
+
+```r
+# Pré-condição: conexão Oracle e tabela de clientes válidos criadas
+tabelaFeature <- GenerateFeatureLineage_IM_ML_RFM(
+  tabelaClientesValidos = "IM_ML_CLIENTES_VALIDOS_TREINO",
+  sufixoTabela = "TREINO",
+  dataFeature = "2025-10-01",
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L,
+  dataAgregacaoInicial = "2025-05-01",
+  dataAgregacaoFinal = "2025-10-31",
+  dataHistoricaInicial = "2022-11-01",
+  dataHistoricaFinal = "2025-10-31"
+)
+```
+
+## Família
+
+**Geração de Feature Groups**
+
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+
+## Ver também
+
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Referências
+
+- @hughes1994
+- @fader2005
+- @oraclesqltuning19
+- @oracleinmemoryguide19
+- @dbplyr
+
+---
+
+*Gerado a partir de `GenerateFeatureLineage_IM_ML_RFM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

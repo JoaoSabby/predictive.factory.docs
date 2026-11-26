@@ -1,0 +1,76 @@
+---
+title: "BuildPipelineFinish"
+subtitle: "Construir o Pipeline de Finalização"
+---
+
+## Uso
+
+```r
+BuildPipelineFinish()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria o target `pipelineFinish`, que registra o horário de término e a memória usada ao
+final da execução do pipeline.
+
+## Detalhes
+
+O target usa `tar_cue(mode = "always")` e executa em toda chamada de `tar_make()`.
+
+## Targets do Pipeline
+
++------------------+------------------------------------------------------------------+
+| Target           | Descrição, comando e dependências                                |
++==================+==================================================================+
+| `pipelineFinish` | Final do pipeline preditivo. Comando: `list(Final, UsedRAM)`.    |
+|                  | Depende de: nenhum.                                              |
++------------------+------------------------------------------------------------------+
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console a etapa de progresso do pipeline.
+
+## Retorno
+
+Lista com um objeto `tar_target` (`pipelineFinish`).
+
+## Exemplos
+
+```r
+listPipelineFinish <- BuildPipelineFinish()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- `lobstr::mem_used`
+
+## Referências
+
+- @targets
+
+---
+
+*Gerado a partir de `BuildPipelineFinish.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

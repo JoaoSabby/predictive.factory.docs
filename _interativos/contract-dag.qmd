@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-contract-dag" class="pf-frame" src="../widgets/contract_pipeline.html" title="Validador de contrato e DAG" loading="lazy"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Validador de contrato e DAG.*
+:::

@@ -1,0 +1,109 @@
+---
+title: "Recursos interativos"
+subtitle: "Demonstração de todos os componentes do livro"
+toc-depth: 2
+---
+
+::: {.pf-resumo}
+Esta página reúne todos os componentes interativos usados no livro. Todos funcionam sem
+internet e sem servidor: abrir o `index.html` com dois cliques é suficiente.
+:::
+
+## Como incluir um componente
+
+O código de cada componente fica em um arquivo próprio na pasta `_interativos/`. Para usá-lo
+em um capítulo, basta uma linha com o `include`, sempre com o caminho relativo ao capítulo.
+Em um capítulo de `teoria/`, por exemplo:
+
+```markdown
+{{</* include ../_interativos/roc-auc.qmd */>}}
+```
+
+::: {.callout-note}
+## Como os componentes são montados
+
+- Cada arquivo de `_interativos/` contém um `iframe` que aponta para uma página em `widgets/`.
+  No PDF, o `iframe` é trocado por um aviso de texto.
+- As páginas de `widgets/` usam apenas JavaScript clássico (`<script src>`), que o navegador
+  aceita em `file://`. Por isso não há Observable JS (OJS) nem módulos ES.
+- O d3 e o Observable Plot ficam em `recursos/js/`, e o Font Awesome em `recursos/fontawesome/`.
+- A altura de cada `iframe` é ajustada por `recursos/ajuste-iframes.html`, incluído em todas
+  as páginas pelo `_quarto.yml`. O `id` do `iframe` deve ser `frame-<id>` e o widget deve
+  chamar `PF.autoResize('<id>')`.
+- Para criar um componente novo, copie `widgets/plot_distribuicao_scores.html` (exemplo com
+  d3 e Plot) e um arquivo de `_interativos/`, e troque o `id`, o título e o caminho.
+:::
+
+## Validação e métricas
+
+### Divisão treino e teste
+
+Arquivo: `_interativos/split-treino-teste.qmd`
+
+{{< include ../_interativos/split-treino-teste.qmd >}}
+
+### Validação cruzada K-fold
+
+Arquivo: `_interativos/validacao-cruzada.qmd`
+
+{{< include ../_interativos/validacao-cruzada.qmd >}}
+
+### Curva ROC e ROC-AUC
+
+Arquivo: `_interativos/roc-auc.qmd`
+
+{{< include ../_interativos/roc-auc.qmd >}}
+
+### Curva precisão-revocação e PR-AUC
+
+Arquivo: `_interativos/pr-auc.qmd`
+
+{{< include ../_interativos/pr-auc.qmd >}}
+
+### Distribuição dos escores por classe
+
+Arquivo: `_interativos/plot-escores.qmd`
+
+{{< include ../_interativos/plot-escores.qmd >}}
+
+## Modelos e avaliação
+
+### Gradient Boosting Playground
+
+Arquivo: `_interativos/gb-playground.qmd`
+
+{{< include ../_interativos/gb-playground.qmd >}}
+
+### SuperTree: inspeção de árvores
+
+Arquivo: `_interativos/supertree.qmd`
+
+{{< include ../_interativos/supertree.qmd >}}
+
+### Leaderboard de modelos
+
+Arquivo: `_interativos/formattable.qmd`
+
+{{< include ../_interativos/formattable.qmd >}}
+
+## Balanceamento de classes
+
+### Fluxo conceitual ADASYN e NearMiss
+
+Arquivo: `_interativos/sby-conceptual.qmd`
+
+{{< include ../_interativos/sby-conceptual.qmd >}}
+
+### Motor numérico AVX-512 e oneMKL
+
+Arquivo: `_interativos/sby-avx512.qmd`
+
+{{< include ../_interativos/sby-avx512.qmd >}}
+
+## Pipeline
+
+### Validador de contrato e DAG
+
+Arquivo: `_interativos/contract-dag.qmd`
+
+{{< include ../_interativos/contract-dag.qmd >}}

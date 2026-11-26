@@ -1,0 +1,6 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Feature store e população**
+
+- [`CheckFeatureStore()`](../referencia/funcoes/CheckFeatureStore.qmd): Verificar a Existência da Feature Store para o Contexto
+- [`DefineValidCustomers()`](../referencia/funcoes/DefineValidCustomers.qmd): Definir a Tabela de Clientes Válidos

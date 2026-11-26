@@ -1,0 +1,129 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+## Configuração e execução
+
+| Função | Descrição |
+|---|---|
+| [DefineOptionsSetup](funcoes/DefineOptionsSetup.qmd) | Definir as Opções de Configuração do Predictive Factory |
+| [RunPipeline](funcoes/RunPipeline.qmd) | Executar o Pipeline Preditivo de um Modelo Alvo |
+| [CheckPredictiveModelExists](funcoes/CheckPredictiveModelExists.qmd) | Verificar a Existência do Modelo Preditivo no Registro |
+| [ConfigurePredictiveModelRun](funcoes/ConfigurePredictiveModelRun.qmd) | Configurar a Execução do Modelo Preditivo |
+| [LoadModelRunConfig](funcoes/LoadModelRunConfig.qmd) | Carregar a Configuração de Execução do Modelo Preditivo |
+| [ShowStartupBanner](funcoes/ShowStartupBanner.qmd) | Exibir o Banner de Inicialização do Motor Preditivo |
+| [CreateCrewControllerGroup](funcoes/CreateCrewControllerGroup.qmd) | Criar o Grupo de Controladores de Paralelismo crew |
+
+## Construção do pipeline
+
+| Função | Descrição |
+|---|---|
+| [BuildPipeline](funcoes/BuildPipeline.qmd) | Construir o Pipeline Completo de Modelagem Preditiva |
+| [MsgBuildPipeline](funcoes/MsgBuildPipeline.qmd) | Exibir Mensagem de Construção de Pipeline |
+| [BuildPipelineBegin](funcoes/BuildPipelineBegin.qmd) | Construir o Pipeline de Inicialização |
+| [BuildPipelineHistoricalData](funcoes/BuildPipelineHistoricalData.qmd) | Construir o Pipeline de Dados Históricos para Modelagem |
+| [BuildPipelineModeling](funcoes/BuildPipelineModeling.qmd) | Construir o Pipeline de Modelagem Preditiva |
+| [BuildPipelinePredictingData](funcoes/BuildPipelinePredictingData.qmd) | Construir o Pipeline de Dados para Predição |
+| [BuildPipelinePredicting](funcoes/BuildPipelinePredicting.qmd) | Construir o Pipeline de Inferência das Predições |
+| [BuildPipelineFinish](funcoes/BuildPipelineFinish.qmd) | Construir o Pipeline de Finalização |
+
+## Execução e registro dos targets
+
+| Função | Descrição |
+|---|---|
+| [InitializeTargetExecution](funcoes/InitializeTargetExecution.qmd) | Inicializar a Execução de um Target |
+| [LogPipelineExecution](funcoes/LogPipelineExecution.qmd) | Executar um Target com Registro de Traces, Telemetria e Auditoria |
+| [LogPipelineExecutionTraces](funcoes/LogPipelineExecutionTraces.qmd) | Redirecionar a Saída do Console de um Target para Arquivo |
+| [LogPipelineExecutionTelemetry](funcoes/LogPipelineExecutionTelemetry.qmd) | Iniciar a Telemetria de Hardware de um Target |
+| [LogPipelineExecutionRegistry](funcoes/LogPipelineExecutionRegistry.qmd) | Gravar a Linha de Auditoria da Execução de um Target |
+| [TerminateTarget](funcoes/TerminateTarget.qmd) | Finalizar a Execução de um Target |
+
+## Feature store e população
+
+| Função | Descrição |
+|---|---|
+| [CheckFeatureStore](funcoes/CheckFeatureStore.qmd) | Verificar a Existência da Feature Store para o Contexto |
+| [DefineValidCustomers](funcoes/DefineValidCustomers.qmd) | Definir a Tabela de Clientes Válidos |
+
+## Feature groups
+
+| Função | Descrição |
+|---|---|
+| [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](funcoes/GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd) | Gerar o Feature Group de Margem de Contribuição |
+| [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](funcoes/GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd) | Gerar o Feature Group de Cartão de Crédito |
+| [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](funcoes/GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd) | Gerar o Feature Group de Carteira de Clientes |
+| [GenerateFeatureLineage_IM_ML_CLIENTE](funcoes/GenerateFeatureLineage_IM_ML_CLIENTE.qmd) | Gerar o Feature Group de Dados Cadastrais do Cliente |
+| [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](funcoes/GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd) | Gerar o Feature Group de Composição de Dívida |
+| [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](funcoes/GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd) | Gerar o Feature Group de Crédito em Liquidação |
+| [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](funcoes/GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd) | Gerar o Feature Group de Débito Automático |
+| [GenerateFeatureLineage_IM_ML_FONTE_RENDA](funcoes/GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd) | Gerar o Feature Group de Fonte de Renda |
+| [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](funcoes/GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd) | Gerar o Feature Group de Agência do Cliente |
+| [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](funcoes/GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd) | Gerar o Feature Group de Histórico Cadastral do Cliente |
+| [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](funcoes/GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd) | Gerar o Feature Group de Limite de Conta |
+| [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](funcoes/GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd) | Gerar o Feature Group de Perfil de Risco |
+| [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](funcoes/GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd) | Gerar o Feature Group de Portabilidade de Crédito |
+| [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](funcoes/GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd) | Gerar o Feature Group de Portabilidade de Salário |
+| [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](funcoes/GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd) | Gerar o Feature Group de Indicadores do Cliente Pessoa Física |
+| [GenerateFeatureLineage_IM_ML_RFM](funcoes/GenerateFeatureLineage_IM_ML_RFM.qmd) | Gerar o Feature Group de Recência, Frequência e Valor Monetário |
+| [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](funcoes/GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd) | Gerar o Feature Group de Risco e Limites do Cliente |
+| [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](funcoes/GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd) | Gerar o Feature Group de Segmento PGC |
+| [GenerateFeatureLineage_IM_ML_SHARE_WALLET](funcoes/GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd) | Gerar o Feature Group de Participação na Carteira de Crédito |
+| [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](funcoes/GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd) | Gerar o Feature Group de Saldos em Conta Corrente e Poupança |
+| [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](funcoes/GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd) | Gerar o Feature Group de Crédito Tomado |
+| [GenerateFeatureLineage_IM_ML_USO_DIGITAL](funcoes/GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd) | Gerar o Feature Group de Uso de Canais Digitais |
+
+## Consolidação dos dados
+
+| Função | Descrição |
+|---|---|
+| [Generate_IM_ML_FEATURE_STORE](funcoes/Generate_IM_ML_FEATURE_STORE.qmd) | Consolidar os Feature Groups na Feature Store In-Memory |
+| [ConsolidateHistoricalData](funcoes/ConsolidateHistoricalData.qmd) | Consolidar Alvo e Preditores para Modelagem |
+
+## Preparação e modelagem
+
+| Função | Descrição |
+|---|---|
+| [PrepareDataModel](funcoes/PrepareDataModel.qmd) | Preprocessar os Dados para o Modelo Preditivo |
+| [TuneModel](funcoes/TuneModel.qmd) | Otimizar os Hiperparâmetros do Modelo Binário por Busca Bayesiana |
+| [TuneModelLastGrid](funcoes/TuneModelLastGrid.qmd) | Recuperar a Grade Inicial da Otimização de Hiperparâmetros |
+| [TuneModelBoundsXGBoost](funcoes/TuneModelBoundsXGBoost.qmd) | Definir os Limites da Busca de Hiperparâmetros do XGBoost |
+| [TuneModelResampleFoldsXGBoost](funcoes/TuneModelResampleFoldsXGBoost.qmd) | Preparar os Folds de Validação Cruzada para o Tuning do XGBoost |
+| [BalanceClass](funcoes/BalanceClass.qmd) | Balancear as Classes da Base de Treino |
+| [BalanceClassRandomUnder](funcoes/BalanceClassRandomUnder.qmd) | Balancear Classes por Subamostragem Aleatória |
+| [BalanceClassAdanear](funcoes/BalanceClassAdanear.qmd) | Balancear Classes com ADASYN e NearMiss |
+| [TuneModelEvaluateXGBoostFolds](funcoes/TuneModelEvaluateXGBoostFolds.qmd) | Avaliar um Candidato de Hiperparâmetros na Validação Cruzada |
+| [TuneModelEvaluateXGBoost](funcoes/TuneModelEvaluateXGBoost.qmd) | Avaliar um Candidato de Hiperparâmetros em um Fold |
+| [FitModel](funcoes/FitModel.qmd) | Ajustar o Modelo Preditivo Final |
+| [FitModelXGBoost](funcoes/FitModelXGBoost.qmd) | Ajustar o Modelo Final com XGBoost |
+| [FitModelLightGBM](funcoes/FitModelLightGBM.qmd) | Ajustar um Modelo com LightGBM |
+| [TuneModelBoundsLightGBM](funcoes/TuneModelBoundsLightGBM.qmd) | Definir os Limites da Busca de Hiperparâmetros do LightGBM |
+
+## Avaliação do modelo
+
+| Função | Descrição |
+|---|---|
+| [EvaluateModel](funcoes/EvaluateModel.qmd) | Avaliar o Desempenho do Modelo na Base de Teste |
+| [PredictModelXGBoost](funcoes/PredictModelXGBoost.qmd) | Executar a Predição Binária com XGBoost |
+| [EstimateBinaryPerformance](funcoes/EstimateBinaryPerformance.qmd) | Estimar o Desempenho de um Modelo Preditivo Binário |
+
+## Predição
+
+| Função | Descrição |
+|---|---|
+| [PredictModel](funcoes/PredictModel.qmd) | Executar a Predição do Modelo sobre a Base de Inferência |
+
+## Fora do pipeline
+
+| Função | Descrição |
+|---|---|
+| [AddColumn_TARGET_PROB_LEVEL](funcoes/AddColumn_TARGET_PROB_LEVEL.qmd) | Adicionar o Nível de Probabilidade da Predição |
+| [BuildPipelinePublishing](funcoes/BuildPipelinePublishing.qmd) | Construir o Pipeline de Publicação do Modelo |
+| [ConsolidatePredictionData](funcoes/ConsolidatePredictionData.qmd) | Consolidar a Feature Store de Predição em Memória |
+| [CreateTable_IM_ML_FEATURE_CATALOG](funcoes/CreateTable_IM_ML_FEATURE_CATALOG.qmd) | Criar a Tabela do Catálogo de Features |
+| [LoadArtifacts](funcoes/LoadArtifacts.qmd) | Carregar um Artefato Persistido em Parquet ou qs2 |
+| [PersistArtifacts](funcoes/PersistArtifacts.qmd) | Persistir um Artefato em Parquet ou qs2 |
+| [PrepareFitModelXGBoost](funcoes/PrepareFitModelXGBoost.qmd) | Preparar as Matrizes Esparsas de Ajuste do XGBoost |
+| [PrepareTuneModelFoldsXGBoost](funcoes/PrepareTuneModelFoldsXGBoost.qmd) | Preparar Folds Nativos do XGBoost em Memória |
+| [PrepareTuneModelFoldXGBoost](funcoes/PrepareTuneModelFoldXGBoost.qmd) | Preparar as Matrizes Quantizadas de um Fold do XGBoost |
+| [PrepareTuneModelFoldsLightGBM](funcoes/PrepareTuneModelFoldsLightGBM.qmd) | Preparar Folds Nativos do LightGBM |
+| [PublishModelRegistry_ML_FEATURE_STORE](funcoes/PublishModelRegistry_ML_FEATURE_STORE.qmd) | Publicar a Feature Store In-Memory na Tabela Persistente |
+| [RegisterPredictiveModel](funcoes/RegisterPredictiveModel.qmd) | Registrar os Metadados do Modelo Preditivo |
+| [RenderRoxygenToQuarto](funcoes/RenderRoxygenToQuarto.qmd) | Renderizar Cabeçalhos roxygen2 em Páginas Quarto |

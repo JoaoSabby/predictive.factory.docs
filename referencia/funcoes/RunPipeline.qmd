@@ -1,0 +1,119 @@
+---
+title: "RunPipeline"
+subtitle: "Executar o Pipeline Preditivo de um Modelo Alvo"
+---
+
+## Uso
+
+```r
+RunPipeline(
+  targetModel,
+  dataReferencia = DbDataMax(),
+  horizontePreditivo = 3L,
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Ponto de entrada da Predictive Factory. Valida o nome do modelo alvo, verifica se o
+modelo preditivo já foi registrado para a combinação de parâmetros informada e, quando
+ainda não existe, gera a configuração de execução e dispara o pipeline `targets`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `targetModel` | Vetor de caracteres de comprimento 1 com o nome do alvo de predição (por exemplo, `"OF_INFLOW_AUTHORISED"`). É convertido para maiúsculas; a execução é interrompida com erro quando contém caracteres fora de letras, números e underline. |
+| `dataReferencia` | Data de referência da execução (`Date` ou texto no formato `"AAAA-MM-DD"`). O padrão `DbDataMax()` usa a data mais recente disponível no banco. |
+| `horizontePreditivo` | Inteiro com o número de meses à frente a serem previstos (padrão: `3L`). |
+| `janelaAgregacao` | Inteiro com o número de meses usados na sumarização dos preditores (padrão: `6L`). |
+| `janelaHistorico` | Inteiro com o número de meses de profundidade histórica dos preditores (padrão: `36L`). |
+
+## Detalhes
+
+A identificação de uma execução é a combinação de `targetModel`, `dataReferencia`,
+`horizontePreditivo`, `janelaAgregacao` e `janelaHistorico`. A função segue as etapas:
+
+#. converte `targetModel` para maiúsculas e valida o formato pela expressão regular
+   `^[a-zA-Z0-9]+(_[a-zA-Z0-9]+)*$`: apenas letras, números e underline, sem underline
+   no início, no fim ou repetido;
+#. consulta `ML_MODEL_REGISTRY` por meio de `CheckPredictiveModelExists()`; se o modelo
+   existir, encerra sem reprocessar;
+#. cria pastas, datas e o arquivo YAML de configuração por meio de
+   `ConfigurePredictiveModelRun()`;
+#. executa `targets::tar_make()` com o script `_targets.R` do orquestrador, o
+   repositório do modelo como `store`, relatório `"balanced"` e workers `crew`.
+
+::: {.callout-note}
+<i class="fa-solid fa-database"></i> **Idempotência:**
+Uma segunda chamada com os mesmos parâmetros não reprocessa o modelo: a existência do
+registro em `ML_MODEL_REGISTRY` interrompe a execução antes da geração de dados.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- registra `on.exit(TerminateTarget())`, que fecha todas as conexões de banco de dados
+  ao final, inclusive em caso de erro;
+- cria a estrutura de pastas e o arquivo `_PredictiveModelRunConfig.yaml` do modelo,
+  por meio de `ConfigurePredictiveModelRun()`;
+- define a variável de ambiente `GPC_PREDICTIVE_FACTORY_RUN_CONFIG` e o lock de
+  execução do modelo;
+- executa o pipeline `targets`, que grava o repositório `_targets`, tabelas no banco
+  Oracle e artefatos do modelo.
+
+## Retorno
+
+Retorna invisivelmente `TRUE`, tanto quando o modelo já existia quanto após a
+execução do pipeline. Erros do pipeline são propagados por `tar_make()`.
+
+## Exemplos
+
+```r
+# Pré-condição: ambiente carregado por _Setup.R
+RunPipeline(
+  targetModel = "OF_INFLOW_AUTHORISED",
+  dataReferencia = as.Date("2026-01-01"),
+  horizontePreditivo = 3L,
+  janelaAgregacao = 6L,
+  janelaHistorico = 36L
+)
+```
+
+## Família
+
+**Orquestração do Pipeline**
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
+- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
+- [DefineOptionsSetup](DefineOptionsSetup.qmd)
+- [InitializeTargetExecution](InitializeTargetExecution.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [ShowStartupBanner](ShowStartupBanner.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Ver também
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+- `targets::tar_make`
+
+## Referências
+
+- @landau2021
+- @targets
+- @crew
+
+---
+
+*Gerado a partir de `RunPipeline.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

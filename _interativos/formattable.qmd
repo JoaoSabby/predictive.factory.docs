@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-formattable" class="pf-frame" src="../widgets/formattable_leaderboard.html" title="Leaderboard de modelos" loading="lazy"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Leaderboard de modelos.*
+:::

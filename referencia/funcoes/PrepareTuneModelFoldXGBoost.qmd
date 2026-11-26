@@ -1,0 +1,103 @@
+---
+title: "PrepareTuneModelFoldXGBoost"
+subtitle: "Preparar as Matrizes Quantizadas de um Fold do XGBoost"
+---
+
+## Uso
+
+```r
+PrepareTuneModelFoldXGBoost(
+  tuneDataFold,
+  tuneData,
+  labelData,
+  targetData,
+  positive,
+  negative,
+  features,
+  fitThreads
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Divide um fold em treino, validação e teste e cria as matrizes `xgb.QuantileDMatrix`
+correspondentes, com as matrizes de validação e de teste quantizadas a partir da matriz
+de treino.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `tuneDataFold` | Objeto `rsplit` de `vfold_cv()` sobre a base de índices, com as colunas `rowId` e `TARGET`. |
+| `tuneData` | Data frame completo com `TARGET` e as features. |
+| `labelData` | Vetor inteiro com o rótulo binário de cada linha (1 para a classe positiva). |
+| `targetData` | Fator com o alvo observado de cada linha. |
+| `positive` | Rótulo da classe positiva. |
+| `negative` | Rótulo da classe negativa. |
+| `features` | Vetor de caracteres com os nomes das features. |
+| `fitThreads` | Inteiro com o número de threads de construção das matrizes. |
+
+## Detalhes
+
+A partição de análise do fold é dividida em 80% para treino e 20% para validação, de
+forma estratificada e com semente `42`; a partição de avaliação é o teste externo. As
+três matrizes usam `max_bin = 512`, `missing = NA` e os nomes de `features`. As
+matrizes de validação e de teste usam `ref = dataTrain`, de modo que os limites dos
+histogramas são definidos apenas pelos dados de treino. Não há balanceamento de
+classes.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Lista invisível com `dataTrain`, `dataValid` e `dataTest` (objetos
+`xgb.QuantileDMatrix`), `targetTest` (fator com níveis `positive` e `negative`),
+`labelTest`, `positive`, `negative` e `features`.
+
+## Exemplos
+
+```r
+tuneFold <- PrepareTuneModelFoldXGBoost(
+  tuneDataFold = tuneDataFolds$splits[[1]],
+  tuneData = tuneSet,
+  labelData = labelData,
+  targetData = tuneSet$TARGET,
+  positive = "Sim",
+  negative = "Nao",
+  features = setdiff(colnames(tuneSet), "TARGET"),
+  fitThreads = 4L
+)
+```
+
+## Família
+
+**Otimização de Hiperparâmetros**
+
+- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [TuneModel](TuneModel.qmd)
+- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
+- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
+- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+
+## Ver também
+
+- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- `rsample::analysis`
+- `xgboost::xgb.QuantileDMatrix`
+
+## Referências
+
+- @chen2016
+
+---
+
+*Gerado a partir de `PrepareTuneModelFoldXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

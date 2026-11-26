@@ -1,0 +1,116 @@
+---
+title: "EstimateBinaryPerformance"
+subtitle: "Estimar o Desempenho de um Modelo Preditivo Binário"
+---
+
+## Uso
+
+```r
+EstimateBinaryPerformance(
+  data,
+  truth,
+  ...,
+  estimate,
+  estimator = NULL,
+  na_rm = TRUE,
+  event_level = yardstick_event_level(),
+  case_weights = NULL
+)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Conjunto padronizado de métricas de classificação binária, criado por
+`yardstick::metric_set()`. Combina métricas baseadas em probabilidade e métricas
+dependentes do ponto de corte.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `data` | Data frame com as colunas de valor real, classe predita e probabilidade. |
+| `truth` | Coluna do valor real (fator com dois níveis). |
+| `...` | Coluna da probabilidade da classe positiva, usada por `pr_auc` e `roc_auc`. |
+| `estimate` | Coluna da classe predita (fator com os mesmos níveis de `truth`). |
+| `estimator` | Tipo de estimador; `NULL` usa o padrão binário. |
+| `na_rm` | Lógico: remove valores ausentes antes do cálculo (padrão: `TRUE`). |
+| `event_level` | `"first"` ou `"second"`: nível de `truth` tratado como evento. |
+| `case_weights` | Coluna opcional de pesos por observação. |
+
+## Detalhes
+
+`EstimateBinaryPerformance` não é uma função escrita no projeto: é o objeto retornado
+por `yardstick::metric_set()`, avaliado na carga do arquivo. As métricas são:
+
++----------------+---------------+---------------------------------------------+
+| Métrica        | Tipo          | Definição                                   |
++================+===============+=============================================+
+| `pr_auc`       | probabilidade | Área sob a curva precisão-recall            |
++----------------+---------------+---------------------------------------------+
+| `roc_auc`      | probabilidade | Área sob a curva ROC                        |
++----------------+---------------+---------------------------------------------+
+| `sens`         | classe        | $TP / (TP + FN)$                        |
++----------------+---------------+---------------------------------------------+
+| `spec`         | classe        | $TN / (TN + FP)$                        |
++----------------+---------------+---------------------------------------------+
+| `recall`       | classe        | $TP / (TP + FN)$, igual à sensibilidade |
++----------------+---------------+---------------------------------------------+
+| `accuracy`     | classe        | $(TP + TN) / N$                         |
++----------------+---------------+---------------------------------------------+
+| `bal_accuracy` | classe        | $(sens + spec) / 2$                     |
++----------------+---------------+---------------------------------------------+
+
+`yardstick::precision` está desativada por comentário. Em bases desbalanceadas, a
+`pr_auc` é mais informativa que a `roc_auc`, pois depende diretamente da precisão na
+classe positiva.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Tibble com as colunas `.metric`, `.estimator` e `.estimate`, uma linha por
+métrica.
+
+## Exemplos
+
+```r
+EstimateBinaryPerformance(
+  data = performanceData,
+  truth = TARGET_REAL,
+  estimate = TARGET_PRED,
+  TARGET_PROB,
+  event_level = "first"
+)
+```
+
+## Família
+
+**Avaliação do Modelo**
+
+- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
+- [EvaluateModel](EvaluateModel.qmd)
+- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- [PredictModel](PredictModel.qmd)
+
+## Ver também
+
+- [EvaluateModel](EvaluateModel.qmd)
+- `yardstick::metric_set`
+- `yardstick::pr_auc`
+- `yardstick::roc_auc`
+
+## Referências
+
+- @davis2006
+- @fawcett2006
+- @saito2015
+- @yardstick
+
+---
+
+*Gerado a partir de `EstimateBinaryPerformance.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

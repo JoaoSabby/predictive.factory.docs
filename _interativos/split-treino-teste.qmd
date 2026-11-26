@@ -1,0 +1,9 @@
+::: {.content-visible when-format="html"}
+```{=html}
+<iframe id="frame-split-treino-teste" class="pf-frame" src="../widgets/split_treino_teste.html" title="Divisão treino e teste" loading="lazy"></iframe>
+```
+:::
+
+::: {.content-visible when-format="pdf"}
+*Componente interativo disponível na versão HTML: Divisão treino e teste.*
+:::

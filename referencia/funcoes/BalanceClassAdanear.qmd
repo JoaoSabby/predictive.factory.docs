@@ -1,0 +1,91 @@
+---
+title: "BalanceClassAdanear"
+subtitle: "Balancear Classes com ADASYN e NearMiss"
+---
+
+## Uso
+
+```r
+BalanceClassAdanear(database, balanceClassConfig, nThreads)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Balanceia a base de treino combinando sobreamostragem sintética adaptativa (ADASYN) da
+classe minoritária e subamostragem NearMiss da classe majoritária, por meio de
+`sbyadanear::sby_adanear_hpc()`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `database` | Data frame com `TARGET` e as features. |
+| `balanceClassConfig` | Lista com `adasyn_k`, `adasyn_ratio`, `nearmiss_k` e `nearmiss_ratio`. |
+| `nThreads` | Inteiro com o número máximo de threads do algoritmo. |
+
+## Detalhes
+
+Antes do balanceamento, as colunas lógicas são convertidas para inteiro. O ADASYN gera
+exemplos sintéticos da classe minoritária em proporção à dificuldade de cada ponto,
+medida pela fração de vizinhos da classe majoritária entre seus $k$ vizinhos:
+
+$$r_i = \frac{\Delta_i}{k}, \qquad g_i = \frac{r_i}{\sum_j r_j} G$$
+
+em que $\Delta_i$ é o número de vizinhos majoritários e $G$ é o total de
+exemplos sintéticos. O NearMiss mantém os exemplos majoritários mais próximos da classe
+minoritária.
+
+A semente é fixada em `42` por `set.seed(42L)` e pelo argumento `sby_seed = 42L`, o que
+torna o resultado reprodutível para os mesmos dados e parâmetros.
+
+::: {.callout-note}
+<i class="fa-solid fa-circle-info"></i> **Restauração de Tipos:**
+Após o balanceamento, voltam a ser lógicas as colunas que em `database` são inteiras
+com valores em $\{0, 1, NA\}$. As colunas que já eram lógicas em `database` foram
+convertidas para inteiro antes do balanceamento e permanecem inteiras no resultado.
+:::
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Retorno
+
+Data frame balanceado retornado por `sby_adanear_hpc()`, com a restauração de
+tipos descrita em detalhes.
+
+## Exemplos
+
+```r
+balancedDataset <- BalanceClassAdanear(
+  database = trainingSet,
+  balanceClassConfig = list(
+    adasyn_k = 5L, adasyn_ratio = 0.5, nearmiss_k = 3L, nearmiss_ratio = 1
+  ),
+  nThreads = 4L
+)
+```
+
+## Família
+
+**Balanceamento de Classes**
+
+- [BalanceClass](BalanceClass.qmd)
+- [BalanceClassRandomUnder](BalanceClassRandomUnder.qmd)
+
+## Ver também
+
+- [BalanceClass](BalanceClass.qmd)
+- [BalanceClassRandomUnder](BalanceClassRandomUnder.qmd)
+
+## Referências
+
+- @he2008
+- @mani2003
+
+---
+
+*Gerado a partir de `BalanceClassAdanear.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

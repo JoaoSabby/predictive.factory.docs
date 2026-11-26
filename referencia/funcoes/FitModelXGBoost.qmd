@@ -1,0 +1,116 @@
+---
+title: "FitModelXGBoost"
+subtitle: "Ajustar o Modelo Final com XGBoost"
+---
+
+## Uso
+
+```r
+FitModelXGBoost(trainingSet, hyperParams)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Ajusta o modelo XGBoost binário final com os hiperparâmetros otimizados, salva o modelo
+em formato JSON compactado em `.zip` na pasta de artefatos e retorna o caminho do
+arquivo.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `trainingSet` | Tibble de treino preprocessada, com `TARGET` (níveis `"Sim"` e `"Nao"`) e as features. |
+| `hyperParams` | Lista retornada por `TuneModel()`. São usados os elementos de `results`: `reg_alpha`, `learning_rate`, `reg_lambda`, `max_delta_step`, `subsample` e `colsample_bytree`. |
+
+## Detalhes
+
+As etapas são:
+
+#. divisão interna estratificada da base de treino em 80% para ajuste e 20% para
+   monitoramento, por `rsample::initial_split()`;
+#. balanceamento apenas da porção de ajuste, por `BalanceClass()` com a configuração da
+   opção `predy_balance_class`;
+#. construção das matrizes `xgb.DMatrix`, com pesos 10 para `"Sim"` e 1 para `"Nao"` na
+   porção de ajuste;
+#. treinamento por `xgb.train()` com 6.000 rodadas, árvores `gbtree`, método `hist`,
+   `max_bin = 1024`, objetivo `binary:logistic` e métrica `aucpr` na porção de
+   monitoramento;
+#. gravação do modelo em JSON por `xgb.save.raw()`, compactação em
+   `predictive_model.zip` e remoção do JSON temporário.
+
+A função de perda ponderada minimizada é:
+
+$$\mathcal{L} = \sum_i w_i \, \ell(y_i, \hat{y}_i) + \sum_k \Omega(f_k)$$
+
+com $w_i = 10$ quando $y_i = 1$ e $w_i = 1$ quando $y_i = 0$.
+
+::: {.callout-important}
+<i class="fa-solid fa-circle-exclamation"></i> **Hiperparâmetros Não Aplicados:**
+`max_depth`, `min_child_weight` e `min_split_loss` são lidos de
+`hyperParams$results$Best_Par[...]`. A lista `results` retornada por `TuneModel()` não
+contém `Best_Par`; por isso, esses três parâmetros não são definidos e o XGBoost usa os
+valores padrão. Os valores otimizados estão em `hyperParams$results$max_depth`,
+`hyperParams$results$min_child_weight` e `hyperParams$results$min_split_loss`.
+:::
+
+::: {.callout-note}
+<i class="fa-solid fa-circle-info"></i> **Parada Antecipada e Margem Base:**
+Não há `early_stopping_rounds`: as 6.000 rodadas são sempre executadas, e a porção de
+monitoramento serve apenas para acompanhamento da métrica. A margem base `baseMargin` é
+calculada, mas não é usada, pois o argumento `base_margin` está comentado.
+:::
+
+A semente do XGBoost é `42`. A divisão interna não fixa semente; sua reprodutibilidade
+depende da semente por target definida em `tar_option_set(seed = 42L)`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- grava `predictive_model.zip` em `modelRunConfig$paths$artifactsPath`, sobrescrevendo
+  arquivo existente;
+- cria e remove o arquivo `predictive_model_{idModel}.json` em `tempdir()`;
+- depende do objeto global `modelRunConfig`.
+
+## Retorno
+
+Vetor de caracteres de comprimento 1 com o caminho de `predictive_model.zip`.
+
+## Exemplos
+
+```r
+# Pré-condição: modelRunConfig carregado e hiperparâmetros otimizados
+fileModel <- FitModelXGBoost(trainingSet = trainingSet, hyperParams = hyperParams)
+```
+
+## Família
+
+**Modelagem Preditiva**
+
+- [FitModel](FitModel.qmd)
+- [FitModelLightGBM](FitModelLightGBM.qmd)
+- [PrepareDataModel](PrepareDataModel.qmd)
+- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+
+## Ver também
+
+- [FitModel](FitModel.qmd)
+- [TuneModel](TuneModel.qmd)
+- [BalanceClass](BalanceClass.qmd)
+- [PredictModel](PredictModel.qmd)
+- `xgboost::xgb.train`
+
+## Referências
+
+- @chen2016
+- @elkan2001
+- @xgboostdocs
+
+---
+
+*Gerado a partir de `FitModelXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

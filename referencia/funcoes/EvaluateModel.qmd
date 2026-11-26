@@ -1,0 +1,80 @@
+---
+title: "EvaluateModel"
+subtitle: "Avaliar o Desempenho do Modelo na Base de Teste"
+---
+
+## Uso
+
+```r
+EvaluateModel(fileModel, holdoutSet)
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Carrega o modelo XGBoost ajustado, aplica-o à base de teste (holdout) e calcula as
+métricas de desempenho binário definidas em `EstimateBinaryPerformance`.
+
+## Parâmetros
+
+| Parâmetro | Descrição |
+|---|---|
+| `fileModel` | Caminho do arquivo `.zip` com o modelo em JSON, retornado por `FitModel()`. |
+| `holdoutSet` | Tibble de teste, com `TARGET` (níveis `"Sim"` e `"Nao"`) e as mesmas features da base de treino. |
+
+## Detalhes
+
+#. extrai o JSON do modelo para `tempdir()` e carrega-o com `xgb.load.raw()`;
+#. constrói a `xgb.DMatrix` com as colunas de `holdoutSet`, exceto `TARGET`;
+#. aplica `PredictModelXGBoost()` com ponto de corte `0.5`;
+#. calcula as métricas com `TARGET` como valor real, a classe predita e a probabilidade
+   de `"Sim"`, com `event_level = "first"`, isto é, `"Sim"` como classe positiva.
+
+A base de teste não é balanceada; as métricas refletem a distribuição observada das
+classes.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- extrai o arquivo JSON do modelo em `tempdir()`, sobrescrevendo arquivo existente.
+
+## Retorno
+
+Tibble com as colunas `METRIC` (nome da métrica) e `ESTIMATE` (valor), com uma
+linha para cada métrica de `EstimateBinaryPerformance`.
+
+## Exemplos
+
+```r
+# Pré-condição: modelo ajustado e base de teste disponível
+performanceMetrics <- EvaluateModel(fileModel = fileModel, holdoutSet = holdoutSet)
+```
+
+## Família
+
+**Avaliação do Modelo**
+
+- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
+- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
+- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- [PredictModel](PredictModel.qmd)
+
+## Ver também
+
+- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
+- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+
+## Referências
+
+- @saito2015
+- @yardstick
+
+---
+
+*Gerado a partir de `EvaluateModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

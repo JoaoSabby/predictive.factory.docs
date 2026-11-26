@@ -35,39 +35,53 @@ format:
 
 <!-- Ordem dos capitulos no PDF. A pagina de recursos interativos fica apenas no site. -->
 
-{{< include 01-fundamentos.qmd >}}
+{{< include introducao/fundamentos-arquitetura.qmd >}}
 
-{{< include 02-qualidade-dados.qmd >}}
+{{< include introducao/qualidade-dados.qmd >}}
 
-{{< include 03-modelagem-dados.qmd >}}
+{{< include introducao/modelagem-dados.qmd >}}
 
-{{< include 04-infraestrutura-hpc.qmd >}}
+{{< include introducao/infraestrutura-hpc.qmd >}}
 
-{{< include 05-governanca-bancaria.qmd >}}
+{{< include introducao/governanca-bancaria.qmd >}}
 
-{{< include 06-padroes-metadados.qmd >}}
+{{< include introducao/padroes-metadados.qmd >}}
 
-{{< include 07-engenharia-software.qmd >}}
+{{< include introducao/engenharia-software.qmd >}}
 
-{{< include 08-persistencia-oracle.qmd >}}
+{{< include introducao/persistencia-oracle.qmd >}}
 
-{{< include 09-preservacao-modelo.qmd >}}
+{{< include introducao/preservacao-modelo.qmd >}}
 
-{{< include 10-evolucao-tecnologica.qmd >}}
+{{< include introducao/evolucao-tecnologica.qmd >}}
 
-{{< include 11-matriz-aderencia.qmd >}}
+{{< include introducao/matriz-aderencia.qmd >}}
 
-{{< include 12-balanceamento-adanear.qmd >}}
+{{< include teoria/aprendizado-supervisionado.qmd >}}
 
-{{< include 13-arvores-boosting.qmd >}}
+{{< include teoria/arvores-boosting.qmd >}}
 
-{{< include 14-validacao-metricas.qmd >}}
+{{< include teoria/validacao-metricas.qmd >}}
 
-{{< include 15-avaliacao-leaderboard.qmd >}}
+{{< include teoria/otimizacao-hiperparametros.qmd >}}
 
-{{< include 16-modelagem.qmd >}}
+{{< include teoria/desbalanceamento-classes.qmd >}}
 
-{{< include 17-pipeline.qmd >}}
+{{< include teoria/avaliacao-leaderboard.qmd >}}
+
+{{< include pipeline/visao-geral.qmd >}}
+
+{{< include pipeline/configuracao-execucao.qmd >}}
+
+{{< include pipeline/dados-features.qmd >}}
+
+{{< include pipeline/modelagem-tuning.qmd >}}
+
+{{< include pipeline/avaliacao-predicao.qmd >}}
+
+{{< include pipeline/publicacao-registro.qmd >}}
+
+{{< include apendices/glossario.qmd >}}
 
 # Referência de funções {#referencia-de-funcoes-pdf}
 

@@ -1,0 +1,108 @@
+---
+title: "BuildPipelinePredictingData"
+subtitle: "Construir o Pipeline de Dados para Predição"
+---
+
+## Uso
+
+```r
+BuildPipelinePredictingData()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria os targets de feature engineering da base de predição: verificação da feature
+store, definição dos clientes válidos, geração de cada feature group e consolidação na
+feature store de predição.
+
+## Detalhes
+
+Segue a mesma estrutura de `BuildPipelineHistoricalData()`, com sufixo de tabela
+`"PREDICAO"` e datas de predição. Os feature groups são descobertos por `ls(pattern =
+"^GenerateFeatureLineage_IM_ML_")` e mapeados por `tar_map()` em targets
+`predictionFeatureGroupTable_{GRUPO}`.
+
+Diferenças em relação ao pipeline de treino:
+
+- a definição dos clientes válidos também usa `tar_skip()` e recebe `featureProcessed =
+  featureStoreProcessedPredicao`;
+- os feature groups de predição não definem o controlador `crew` dedicado e usam o
+  controlador padrão de `_targets.R`;
+- o target de consolidação não define `deployment = "worker"`;
+- não há geração de alvo, pois o alvo de predição ainda não é observado.
+
+## Targets do Pipeline
+
++---------------------------------------+---------------------------------------------+
+| Target                                | Descrição, comando e dependências           |
++=======================================+=============================================+
+| `featureStoreProcessedPredicao`       | Verifica a feature store de predição.       |
+|                                       | Comando: `CheckFeatureStore()`. Depende de: |
+|                                       | `pipelineBegin`.                            |
++---------------------------------------+---------------------------------------------+
+| `tabelaClientesValidosPredicao`       | Define os clientes válidos de predição.     |
+|                                       | Comando: `DefineValidCustomers()`. Depende  |
+|                                       | de: `featureStoreProcessedPredicao`.        |
++---------------------------------------+---------------------------------------------+
+| `predictionFeatureGroupTable_{GRUPO}` | Gera cada feature group de predição.        |
+|                                       | Comando:                                    |
+|                                       | `GenerateFeatureLineage_IM_ML_{GRUPO}()`.   |
+|                                       | Depende de:                                 |
+|                                       | `tabelaClientesValidosPredicao`.            |
++---------------------------------------+---------------------------------------------+
+| `predictionTable_FEATURE_STORE`       | Consolida `IM_ML_FEATURE_STORE_PREDICAO`.   |
+|                                       | Comando: `Generate_IM_ML_FEATURE_STORE()`.  |
+|                                       | Depende de: feature groups de predição.     |
++---------------------------------------+---------------------------------------------+
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console a etapa de progresso do pipeline;
+- depende dos objetos globais de datas de predição publicados por
+  `LoadModelRunConfig()`.
+
+## Retorno
+
+Lista de objetos `tar_target`, incluindo os targets gerados por `tar_map()`.
+
+## Exemplos
+
+```r
+# Pré-condição: funções carregadas e configuração publicada por LoadModelRunConfig()
+listPipelinePredictingData <- BuildPipelinePredictingData()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- `tarchetypes::tar_map`
+
+## Referências
+
+- @tarchetypes
+
+---
+
+*Gerado a partir de `BuildPipelinePredictingData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

@@ -1,0 +1,12 @@
+<!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
+
+**Construção do pipeline**
+
+- [`BuildPipeline()`](../referencia/funcoes/BuildPipeline.qmd): Construir o Pipeline Completo de Modelagem Preditiva
+- [`MsgBuildPipeline()`](../referencia/funcoes/MsgBuildPipeline.qmd): Exibir Mensagem de Construção de Pipeline
+- [`BuildPipelineBegin()`](../referencia/funcoes/BuildPipelineBegin.qmd): Construir o Pipeline de Inicialização
+- [`BuildPipelineHistoricalData()`](../referencia/funcoes/BuildPipelineHistoricalData.qmd): Construir o Pipeline de Dados Históricos para Modelagem
+- [`BuildPipelineModeling()`](../referencia/funcoes/BuildPipelineModeling.qmd): Construir o Pipeline de Modelagem Preditiva
+- [`BuildPipelinePredictingData()`](../referencia/funcoes/BuildPipelinePredictingData.qmd): Construir o Pipeline de Dados para Predição
+- [`BuildPipelinePredicting()`](../referencia/funcoes/BuildPipelinePredicting.qmd): Construir o Pipeline de Inferência das Predições
+- [`BuildPipelineFinish()`](../referencia/funcoes/BuildPipelineFinish.qmd): Construir o Pipeline de Finalização

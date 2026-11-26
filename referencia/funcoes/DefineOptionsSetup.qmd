@@ -1,0 +1,116 @@
+---
+title: "DefineOptionsSetup"
+subtitle: "Definir as Opções de Configuração do Predictive Factory"
+---
+
+## Uso
+
+```r
+DefineOptionsSetup()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Registra, com o pacote `options`, as 13 opções `predy_*` que parametrizam o motor de
+modelagem, o tuning, os limites de threads, as colunas de contexto, a seleção de
+features, a divisão treino e teste e o balanceamento de classes.
+
+## Detalhes
+
+Cada opção é registrada por `options::define_option()` com valor padrão, descrição,
+nome de opção igual ao nome da opção e variável de ambiente `R_{OPCAO}` em maiúsculas.
+A ordem de precedência do pacote `options` permite sobrescrever o padrão pela opção da
+sessão ou pela variável de ambiente.
+
++--------------------------------------------+----------------------------------------+
+| Opção                                      | Valor padrão                           |
++============================================+========================================+
+| `predy_engine_model`                       | `"xgboost"`                            |
++--------------------------------------------+----------------------------------------+
+| `predy_engine_model_xgboost`               | `list(max_trees = 3000L,               |
+|                                            | max_delta_step = 1L, stop_iter = 50L,  |
+|                                            | reg_alpha = 0.5)`                      |
++--------------------------------------------+----------------------------------------+
+| `predy_tune_num_folds`                     | `5L`                                   |
++--------------------------------------------+----------------------------------------+
+| `predy_positive_class_threshold`           | `0.5`                                  |
++--------------------------------------------+----------------------------------------+
+| `predy_threads_limit`                      | `getOption("threads_limit")`           |
++--------------------------------------------+----------------------------------------+
+| `predy_tune_debug`                         | `FALSE`                                |
++--------------------------------------------+----------------------------------------+
+| `predy_tune_threads_outer`                 | `2L`                                   |
++--------------------------------------------+----------------------------------------+
+| `predy_tune_threads_inner`                 | $\lfloor (\text{threads} - 2) /    |
+|                                            | \text{folds} \rfloor$                  |
++--------------------------------------------+----------------------------------------+
+| `predy_columns_key_context`                | `SEQUENCIA_CLIENTE`,                   |
+|                                            | `DATA_REFERENCIA_TARGET`,              |
+|                                            | `DATA_REFERENCIA_FEATURE`,             |
+|                                            | `HORIZONTE_PREDITIVO`,                 |
+|                                            | `JANELA_AGREGACAO`, `JANELA_HISTORICO` |
++--------------------------------------------+----------------------------------------+
+| `predy_features_modal_frequency_threshold` | `0.995`                                |
++--------------------------------------------+----------------------------------------+
+| `predy_features_correlation_threshold`     | `0.995`                                |
++--------------------------------------------+----------------------------------------+
+| `predy_training_set_prop`                  | `0.90`                                 |
++--------------------------------------------+----------------------------------------+
+| `predy_balance_class`                      | `list(method = "random_under",         |
+|                                            | adasyn_k = 7L, adasyn_ratio = 0.2,     |
+|                                            | nearmiss_k = 3L, nearmiss_ratio = 10L, |
+|                                            | under_sampling = 10L)`                 |
++--------------------------------------------+----------------------------------------+
+
+O valor padrão de `predy_tune_threads_inner` é calculado no momento do registro, a
+partir dos valores correntes de `predy_threads_limit` e `predy_tune_num_folds`.
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- carrega os pacotes `options` e `pacman` por `pacman::p_load()`;
+- registra as definições de opções no ambiente global (`envir = .GlobalEnv`).
+
+## Retorno
+
+`NULL` invisível.
+
+## Exemplos
+
+```r
+DefineOptionsSetup()
+options::opt("predy_engine_model")
+```
+
+## Família
+
+**Orquestração do Pipeline**
+
+- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
+- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
+- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
+- [InitializeTargetExecution](InitializeTargetExecution.qmd)
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [RunPipeline](RunPipeline.qmd)
+- [ShowStartupBanner](ShowStartupBanner.qmd)
+- [TerminateTarget](TerminateTarget.qmd)
+
+## Ver também
+
+- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- `options::define_option`
+- `options::opt`
+
+## Referências
+
+- @optionspkg
+
+---
+
+*Gerado a partir de `DefineOptionsSetup.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

@@ -1,0 +1,102 @@
+---
+title: "BuildPipelineModeling"
+subtitle: "Construir o Pipeline de Modelagem Preditiva"
+---
+
+## Uso
+
+```r
+BuildPipelineModeling()
+```
+
+## Descrição
+
+[![Experimental](figures/lifecycle-experimental.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+Cria os targets de modelagem: preparação dos dados históricos, divisão em treino e
+teste, otimização de hiperparâmetros, ajuste do modelo final e avaliação do desempenho
+na base de teste.
+
+## Detalhes
+
+A divisão treino e teste usa `rsample::initial_split()` estratificada por `TARGET`, com
+a proporção de treino definida pela opção `predy_training_set_prop`. A descrição do
+target de tuning informa o motor da opção `predy_engine_model`.
+
+## Targets do Pipeline
+
++----------------------+--------------------------------------------------------------+
+| Target               | Descrição, comando e dependências                            |
++======================+==============================================================+
+| `dataModel`          | Preprocessamento dos dados históricos. Comando:              |
+|                      | `PrepareDataModel()`. Depende de: `historicalData`.          |
++----------------------+--------------------------------------------------------------+
+| `splitSet`           | Divisão estratificada em treino e teste. Comando:            |
+|                      | `initial_split()`. Depende de: `dataModel`.                  |
++----------------------+--------------------------------------------------------------+
+| `trainingSet`        | Porção de treino. Comando: `training()`. Depende de:         |
+|                      | `splitSet`.                                                  |
++----------------------+--------------------------------------------------------------+
+| `hyperParams`        | Otimização de hiperparâmetros. Comando: `TuneModel()`.       |
+|                      | Depende de: `trainingSet`.                                   |
++----------------------+--------------------------------------------------------------+
+| `fileModel`          | Ajuste do modelo preditivo. Comando: `FitModel()`. Formato:  |
+|                      | `"file"`. Depende de: `trainingSet`, `hyperParams`.          |
++----------------------+--------------------------------------------------------------+
+| `holdoutSet`         | Porção de teste. Comando: `testing()`. Depende de:           |
+|                      | `splitSet`.                                                  |
++----------------------+--------------------------------------------------------------+
+| `performanceMetrics` | Desempenho na base de teste. Comando: `EvaluateModel()`.     |
+|                      | Depende de: `fileModel`, `holdoutSet`.                       |
++----------------------+--------------------------------------------------------------+
+
+## Ciclo de Vida
+
+Função introduzida na versão 0.1.0 do projeto, em estágio experimental: a interface
+pode mudar entre versões 0.x sem garantia de compatibilidade.
+
+## Efeitos Colaterais
+
+- escreve no console a etapa de progresso do pipeline.
+
+## Retorno
+
+Lista com sete objetos `tar_target`.
+
+## Exemplos
+
+```r
+# Pré-condição: opções definidas por DefineOptionsSetup()
+listPipelineModeling <- BuildPipelineModeling()
+```
+
+## Família
+
+**Construção do Pipeline**
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+
+## Ver também
+
+- [BuildPipeline](BuildPipeline.qmd)
+- [PrepareDataModel](PrepareDataModel.qmd)
+- [TuneModel](TuneModel.qmd)
+- [FitModel](FitModel.qmd)
+- [EvaluateModel](EvaluateModel.qmd)
+- `rsample::initial_split`
+
+## Referências
+
+- @hastie2009
+- @rsample
+
+---
+
+*Gerado a partir de `BuildPipelineModeling.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*

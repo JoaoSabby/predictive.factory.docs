@@ -3,7 +3,7 @@
 #   source("buildPdf.R", encoding = "UTF-8")
 #
 # Requer XeLaTeX, o pacote LaTeX fvextra e as familias DejaVu Serif, Sans e Sans Mono.
-# O PDF e gerado em ebook_pdf.pdf e copiado para _site/ (link no menu superior do site).
+# O PDF e gerado em ebook_pdf.pdf e copiado para _book/ (link no menu superior do site).
 
 quartoPath <- Sys.which("quarto")
 xelatexPath <- Sys.which("xelatex")
@@ -15,7 +15,7 @@ renderStatus <- system2(quartoPath, c("render", "ebook_pdf.qmd", "--to", "pdf"))
 if(renderStatus != 0L){
   stop("A geracao do PDF nao foi concluida.")
 }
-if(dir.exists("_site")){
-  file.copy("ebook_pdf.pdf", file.path("_site", "ebook_pdf.pdf"), overwrite = TRUE)
+if(dir.exists("_book")){
+  file.copy("ebook_pdf.pdf", file.path("_book", "ebook_pdf.pdf"), overwrite = TRUE)
 }
 message("PDF gerado em ebook_pdf.pdf.")

@@ -1,0 +1,15 @@
+# Avaliação e leaderboard de modelos {#leaderboard}
+
+## Critérios de comparação
+
+<!-- Conteúdo a ser escrito. -->
+
+## Leaderboard de experimentos
+
+<!-- Conteúdo a ser escrito. -->
+
+{{< include ../_interativos/formattable.qmd >}}
+
+## Promoção de modelos
+
+<!-- Conteúdo a ser escrito. -->

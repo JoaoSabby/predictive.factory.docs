@@ -2,6 +2,7 @@
 
 **Preparação e modelagem**
 
+::: {.content-visible when-format="html"}
 - [`PrepareDataModel()`](../referencia/funcoes/PrepareDataModel.qmd): Preprocessar os Dados para o Modelo Preditivo
 - [`TuneModel()`](../referencia/funcoes/TuneModel.qmd): Otimizar os Hiperparâmetros do Modelo Binário por Busca Bayesiana
 - [`TuneModelLastGrid()`](../referencia/funcoes/TuneModelLastGrid.qmd): Recuperar a Grade Inicial da Otimização de Hiperparâmetros
@@ -16,3 +17,21 @@
 - [`FitModelXGBoost()`](../referencia/funcoes/FitModelXGBoost.qmd): Ajustar o Modelo Final com XGBoost
 - [`FitModelLightGBM()`](../referencia/funcoes/FitModelLightGBM.qmd): Ajustar um Modelo com LightGBM
 - [`TuneModelBoundsLightGBM()`](../referencia/funcoes/TuneModelBoundsLightGBM.qmd): Definir os Limites da Busca de Hiperparâmetros do LightGBM
+:::
+
+::: {.content-visible unless-format="html"}
+- [`PrepareDataModel()`](#fn-PrepareDataModel): Preprocessar os Dados para o Modelo Preditivo
+- [`TuneModel()`](#fn-TuneModel): Otimizar os Hiperparâmetros do Modelo Binário por Busca Bayesiana
+- [`TuneModelLastGrid()`](#fn-TuneModelLastGrid): Recuperar a Grade Inicial da Otimização de Hiperparâmetros
+- [`TuneModelBoundsXGBoost()`](#fn-TuneModelBoundsXGBoost): Definir os Limites da Busca de Hiperparâmetros do XGBoost
+- [`TuneModelResampleFoldsXGBoost()`](#fn-TuneModelResampleFoldsXGBoost): Preparar os Folds de Validação Cruzada para o Tuning do XGBoost
+- [`BalanceClass()`](#fn-BalanceClass): Balancear as Classes da Base de Treino
+- [`BalanceClassRandomUnder()`](#fn-BalanceClassRandomUnder): Balancear Classes por Subamostragem Aleatória
+- [`BalanceClassAdanear()`](#fn-BalanceClassAdanear): Balancear Classes com ADASYN e NearMiss
+- [`TuneModelEvaluateXGBoostFolds()`](#fn-TuneModelEvaluateXGBoostFolds): Avaliar um Candidato de Hiperparâmetros na Validação Cruzada
+- [`TuneModelEvaluateXGBoost()`](#fn-TuneModelEvaluateXGBoost): Avaliar um Candidato de Hiperparâmetros em um Fold
+- [`FitModel()`](#fn-FitModel): Ajustar o Modelo Preditivo Final
+- [`FitModelXGBoost()`](#fn-FitModelXGBoost): Ajustar o Modelo Final com XGBoost
+- [`FitModelLightGBM()`](#fn-FitModelLightGBM): Ajustar um Modelo com LightGBM
+- [`TuneModelBoundsLightGBM()`](#fn-TuneModelBoundsLightGBM): Definir os Limites da Busca de Hiperparâmetros do LightGBM
+:::

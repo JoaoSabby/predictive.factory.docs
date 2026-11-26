@@ -2,6 +2,7 @@
 
 **Construção do pipeline**
 
+::: {.content-visible when-format="html"}
 - [`BuildPipeline()`](../referencia/funcoes/BuildPipeline.qmd): Construir o Pipeline Completo de Modelagem Preditiva
 - [`MsgBuildPipeline()`](../referencia/funcoes/MsgBuildPipeline.qmd): Exibir Mensagem de Construção de Pipeline
 - [`BuildPipelineBegin()`](../referencia/funcoes/BuildPipelineBegin.qmd): Construir o Pipeline de Inicialização
@@ -10,3 +11,15 @@
 - [`BuildPipelinePredictingData()`](../referencia/funcoes/BuildPipelinePredictingData.qmd): Construir o Pipeline de Dados para Predição
 - [`BuildPipelinePredicting()`](../referencia/funcoes/BuildPipelinePredicting.qmd): Construir o Pipeline de Inferência das Predições
 - [`BuildPipelineFinish()`](../referencia/funcoes/BuildPipelineFinish.qmd): Construir o Pipeline de Finalização
+:::
+
+::: {.content-visible unless-format="html"}
+- [`BuildPipeline()`](#fn-BuildPipeline): Construir o Pipeline Completo de Modelagem Preditiva
+- [`MsgBuildPipeline()`](#fn-MsgBuildPipeline): Exibir Mensagem de Construção de Pipeline
+- [`BuildPipelineBegin()`](#fn-BuildPipelineBegin): Construir o Pipeline de Inicialização
+- [`BuildPipelineHistoricalData()`](#fn-BuildPipelineHistoricalData): Construir o Pipeline de Dados Históricos para Modelagem
+- [`BuildPipelineModeling()`](#fn-BuildPipelineModeling): Construir o Pipeline de Modelagem Preditiva
+- [`BuildPipelinePredictingData()`](#fn-BuildPipelinePredictingData): Construir o Pipeline de Dados para Predição
+- [`BuildPipelinePredicting()`](#fn-BuildPipelinePredicting): Construir o Pipeline de Inferência das Predições
+- [`BuildPipelineFinish()`](#fn-BuildPipelineFinish): Construir o Pipeline de Finalização
+:::

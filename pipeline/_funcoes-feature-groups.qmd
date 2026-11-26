@@ -2,6 +2,7 @@
 
 **Feature groups**
 
+::: {.content-visible when-format="html"}
 - [`GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO()`](../referencia/funcoes/GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd): Gerar o Feature Group de Margem de Contribuição
 - [`GenerateFeatureLineage_IM_ML_CARTAO_CREDITO()`](../referencia/funcoes/GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd): Gerar o Feature Group de Cartão de Crédito
 - [`GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META()`](../referencia/funcoes/GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd): Gerar o Feature Group de Carteira de Clientes
@@ -24,3 +25,29 @@
 - [`GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP()`](../referencia/funcoes/GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd): Gerar o Feature Group de Saldos em Conta Corrente e Poupança
 - [`GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO()`](../referencia/funcoes/GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd): Gerar o Feature Group de Crédito Tomado
 - [`GenerateFeatureLineage_IM_ML_USO_DIGITAL()`](../referencia/funcoes/GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd): Gerar o Feature Group de Uso de Canais Digitais
+:::
+
+::: {.content-visible unless-format="html"}
+- [`GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO()`](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO): Gerar o Feature Group de Margem de Contribuição
+- [`GenerateFeatureLineage_IM_ML_CARTAO_CREDITO()`](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO): Gerar o Feature Group de Cartão de Crédito
+- [`GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META()`](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META): Gerar o Feature Group de Carteira de Clientes
+- [`GenerateFeatureLineage_IM_ML_CLIENTE()`](#fn-GenerateFeatureLineage_IM_ML_CLIENTE): Gerar o Feature Group de Dados Cadastrais do Cliente
+- [`GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA()`](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA): Gerar o Feature Group de Composição de Dívida
+- [`GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO()`](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO): Gerar o Feature Group de Crédito em Liquidação
+- [`GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO()`](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO): Gerar o Feature Group de Débito Automático
+- [`GenerateFeatureLineage_IM_ML_FONTE_RENDA()`](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA): Gerar o Feature Group de Fonte de Renda
+- [`GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA()`](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA): Gerar o Feature Group de Agência do Cliente
+- [`GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE()`](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE): Gerar o Feature Group de Histórico Cadastral do Cliente
+- [`GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES()`](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES): Gerar o Feature Group de Limite de Conta
+- [`GenerateFeatureLineage_IM_ML_PERFIL_RISCO()`](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO): Gerar o Feature Group de Perfil de Risco
+- [`GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO()`](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO): Gerar o Feature Group de Portabilidade de Crédito
+- [`GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO()`](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO): Gerar o Feature Group de Portabilidade de Salário
+- [`GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES()`](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES): Gerar o Feature Group de Indicadores do Cliente Pessoa Física
+- [`GenerateFeatureLineage_IM_ML_RFM()`](#fn-GenerateFeatureLineage_IM_ML_RFM): Gerar o Feature Group de Recência, Frequência e Valor Monetário
+- [`GenerateFeatureLineage_IM_ML_RISCO_CLIENTE()`](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE): Gerar o Feature Group de Risco e Limites do Cliente
+- [`GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ()`](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ): Gerar o Feature Group de Segmento PGC
+- [`GenerateFeatureLineage_IM_ML_SHARE_WALLET()`](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET): Gerar o Feature Group de Participação na Carteira de Crédito
+- [`GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP()`](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP): Gerar o Feature Group de Saldos em Conta Corrente e Poupança
+- [`GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO()`](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO): Gerar o Feature Group de Crédito Tomado
+- [`GenerateFeatureLineage_IM_ML_USO_DIGITAL()`](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL): Gerar o Feature Group de Uso de Canais Digitais
+:::

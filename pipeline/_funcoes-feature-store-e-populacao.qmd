@@ -2,5 +2,12 @@
 
 **Feature store e população**
 
+::: {.content-visible when-format="html"}
 - [`CheckFeatureStore()`](../referencia/funcoes/CheckFeatureStore.qmd): Verificar a Existência da Feature Store para o Contexto
 - [`DefineValidCustomers()`](../referencia/funcoes/DefineValidCustomers.qmd): Definir a Tabela de Clientes Válidos
+:::
+
+::: {.content-visible unless-format="html"}
+- [`CheckFeatureStore()`](#fn-CheckFeatureStore): Verificar a Existência da Feature Store para o Contexto
+- [`DefineValidCustomers()`](#fn-DefineValidCustomers): Definir a Tabela de Clientes Válidos
+:::

@@ -1,6 +1,6 @@
 <!-- Gerado por scripts/funcoes.R a partir de referencia/ordem-pipeline.csv. -->
 
-## DefineOptionsSetup {.unnumbered}
+## DefineOptionsSetup {#fn-DefineOptionsSetup .unnumbered}
 
 *Definir as Opções de Configuração do Predictive Factory*
 
@@ -92,18 +92,18 @@ options::opt("predy_engine_model")
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [RunPipeline](#fn-RunPipeline)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
 - `options::define_option`
 - `options::opt`
 
@@ -115,7 +115,7 @@ options::opt("predy_engine_model")
 
 *Gerado a partir de `DefineOptionsSetup.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## RunPipeline {.unnumbered}
+## RunPipeline {#fn-RunPipeline .unnumbered}
 
 *Executar o Pipeline Preditivo de um Modelo Alvo*
 
@@ -207,20 +207,20 @@ RunPipeline(
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [TerminateTarget](#fn-TerminateTarget)
 - `targets::tar_make`
 
 ### Referências
@@ -233,7 +233,7 @@ RunPipeline(
 
 *Gerado a partir de `RunPipeline.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## CheckPredictiveModelExists {.unnumbered}
+## CheckPredictiveModelExists {#fn-CheckPredictiveModelExists .unnumbered}
 
 *Verificar a Existência do Modelo Preditivo no Registro*
 
@@ -323,18 +323,18 @@ existeModelo <- CheckPredictiveModelExists(
 
 **Orquestração do Pipeline**
 
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [RunPipeline](#fn-RunPipeline)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
-- [RunPipeline](RunPipeline.qmd)
+- [RunPipeline](#fn-RunPipeline)
 - `dbplyr::dbplyr-package`
 
 ### Referências
@@ -346,7 +346,7 @@ existeModelo <- CheckPredictiveModelExists(
 
 *Gerado a partir de `CheckPredictiveModelExists.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## ConfigurePredictiveModelRun {.unnumbered}
+## ConfigurePredictiveModelRun {#fn-ConfigurePredictiveModelRun .unnumbered}
 
 *Configurar a Execução do Modelo Preditivo*
 
@@ -470,19 +470,19 @@ modelRunConfig$datas$dataFeatureTreino
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [RunPipeline](#fn-RunPipeline)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
-- [RunPipeline](RunPipeline.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [RunPipeline](#fn-RunPipeline)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
 - `lubridate::months`
 - `yaml::write_yaml`
 
@@ -496,7 +496,7 @@ modelRunConfig$datas$dataFeatureTreino
 
 *Gerado a partir de `ConfigurePredictiveModelRun.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## LoadModelRunConfig {.unnumbered}
+## LoadModelRunConfig {#fn-LoadModelRunConfig .unnumbered}
 
 *Carregar a Configuração de Execução do Modelo Preditivo*
 
@@ -562,19 +562,19 @@ modelRunConfig <- LoadModelRunConfig()
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [RunPipeline](#fn-RunPipeline)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
 - `yaml::read_yaml`
 
 ### Referências
@@ -586,7 +586,7 @@ modelRunConfig <- LoadModelRunConfig()
 
 *Gerado a partir de `LoadModelRunConfig.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## ShowStartupBanner {.unnumbered}
+## ShowStartupBanner {#fn-ShowStartupBanner .unnumbered}
 
 *Exibir o Banner de Inicialização do Motor Preditivo*
 
@@ -648,18 +648,18 @@ ShowStartupBanner(modelRunConfig)
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [RunPipeline](#fn-RunPipeline)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
 - `cli::rule`
 
 ### Referências
@@ -670,7 +670,7 @@ ShowStartupBanner(modelRunConfig)
 
 *Gerado a partir de `ShowStartupBanner.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## CreateCrewControllerGroup {.unnumbered}
+## CreateCrewControllerGroup {#fn-CreateCrewControllerGroup .unnumbered}
 
 *Criar o Grupo de Controladores de Paralelismo crew*
 
@@ -726,19 +726,19 @@ targets::tar_option_set(controller = crewControllerGroup)
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [RunPipeline](#fn-RunPipeline)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
 - `crew::crew_controller_group`
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
 
 ### Referências
 
@@ -749,7 +749,7 @@ targets::tar_option_set(controller = crewControllerGroup)
 
 *Gerado a partir de `CreateCrewControllerGroup.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipeline {.unnumbered}
+## BuildPipeline {#fn-BuildPipeline .unnumbered}
 
 *Construir o Pipeline Completo de Modelagem Preditiva*
 
@@ -819,24 +819,24 @@ BuildPipeline()
 
 **Construção do Pipeline**
 
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [LogPipelineExecution](LogPipelineExecution.qmd)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [LogPipelineExecution](#fn-LogPipelineExecution)
 - `tarchetypes::tar_hook_outer`
 
 ### Referências
@@ -848,7 +848,7 @@ BuildPipeline()
 
 *Gerado a partir de `BuildPipeline.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## MsgBuildPipeline {.unnumbered}
+## MsgBuildPipeline {#fn-MsgBuildPipeline .unnumbered}
 
 *Exibir Mensagem de Construção de Pipeline*
 
@@ -903,18 +903,18 @@ BuildPipelineExemplo()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
 - `cli::cli_progress_step`
 
 ### Referências
@@ -925,7 +925,7 @@ BuildPipelineExemplo()
 
 *Gerado a partir de `MsgBuildPipeline.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipelineBegin {.unnumbered}
+## BuildPipelineBegin {#fn-BuildPipelineBegin .unnumbered}
 
 *Construir o Pipeline de Inicialização*
 
@@ -985,19 +985,19 @@ listPipelineBegin <- BuildPipelineBegin()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
 - `sessioninfo::session_info`
 - `targets::tar_cue`
 
@@ -1010,7 +1010,7 @@ listPipelineBegin <- BuildPipelineBegin()
 
 *Gerado a partir de `BuildPipelineBegin.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipelineHistoricalData {.unnumbered}
+## BuildPipelineHistoricalData {#fn-BuildPipelineHistoricalData .unnumbered}
 
 *Construir o Pipeline de Dados Históricos para Modelagem*
 
@@ -1106,22 +1106,22 @@ listPipelineTrainingData <- BuildPipelineHistoricalData()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [CheckFeatureStore](CheckFeatureStore.qmd)
-- [DefineValidCustomers](DefineValidCustomers.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [CheckFeatureStore](#fn-CheckFeatureStore)
+- [DefineValidCustomers](#fn-DefineValidCustomers)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
 - `tarchetypes::tar_map`
 - `tarchetypes::tar_skip`
 
@@ -1134,7 +1134,7 @@ listPipelineTrainingData <- BuildPipelineHistoricalData()
 
 *Gerado a partir de `BuildPipelineHistoricalData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipelineModeling {.unnumbered}
+## BuildPipelineModeling {#fn-BuildPipelineModeling .unnumbered}
 
 *Construir o Pipeline de Modelagem Preditiva*
 
@@ -1208,22 +1208,22 @@ listPipelineModeling <- BuildPipelineModeling()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [PrepareDataModel](PrepareDataModel.qmd)
-- [TuneModel](TuneModel.qmd)
-- [FitModel](FitModel.qmd)
-- [EvaluateModel](EvaluateModel.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [PrepareDataModel](#fn-PrepareDataModel)
+- [TuneModel](#fn-TuneModel)
+- [FitModel](#fn-FitModel)
+- [EvaluateModel](#fn-EvaluateModel)
 - `rsample::initial_split`
 
 ### Referências
@@ -1235,7 +1235,7 @@ listPipelineModeling <- BuildPipelineModeling()
 
 *Gerado a partir de `BuildPipelineModeling.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipelinePredictingData {.unnumbered}
+## BuildPipelinePredictingData {#fn-BuildPipelinePredictingData .unnumbered}
 
 *Construir o Pipeline de Dados para Predição*
 
@@ -1318,20 +1318,20 @@ listPipelinePredictingData <- BuildPipelinePredictingData()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
 - `tarchetypes::tar_map`
 
 ### Referências
@@ -1342,7 +1342,7 @@ listPipelinePredictingData <- BuildPipelinePredictingData()
 
 *Gerado a partir de `BuildPipelinePredictingData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipelinePredicting {.unnumbered}
+## BuildPipelinePredicting {#fn-BuildPipelinePredicting .unnumbered}
 
 *Construir o Pipeline de Inferência das Predições*
 
@@ -1404,20 +1404,20 @@ listPipelinePredicting <- BuildPipelinePredicting()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [PrepareDataModel](PrepareDataModel.qmd)
-- [PredictModel](PredictModel.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [PrepareDataModel](#fn-PrepareDataModel)
+- [PredictModel](#fn-PredictModel)
 
 ### Referências
 
@@ -1427,7 +1427,7 @@ listPipelinePredicting <- BuildPipelinePredicting()
 
 *Gerado a partir de `BuildPipelinePredicting.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipelineFinish {.unnumbered}
+## BuildPipelineFinish {#fn-BuildPipelineFinish .unnumbered}
 
 *Construir o Pipeline de Finalização*
 
@@ -1479,19 +1479,19 @@ listPipelineFinish <- BuildPipelineFinish()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
 - `lobstr::mem_used`
 
 ### Referências
@@ -1502,7 +1502,7 @@ listPipelineFinish <- BuildPipelineFinish()
 
 *Gerado a partir de `BuildPipelineFinish.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## InitializeTargetExecution {.unnumbered}
+## InitializeTargetExecution {#fn-InitializeTargetExecution .unnumbered}
 
 *Inicializar a Execução de um Target*
 
@@ -1549,19 +1549,19 @@ InitializeTargetExecution()
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [RunPipeline](#fn-RunPipeline)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Ver também
 
-- [TerminateTarget](TerminateTarget.qmd)
-- [BuildPipeline](BuildPipeline.qmd)
+- [TerminateTarget](#fn-TerminateTarget)
+- [BuildPipeline](#fn-BuildPipeline)
 - `tarchetypes::tar_hook_before`
 
 ### Referências
@@ -1573,7 +1573,7 @@ InitializeTargetExecution()
 
 *Gerado a partir de `InitializeTargetExecution.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## LogPipelineExecution {.unnumbered}
+## LogPipelineExecution {#fn-LogPipelineExecution .unnumbered}
 
 *Executar um Target com Registro de Traces, Telemetria e Auditoria*
 
@@ -1664,16 +1664,16 @@ resultado <- LogPipelineExecution(
 
 **Registro de Execução**
 
-- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
-- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
-- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
+- [LogPipelineExecutionRegistry](#fn-LogPipelineExecutionRegistry)
+- [LogPipelineExecutionTelemetry](#fn-LogPipelineExecutionTelemetry)
+- [LogPipelineExecutionTraces](#fn-LogPipelineExecutionTraces)
 
 ### Ver também
 
-- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
-- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
-- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
-- [BuildPipeline](BuildPipeline.qmd)
+- [LogPipelineExecutionTraces](#fn-LogPipelineExecutionTraces)
+- [LogPipelineExecutionTelemetry](#fn-LogPipelineExecutionTelemetry)
+- [LogPipelineExecutionRegistry](#fn-LogPipelineExecutionRegistry)
+- [BuildPipeline](#fn-BuildPipeline)
 - `tarchetypes::tar_hook_outer`
 
 ### Referências
@@ -1686,7 +1686,7 @@ resultado <- LogPipelineExecution(
 
 *Gerado a partir de `LogPipelineExecution.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## LogPipelineExecutionTraces {.unnumbered}
+## LogPipelineExecutionTraces {#fn-LogPipelineExecutionTraces .unnumbered}
 
 *Redirecionar a Saída do Console de um Target para Arquivo*
 
@@ -1749,13 +1749,13 @@ sink(type = "message"); sink(); close(conexaoTrace)
 
 **Registro de Execução**
 
-- [LogPipelineExecution](LogPipelineExecution.qmd)
-- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
-- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
+- [LogPipelineExecution](#fn-LogPipelineExecution)
+- [LogPipelineExecutionRegistry](#fn-LogPipelineExecutionRegistry)
+- [LogPipelineExecutionTelemetry](#fn-LogPipelineExecutionTelemetry)
 
 ### Ver também
 
-- [LogPipelineExecution](LogPipelineExecution.qmd)
+- [LogPipelineExecution](#fn-LogPipelineExecution)
 - `base::sink`
 
 ### Referências
@@ -1766,7 +1766,7 @@ sink(type = "message"); sink(); close(conexaoTrace)
 
 *Gerado a partir de `LogPipelineExecutionTraces.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## LogPipelineExecutionTelemetry {.unnumbered}
+## LogPipelineExecutionTelemetry {#fn-LogPipelineExecutionTelemetry .unnumbered}
 
 *Iniciar a Telemetria de Hardware de um Target*
 
@@ -1827,13 +1827,13 @@ autometric::log_stop()
 
 **Registro de Execução**
 
-- [LogPipelineExecution](LogPipelineExecution.qmd)
-- [LogPipelineExecutionRegistry](LogPipelineExecutionRegistry.qmd)
-- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
+- [LogPipelineExecution](#fn-LogPipelineExecution)
+- [LogPipelineExecutionRegistry](#fn-LogPipelineExecutionRegistry)
+- [LogPipelineExecutionTraces](#fn-LogPipelineExecutionTraces)
 
 ### Ver também
 
-- [LogPipelineExecution](LogPipelineExecution.qmd)
+- [LogPipelineExecution](#fn-LogPipelineExecution)
 - `autometric::log_start`
 
 ### Referências
@@ -1844,7 +1844,7 @@ autometric::log_stop()
 
 *Gerado a partir de `LogPipelineExecutionTelemetry.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## LogPipelineExecutionRegistry {.unnumbered}
+## LogPipelineExecutionRegistry {#fn-LogPipelineExecutionRegistry .unnumbered}
 
 *Gravar a Linha de Auditoria da Execução de um Target*
 
@@ -1962,13 +1962,13 @@ LogPipelineExecutionRegistry(
 
 **Registro de Execução**
 
-- [LogPipelineExecution](LogPipelineExecution.qmd)
-- [LogPipelineExecutionTelemetry](LogPipelineExecutionTelemetry.qmd)
-- [LogPipelineExecutionTraces](LogPipelineExecutionTraces.qmd)
+- [LogPipelineExecution](#fn-LogPipelineExecution)
+- [LogPipelineExecutionTelemetry](#fn-LogPipelineExecutionTelemetry)
+- [LogPipelineExecutionTraces](#fn-LogPipelineExecutionTraces)
 
 ### Ver também
 
-- [LogPipelineExecution](LogPipelineExecution.qmd)
+- [LogPipelineExecution](#fn-LogPipelineExecution)
 
 ### Referências
 
@@ -1978,7 +1978,7 @@ LogPipelineExecutionRegistry(
 
 *Gerado a partir de `LogPipelineExecutionRegistry.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TerminateTarget {.unnumbered}
+## TerminateTarget {#fn-TerminateTarget .unnumbered}
 
 *Finalizar a Execução de um Target*
 
@@ -2027,19 +2027,19 @@ funcaoComBanco <- function(){
 
 **Orquestração do Pipeline**
 
-- [CheckPredictiveModelExists](CheckPredictiveModelExists.qmd)
-- [ConfigurePredictiveModelRun](ConfigurePredictiveModelRun.qmd)
-- [CreateCrewControllerGroup](CreateCrewControllerGroup.qmd)
-- [DefineOptionsSetup](DefineOptionsSetup.qmd)
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [LoadModelRunConfig](LoadModelRunConfig.qmd)
-- [RunPipeline](RunPipeline.qmd)
-- [ShowStartupBanner](ShowStartupBanner.qmd)
+- [CheckPredictiveModelExists](#fn-CheckPredictiveModelExists)
+- [ConfigurePredictiveModelRun](#fn-ConfigurePredictiveModelRun)
+- [CreateCrewControllerGroup](#fn-CreateCrewControllerGroup)
+- [DefineOptionsSetup](#fn-DefineOptionsSetup)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [LoadModelRunConfig](#fn-LoadModelRunConfig)
+- [RunPipeline](#fn-RunPipeline)
+- [ShowStartupBanner](#fn-ShowStartupBanner)
 
 ### Ver também
 
-- [InitializeTargetExecution](InitializeTargetExecution.qmd)
-- [RunPipeline](RunPipeline.qmd)
+- [InitializeTargetExecution](#fn-InitializeTargetExecution)
+- [RunPipeline](#fn-RunPipeline)
 - `base::on.exit`
 
 ### Referências
@@ -2050,7 +2050,7 @@ funcaoComBanco <- function(){
 
 *Gerado a partir de `TerminateTarget.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## CheckFeatureStore {.unnumbered}
+## CheckFeatureStore {#fn-CheckFeatureStore .unnumbered}
 
 *Verificar a Existência da Feature Store para o Contexto*
 
@@ -2124,16 +2124,16 @@ featureStoreProcessed <- CheckFeatureStore(
 
 **Feature Store**
 
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
-- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
-- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
-- [DefineValidCustomers](DefineValidCustomers.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
+- [ConsolidatePredictionData](#fn-ConsolidatePredictionData)
+- [CreateTable_IM_ML_FEATURE_CATALOG](#fn-CreateTable_IM_ML_FEATURE_CATALOG)
+- [DefineValidCustomers](#fn-DefineValidCustomers)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
 - `tarchetypes::tar_skip`
 
 ### Referências
@@ -2145,7 +2145,7 @@ featureStoreProcessed <- CheckFeatureStore(
 
 *Gerado a partir de `CheckFeatureStore.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## DefineValidCustomers {.unnumbered}
+## DefineValidCustomers {#fn-DefineValidCustomers .unnumbered}
 
 *Definir a Tabela de Clientes Válidos*
 
@@ -2282,16 +2282,16 @@ tabelaClientesValidos <- DefineValidCustomers(
 
 **Feature Store**
 
-- [CheckFeatureStore](CheckFeatureStore.qmd)
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
-- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
-- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [CheckFeatureStore](#fn-CheckFeatureStore)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
+- [ConsolidatePredictionData](#fn-ConsolidatePredictionData)
+- [CreateTable_IM_ML_FEATURE_CATALOG](#fn-CreateTable_IM_ML_FEATURE_CATALOG)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
 - `dbplyr::dbplyr-package`
 
 ### Referências
@@ -2303,7 +2303,7 @@ tabelaClientesValidos <- DefineValidCustomers(
 
 *Gerado a partir de `DefineValidCustomers.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO {#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO .unnumbered}
 
 *Gerar o Feature Group de Margem de Contribuição*
 
@@ -2453,33 +2453,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -2491,7 +2491,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_CARTAO_CREDITO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_CARTAO_CREDITO {#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO .unnumbered}
 
 *Gerar o Feature Group de Cartão de Crédito*
 
@@ -2627,33 +2627,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CARTAO_CREDITO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -2664,7 +2664,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CARTAO_CREDITO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META {.unnumbered}
+## GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META {#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META .unnumbered}
 
 *Gerar o Feature Group de Carteira de Clientes*
 
@@ -2791,33 +2791,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -2828,7 +2828,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_CLIENTE {.unnumbered}
+## GenerateFeatureLineage_IM_ML_CLIENTE {#fn-GenerateFeatureLineage_IM_ML_CLIENTE .unnumbered}
 
 *Gerar o Feature Group de Dados Cadastrais do Cliente*
 
@@ -2968,33 +2968,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CLIENTE(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -3007,7 +3007,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CLIENTE(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_CLIENTE.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA {.unnumbered}
+## GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA {#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA .unnumbered}
 
 *Gerar o Feature Group de Composição de Dívida*
 
@@ -3139,33 +3139,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -3176,7 +3176,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO {#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO .unnumbered}
 
 *Gerar o Feature Group de Crédito em Liquidação*
 
@@ -3302,33 +3302,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -3339,7 +3339,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO {#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO .unnumbered}
 
 *Gerar o Feature Group de Débito Automático*
 
@@ -3472,33 +3472,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -3509,7 +3509,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_FONTE_RENDA {.unnumbered}
+## GenerateFeatureLineage_IM_ML_FONTE_RENDA {#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA .unnumbered}
 
 *Gerar o Feature Group de Fonte de Renda*
 
@@ -3645,33 +3645,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_FONTE_RENDA(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -3683,7 +3683,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_FONTE_RENDA(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_FONTE_RENDA.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA {.unnumbered}
+## GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA {#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA .unnumbered}
 
 *Gerar o Feature Group de Agência do Cliente*
 
@@ -3818,33 +3818,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -3855,7 +3855,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE {.unnumbered}
+## GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE {#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE .unnumbered}
 
 *Gerar o Feature Group de Histórico Cadastral do Cliente*
 
@@ -3984,33 +3984,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -4021,7 +4021,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES {.unnumbered}
+## GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES {#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES .unnumbered}
 
 *Gerar o Feature Group de Limite de Conta*
 
@@ -4151,33 +4151,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -4189,7 +4189,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_PERFIL_RISCO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_PERFIL_RISCO {#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO .unnumbered}
 
 *Gerar o Feature Group de Perfil de Risco*
 
@@ -4316,33 +4316,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_PERFIL_RISCO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -4353,7 +4353,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_PERFIL_RISCO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_PERFIL_RISCO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO {#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO .unnumbered}
 
 *Gerar o Feature Group de Portabilidade de Crédito*
 
@@ -4522,33 +4522,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -4561,7 +4561,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO {#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO .unnumbered}
 
 *Gerar o Feature Group de Portabilidade de Salário*
 
@@ -4714,33 +4714,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -4752,7 +4752,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES {.unnumbered}
+## GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES {#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES .unnumbered}
 
 *Gerar o Feature Group de Indicadores do Cliente Pessoa Física*
 
@@ -4886,33 +4886,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -4923,7 +4923,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_RFM {.unnumbered}
+## GenerateFeatureLineage_IM_ML_RFM {#fn-GenerateFeatureLineage_IM_ML_RFM .unnumbered}
 
 *Gerar o Feature Group de Recência, Frequência e Valor Monetário*
 
@@ -5143,33 +5143,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_RFM(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -5183,7 +5183,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_RFM(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_RFM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_RISCO_CLIENTE {.unnumbered}
+## GenerateFeatureLineage_IM_ML_RISCO_CLIENTE {#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE .unnumbered}
 
 *Gerar o Feature Group de Risco e Limites do Cliente*
 
@@ -5348,33 +5348,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_RISCO_CLIENTE(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -5385,7 +5385,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_RISCO_CLIENTE(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ {.unnumbered}
+## GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ {#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ .unnumbered}
 
 *Gerar o Feature Group de Segmento PGC*
 
@@ -5518,33 +5518,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -5555,7 +5555,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_SHARE_WALLET {.unnumbered}
+## GenerateFeatureLineage_IM_ML_SHARE_WALLET {#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET .unnumbered}
 
 *Gerar o Feature Group de Participação na Carteira de Crédito*
 
@@ -5730,33 +5730,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_SHARE_WALLET(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -5769,7 +5769,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_SHARE_WALLET(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_SHARE_WALLET.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP {.unnumbered}
+## GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP {#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP .unnumbered}
 
 *Gerar o Feature Group de Saldos em Conta Corrente e Poupança*
 
@@ -5914,33 +5914,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -5951,7 +5951,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO {.unnumbered}
+## GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO {#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO .unnumbered}
 
 *Gerar o Feature Group de Crédito Tomado*
 
@@ -6110,33 +6110,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](GenerateFeatureLineage_IM_ML_USO_DIGITAL.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_USO_DIGITAL](#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -6148,7 +6148,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## GenerateFeatureLineage_IM_ML_USO_DIGITAL {.unnumbered}
+## GenerateFeatureLineage_IM_ML_USO_DIGITAL {#fn-GenerateFeatureLineage_IM_ML_USO_DIGITAL .unnumbered}
 
 *Gerar o Feature Group de Uso de Canais Digitais*
 
@@ -6281,33 +6281,33 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_USO_DIGITAL(
 
 **Geração de Feature Groups**
 
-- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](GenerateFeatureLineage_IM_ML_CARTAO_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META.qmd)
-- [GenerateFeatureLineage_IM_ML_CLIENTE](GenerateFeatureLineage_IM_ML_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA.qmd)
-- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO.qmd)
-- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO.qmd)
-- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](GenerateFeatureLineage_IM_ML_FONTE_RENDA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA.qmd)
-- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](GenerateFeatureLineage_IM_ML_PERFIL_RISCO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO.qmd)
-- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO.qmd)
-- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES.qmd)
-- [GenerateFeatureLineage_IM_ML_RFM](GenerateFeatureLineage_IM_ML_RFM.qmd)
-- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](GenerateFeatureLineage_IM_ML_RISCO_CLIENTE.qmd)
-- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ.qmd)
-- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](GenerateFeatureLineage_IM_ML_SHARE_WALLET.qmd)
-- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP.qmd)
-- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO.qmd)
+- [GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO](#fn-GenerateFeatureLineage_IM_ML_BHL_MARGEM_CONTRIBUICAO)
+- [GenerateFeatureLineage_IM_ML_CARTAO_CREDITO](#fn-GenerateFeatureLineage_IM_ML_CARTAO_CREDITO)
+- [GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META](#fn-GenerateFeatureLineage_IM_ML_CARTEIRA_CLIENTE_META)
+- [GenerateFeatureLineage_IM_ML_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA](#fn-GenerateFeatureLineage_IM_ML_COMPOSICAO_DIVIDA)
+- [GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO](#fn-GenerateFeatureLineage_IM_ML_CREDITO_LIQUIDACAO)
+- [GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO](#fn-GenerateFeatureLineage_IM_ML_DEBITO_AUTOMATICO)
+- [GenerateFeatureLineage_IM_ML_FONTE_RENDA](#fn-GenerateFeatureLineage_IM_ML_FONTE_RENDA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_AGENCIA)
+- [GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_HISTORICO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES](#fn-GenerateFeatureLineage_IM_ML_LIMITE_CLI_MES)
+- [GenerateFeatureLineage_IM_ML_PERFIL_RISCO](#fn-GenerateFeatureLineage_IM_ML_PERFIL_RISCO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_CREDITO)
+- [GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO](#fn-GenerateFeatureLineage_IM_ML_PORTABILIDADE_SALARIO)
+- [GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES](#fn-GenerateFeatureLineage_IM_ML_POS_KPI_CLIENTE_PF_MES)
+- [GenerateFeatureLineage_IM_ML_RFM](#fn-GenerateFeatureLineage_IM_ML_RFM)
+- [GenerateFeatureLineage_IM_ML_RISCO_CLIENTE](#fn-GenerateFeatureLineage_IM_ML_RISCO_CLIENTE)
+- [GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ](#fn-GenerateFeatureLineage_IM_ML_SEGMENTO_PGC_BDQ)
+- [GenerateFeatureLineage_IM_ML_SHARE_WALLET](#fn-GenerateFeatureLineage_IM_ML_SHARE_WALLET)
+- [GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP](#fn-GenerateFeatureLineage_IM_ML_SLD_CONTA_CORR_POUP)
+- [GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO](#fn-GenerateFeatureLineage_IM_ML_TOMADOR_CREDITO)
 
 ### Ver também
 
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [TerminateTarget](TerminateTarget.qmd)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [TerminateTarget](#fn-TerminateTarget)
 
 ### Referências
 
@@ -6318,7 +6318,7 @@ tabelaFeature <- GenerateFeatureLineage_IM_ML_USO_DIGITAL(
 
 *Gerado a partir de `GenerateFeatureLineage_IM_ML_USO_DIGITAL.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## Generate_IM_ML_FEATURE_STORE {.unnumbered}
+## Generate_IM_ML_FEATURE_STORE {#fn-Generate_IM_ML_FEATURE_STORE .unnumbered}
 
 *Consolidar os Feature Groups na Feature Store In-Memory*
 
@@ -6477,17 +6477,17 @@ tabelaFeatureStore <- Generate_IM_ML_FEATURE_STORE(
 
 **Feature Store**
 
-- [CheckFeatureStore](CheckFeatureStore.qmd)
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
-- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
-- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
-- [DefineValidCustomers](DefineValidCustomers.qmd)
+- [CheckFeatureStore](#fn-CheckFeatureStore)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
+- [ConsolidatePredictionData](#fn-ConsolidatePredictionData)
+- [CreateTable_IM_ML_FEATURE_CATALOG](#fn-CreateTable_IM_ML_FEATURE_CATALOG)
+- [DefineValidCustomers](#fn-DefineValidCustomers)
 
 ### Ver também
 
-- [DefineValidCustomers](DefineValidCustomers.qmd)
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [DefineValidCustomers](#fn-DefineValidCustomers)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
 - `purrr::reduce`
 
 ### Referências
@@ -6500,7 +6500,7 @@ tabelaFeatureStore <- Generate_IM_ML_FEATURE_STORE(
 
 *Gerado a partir de `Generate_IM_ML_FEATURE_STORE.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## ConsolidateHistoricalData {.unnumbered}
+## ConsolidateHistoricalData {#fn-ConsolidateHistoricalData .unnumbered}
 
 *Consolidar Alvo e Preditores para Modelagem*
 
@@ -6575,17 +6575,17 @@ historicalData <- ConsolidateHistoricalData(
 
 **Feature Store**
 
-- [CheckFeatureStore](CheckFeatureStore.qmd)
-- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
-- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
-- [DefineValidCustomers](DefineValidCustomers.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [CheckFeatureStore](#fn-CheckFeatureStore)
+- [ConsolidatePredictionData](#fn-ConsolidatePredictionData)
+- [CreateTable_IM_ML_FEATURE_CATALOG](#fn-CreateTable_IM_ML_FEATURE_CATALOG)
+- [DefineValidCustomers](#fn-DefineValidCustomers)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
 
 ### Ver também
 
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [PrepareDataModel](PrepareDataModel.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [PrepareDataModel](#fn-PrepareDataModel)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
 
 ### Referências
 
@@ -6596,7 +6596,7 @@ historicalData <- ConsolidateHistoricalData(
 
 *Gerado a partir de `ConsolidateHistoricalData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PrepareDataModel {.unnumbered}
+## PrepareDataModel {#fn-PrepareDataModel .unnumbered}
 
 *Preprocessar os Dados para o Modelo Preditivo*
 
@@ -6680,16 +6680,16 @@ dataModel <- PrepareDataModel(dataset = historicalData)
 
 **Modelagem Preditiva**
 
-- [FitModel](FitModel.qmd)
-- [FitModelLightGBM](FitModelLightGBM.qmd)
-- [FitModelXGBoost](FitModelXGBoost.qmd)
-- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+- [FitModel](#fn-FitModel)
+- [FitModelLightGBM](#fn-FitModelLightGBM)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
+- [PrepareFitModelXGBoost](#fn-PrepareFitModelXGBoost)
 
 ### Ver também
 
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
 - `mltools::one_hot`
 
 ### Referências
@@ -6702,7 +6702,7 @@ dataModel <- PrepareDataModel(dataset = historicalData)
 
 *Gerado a partir de `PrepareDataModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TuneModel {.unnumbered}
+## TuneModel {#fn-TuneModel .unnumbered}
 
 *Otimizar os Hiperparâmetros do Modelo Binário por Busca Bayesiana*
 
@@ -6808,22 +6808,22 @@ hyperParams$results
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
 - `rBayesianOptimization::BayesianOptimization`
 
 ### Referências
@@ -6838,7 +6838,7 @@ hyperParams$results
 
 *Gerado a partir de `TuneModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TuneModelLastGrid {.unnumbered}
+## TuneModelLastGrid {#fn-TuneModelLastGrid .unnumbered}
 
 *Recuperar a Grade Inicial da Otimização de Hiperparâmetros*
 
@@ -6887,19 +6887,19 @@ TuneModelLastGrid(dataReferencia = "2025-10-01")
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [TuneModel](TuneModel.qmd)
+- [TuneModel](#fn-TuneModel)
 - `rBayesianOptimization::BayesianOptimization`
 
 ### Referências
@@ -6910,7 +6910,7 @@ TuneModelLastGrid(dataReferencia = "2025-10-01")
 
 *Gerado a partir de `TuneModelLastGrid.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TuneModelBoundsXGBoost {.unnumbered}
+## TuneModelBoundsXGBoost {#fn-TuneModelBoundsXGBoost .unnumbered}
 
 *Definir os Limites da Busca de Hiperparâmetros do XGBoost*
 
@@ -6974,20 +6974,20 @@ tuneModelBounds <- TuneModelBoundsXGBoost()
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
 - `rBayesianOptimization::BayesianOptimization`
 
 ### Referências
@@ -6999,7 +6999,7 @@ tuneModelBounds <- TuneModelBoundsXGBoost()
 
 *Gerado a partir de `TuneModelBoundsXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TuneModelResampleFoldsXGBoost {.unnumbered}
+## TuneModelResampleFoldsXGBoost {#fn-TuneModelResampleFoldsXGBoost .unnumbered}
 
 *Preparar os Folds de Validação Cruzada para o Tuning do XGBoost*
 
@@ -7075,21 +7075,21 @@ params$splits <- TuneModelResampleFoldsXGBoost(tuneSet, params)
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
 
 ### Ver também
 
-- [TuneModel](TuneModel.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [BalanceClass](BalanceClass.qmd)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [BalanceClass](#fn-BalanceClass)
 - `rsample::vfold_cv`
 - `xgboost::xgb.DMatrix.save`
 
@@ -7103,7 +7103,7 @@ params$splits <- TuneModelResampleFoldsXGBoost(tuneSet, params)
 
 *Gerado a partir de `TuneModelResampleFoldsXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BalanceClass {.unnumbered}
+## BalanceClass {#fn-BalanceClass .unnumbered}
 
 *Balancear as Classes da Base de Treino*
 
@@ -7167,15 +7167,15 @@ balancedDataset <- BalanceClass(
 
 **Balanceamento de Classes**
 
-- [BalanceClassAdanear](BalanceClassAdanear.qmd)
-- [BalanceClassRandomUnder](BalanceClassRandomUnder.qmd)
+- [BalanceClassAdanear](#fn-BalanceClassAdanear)
+- [BalanceClassRandomUnder](#fn-BalanceClassRandomUnder)
 
 ### Ver também
 
-- [BalanceClassAdanear](BalanceClassAdanear.qmd)
-- [BalanceClassRandomUnder](BalanceClassRandomUnder.qmd)
-- [FitModelXGBoost](FitModelXGBoost.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [BalanceClassAdanear](#fn-BalanceClassAdanear)
+- [BalanceClassRandomUnder](#fn-BalanceClassRandomUnder)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Referências
 
@@ -7185,7 +7185,7 @@ balancedDataset <- BalanceClass(
 
 *Gerado a partir de `BalanceClass.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BalanceClassRandomUnder {.unnumbered}
+## BalanceClassRandomUnder {#fn-BalanceClassRandomUnder .unnumbered}
 
 *Balancear Classes por Subamostragem Aleatória*
 
@@ -7244,13 +7244,13 @@ balancedDataset <- BalanceClassRandomUnder(
 
 **Balanceamento de Classes**
 
-- [BalanceClass](BalanceClass.qmd)
-- [BalanceClassAdanear](BalanceClassAdanear.qmd)
+- [BalanceClass](#fn-BalanceClass)
+- [BalanceClassAdanear](#fn-BalanceClassAdanear)
 
 ### Ver também
 
-- [BalanceClass](BalanceClass.qmd)
-- [BalanceClassAdanear](BalanceClassAdanear.qmd)
+- [BalanceClass](#fn-BalanceClass)
+- [BalanceClassAdanear](#fn-BalanceClassAdanear)
 - `dplyr::slice_sample`
 
 ### Referências
@@ -7261,7 +7261,7 @@ balancedDataset <- BalanceClassRandomUnder(
 
 *Gerado a partir de `BalanceClassRandomUnder.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BalanceClassAdanear {.unnumbered}
+## BalanceClassAdanear {#fn-BalanceClassAdanear .unnumbered}
 
 *Balancear Classes com ADASYN e NearMiss*
 
@@ -7334,13 +7334,13 @@ balancedDataset <- BalanceClassAdanear(
 
 **Balanceamento de Classes**
 
-- [BalanceClass](BalanceClass.qmd)
-- [BalanceClassRandomUnder](BalanceClassRandomUnder.qmd)
+- [BalanceClass](#fn-BalanceClass)
+- [BalanceClassRandomUnder](#fn-BalanceClassRandomUnder)
 
 ### Ver também
 
-- [BalanceClass](BalanceClass.qmd)
-- [BalanceClassRandomUnder](BalanceClassRandomUnder.qmd)
+- [BalanceClass](#fn-BalanceClass)
+- [BalanceClassRandomUnder](#fn-BalanceClassRandomUnder)
 
 ### Referências
 
@@ -7351,7 +7351,7 @@ balancedDataset <- BalanceClassAdanear(
 
 *Gerado a partir de `BalanceClassAdanear.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TuneModelEvaluateXGBoostFolds {.unnumbered}
+## TuneModelEvaluateXGBoostFolds {#fn-TuneModelEvaluateXGBoostFolds .unnumbered}
 
 *Avaliar um Candidato de Hiperparâmetros na Validação Cruzada*
 
@@ -7408,21 +7408,21 @@ tuneResult$Score
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [TuneModel](TuneModel.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 - `furrr::future_map`
 
 ### Referências
@@ -7434,7 +7434,7 @@ tuneResult$Score
 
 *Gerado a partir de `TuneModelEvaluateXGBoostFolds.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TuneModelEvaluateXGBoost {.unnumbered}
+## TuneModelEvaluateXGBoost {#fn-TuneModelEvaluateXGBoost .unnumbered}
 
 *Avaliar um Candidato de Hiperparâmetros em um Fold*
 
@@ -7500,20 +7500,20 @@ performanceResult <- TuneModelEvaluateXGBoost(
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [PredictModelXGBoost](#fn-PredictModelXGBoost)
 - `yardstick::pr_auc_vec`
 
 ### Referências
@@ -7525,7 +7525,7 @@ performanceResult <- TuneModelEvaluateXGBoost(
 
 *Gerado a partir de `TuneModelEvaluateXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## FitModel {.unnumbered}
+## FitModel {#fn-FitModel .unnumbered}
 
 *Ajustar o Modelo Preditivo Final*
 
@@ -7589,17 +7589,17 @@ fileModel <- FitModel(trainingSet = trainingSet, hyperParams = hyperParams)
 
 **Modelagem Preditiva**
 
-- [FitModelLightGBM](FitModelLightGBM.qmd)
-- [FitModelXGBoost](FitModelXGBoost.qmd)
-- [PrepareDataModel](PrepareDataModel.qmd)
-- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+- [FitModelLightGBM](#fn-FitModelLightGBM)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
+- [PrepareDataModel](#fn-PrepareDataModel)
+- [PrepareFitModelXGBoost](#fn-PrepareFitModelXGBoost)
 
 ### Ver também
 
-- [FitModelXGBoost](FitModelXGBoost.qmd)
-- [FitModelLightGBM](FitModelLightGBM.qmd)
-- [TuneModel](TuneModel.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
+- [FitModelLightGBM](#fn-FitModelLightGBM)
+- [TuneModel](#fn-TuneModel)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
 
 ### Referências
 
@@ -7611,7 +7611,7 @@ fileModel <- FitModel(trainingSet = trainingSet, hyperParams = hyperParams)
 
 *Gerado a partir de `FitModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## FitModelXGBoost {.unnumbered}
+## FitModelXGBoost {#fn-FitModelXGBoost .unnumbered}
 
 *Ajustar o Modelo Final com XGBoost*
 
@@ -7703,17 +7703,17 @@ fileModel <- FitModelXGBoost(trainingSet = trainingSet, hyperParams = hyperParam
 
 **Modelagem Preditiva**
 
-- [FitModel](FitModel.qmd)
-- [FitModelLightGBM](FitModelLightGBM.qmd)
-- [PrepareDataModel](PrepareDataModel.qmd)
-- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+- [FitModel](#fn-FitModel)
+- [FitModelLightGBM](#fn-FitModelLightGBM)
+- [PrepareDataModel](#fn-PrepareDataModel)
+- [PrepareFitModelXGBoost](#fn-PrepareFitModelXGBoost)
 
 ### Ver também
 
-- [FitModel](FitModel.qmd)
-- [TuneModel](TuneModel.qmd)
-- [BalanceClass](BalanceClass.qmd)
-- [PredictModel](PredictModel.qmd)
+- [FitModel](#fn-FitModel)
+- [TuneModel](#fn-TuneModel)
+- [BalanceClass](#fn-BalanceClass)
+- [PredictModel](#fn-PredictModel)
 - `xgboost::xgb.train`
 
 ### Referências
@@ -7726,7 +7726,7 @@ fileModel <- FitModelXGBoost(trainingSet = trainingSet, hyperParams = hyperParam
 
 *Gerado a partir de `FitModelXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## FitModelLightGBM {.unnumbered}
+## FitModelLightGBM {#fn-FitModelLightGBM .unnumbered}
 
 *Ajustar um Modelo com LightGBM*
 
@@ -7812,16 +7812,16 @@ fittedModel <- FitModelLightGBM(
 
 **Modelagem Preditiva**
 
-- [FitModel](FitModel.qmd)
-- [FitModelXGBoost](FitModelXGBoost.qmd)
-- [PrepareDataModel](PrepareDataModel.qmd)
-- [PrepareFitModelXGBoost](PrepareFitModelXGBoost.qmd)
+- [FitModel](#fn-FitModel)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
+- [PrepareDataModel](#fn-PrepareDataModel)
+- [PrepareFitModelXGBoost](#fn-PrepareFitModelXGBoost)
 
 ### Ver também
 
-- [FitModel](FitModel.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [FitModel](#fn-FitModel)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
 - `lightgbm::lgb.train`
 
 ### Referências
@@ -7833,7 +7833,7 @@ fittedModel <- FitModelLightGBM(
 
 *Gerado a partir de `FitModelLightGBM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## TuneModelBoundsLightGBM {.unnumbered}
+## TuneModelBoundsLightGBM {#fn-TuneModelBoundsLightGBM .unnumbered}
 
 *Definir os Limites da Busca de Hiperparâmetros do LightGBM*
 
@@ -7899,21 +7899,21 @@ tuneModelBounds <- TuneModelBoundsLightGBM()
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [FitModelLightGBM](FitModelLightGBM.qmd)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [FitModelLightGBM](#fn-FitModelLightGBM)
 
 ### Referências
 
@@ -7923,7 +7923,7 @@ tuneModelBounds <- TuneModelBoundsLightGBM()
 
 *Gerado a partir de `TuneModelBoundsLightGBM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## EvaluateModel {.unnumbered}
+## EvaluateModel {#fn-EvaluateModel .unnumbered}
 
 *Avaliar o Desempenho do Modelo na Base de Teste*
 
@@ -7982,16 +7982,16 @@ performanceMetrics <- EvaluateModel(fileModel = fileModel, holdoutSet = holdoutS
 
 **Avaliação do Modelo**
 
-- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
-- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
-- [PredictModelXGBoost](PredictModelXGBoost.qmd)
-- [PredictModel](PredictModel.qmd)
+- [AddColumn_TARGET_PROB_LEVEL](#fn-AddColumn_TARGET_PROB_LEVEL)
+- [EstimateBinaryPerformance](#fn-EstimateBinaryPerformance)
+- [PredictModelXGBoost](#fn-PredictModelXGBoost)
+- [PredictModel](#fn-PredictModel)
 
 ### Ver também
 
-- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
-- [PredictModelXGBoost](PredictModelXGBoost.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
+- [EstimateBinaryPerformance](#fn-EstimateBinaryPerformance)
+- [PredictModelXGBoost](#fn-PredictModelXGBoost)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
 
 ### Referências
 
@@ -8002,7 +8002,7 @@ performanceMetrics <- EvaluateModel(fileModel = fileModel, holdoutSet = holdoutS
 
 *Gerado a partir de `EvaluateModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PredictModelXGBoost {.unnumbered}
+## PredictModelXGBoost {#fn-PredictModelXGBoost .unnumbered}
 
 *Executar a Predição Binária com XGBoost*
 
@@ -8075,17 +8075,17 @@ predictionData <- PredictModelXGBoost(
 
 **Avaliação do Modelo**
 
-- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
-- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
-- [EvaluateModel](EvaluateModel.qmd)
-- [PredictModel](PredictModel.qmd)
+- [AddColumn_TARGET_PROB_LEVEL](#fn-AddColumn_TARGET_PROB_LEVEL)
+- [EstimateBinaryPerformance](#fn-EstimateBinaryPerformance)
+- [EvaluateModel](#fn-EvaluateModel)
+- [PredictModel](#fn-PredictModel)
 
 ### Ver também
 
-- [PredictModel](PredictModel.qmd)
-- [EvaluateModel](EvaluateModel.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
+- [PredictModel](#fn-PredictModel)
+- [EvaluateModel](#fn-EvaluateModel)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [EstimateBinaryPerformance](#fn-EstimateBinaryPerformance)
 
 ### Referências
 
@@ -8096,7 +8096,7 @@ predictionData <- PredictModelXGBoost(
 
 *Gerado a partir de `PredictModelXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## EstimateBinaryPerformance {.unnumbered}
+## EstimateBinaryPerformance {#fn-EstimateBinaryPerformance .unnumbered}
 
 *Estimar o Desempenho de um Modelo Preditivo Binário*
 
@@ -8188,14 +8188,14 @@ EstimateBinaryPerformance(
 
 **Avaliação do Modelo**
 
-- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
-- [EvaluateModel](EvaluateModel.qmd)
-- [PredictModelXGBoost](PredictModelXGBoost.qmd)
-- [PredictModel](PredictModel.qmd)
+- [AddColumn_TARGET_PROB_LEVEL](#fn-AddColumn_TARGET_PROB_LEVEL)
+- [EvaluateModel](#fn-EvaluateModel)
+- [PredictModelXGBoost](#fn-PredictModelXGBoost)
+- [PredictModel](#fn-PredictModel)
 
 ### Ver também
 
-- [EvaluateModel](EvaluateModel.qmd)
+- [EvaluateModel](#fn-EvaluateModel)
 - `yardstick::metric_set`
 - `yardstick::pr_auc`
 - `yardstick::roc_auc`
@@ -8211,7 +8211,7 @@ EstimateBinaryPerformance(
 
 *Gerado a partir de `EstimateBinaryPerformance.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PredictModel {.unnumbered}
+## PredictModel {#fn-PredictModel .unnumbered}
 
 *Executar a Predição do Modelo sobre a Base de Inferência*
 
@@ -8283,16 +8283,16 @@ predictionResults <- PredictModel(
 
 **Avaliação do Modelo**
 
-- [AddColumn_TARGET_PROB_LEVEL](AddColumn_TARGET_PROB_LEVEL.qmd)
-- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
-- [EvaluateModel](EvaluateModel.qmd)
-- [PredictModelXGBoost](PredictModelXGBoost.qmd)
+- [AddColumn_TARGET_PROB_LEVEL](#fn-AddColumn_TARGET_PROB_LEVEL)
+- [EstimateBinaryPerformance](#fn-EstimateBinaryPerformance)
+- [EvaluateModel](#fn-EvaluateModel)
+- [PredictModelXGBoost](#fn-PredictModelXGBoost)
 
 ### Ver também
 
-- [PredictModelXGBoost](PredictModelXGBoost.qmd)
-- [FitModelXGBoost](FitModelXGBoost.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [PredictModelXGBoost](#fn-PredictModelXGBoost)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
 - `xgboost::xgb.load.raw`
 
 ### Referências
@@ -8303,7 +8303,7 @@ predictionResults <- PredictModel(
 
 *Gerado a partir de `PredicteModel.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## AddColumn_TARGET_PROB_LEVEL {.unnumbered}
+## AddColumn_TARGET_PROB_LEVEL {#fn-AddColumn_TARGET_PROB_LEVEL .unnumbered}
 
 *Adicionar o Nível de Probabilidade da Predição*
 
@@ -8368,14 +8368,14 @@ AddColumn_TARGET_PROB_LEVEL(predicoes)
 
 **Avaliação do Modelo**
 
-- [EstimateBinaryPerformance](EstimateBinaryPerformance.qmd)
-- [EvaluateModel](EvaluateModel.qmd)
-- [PredictModelXGBoost](PredictModelXGBoost.qmd)
-- [PredictModel](PredictModel.qmd)
+- [EstimateBinaryPerformance](#fn-EstimateBinaryPerformance)
+- [EvaluateModel](#fn-EvaluateModel)
+- [PredictModelXGBoost](#fn-PredictModelXGBoost)
+- [PredictModel](#fn-PredictModel)
 
 ### Ver também
 
-- [PredictModel](PredictModel.qmd)
+- [PredictModel](#fn-PredictModel)
 
 ### Referências
 
@@ -8385,7 +8385,7 @@ AddColumn_TARGET_PROB_LEVEL(predicoes)
 
 *Gerado a partir de `AddColumn_TARGET_PROB_LEVEL.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## BuildPipelinePublishing {.unnumbered}
+## BuildPipelinePublishing {#fn-BuildPipelinePublishing .unnumbered}
 
 *Construir o Pipeline de Publicação do Modelo*
 
@@ -8445,19 +8445,19 @@ listPipelinePublishing <- BuildPipelinePublishing()
 
 **Construção do Pipeline**
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [BuildPipelineBegin](BuildPipelineBegin.qmd)
-- [BuildPipelineFinish](BuildPipelineFinish.qmd)
-- [BuildPipelineHistoricalData](BuildPipelineHistoricalData.qmd)
-- [BuildPipelineModeling](BuildPipelineModeling.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
-- [BuildPipelinePredictingData](BuildPipelinePredictingData.qmd)
-- [MsgBuildPipeline](MsgBuildPipeline.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [BuildPipelineBegin](#fn-BuildPipelineBegin)
+- [BuildPipelineFinish](#fn-BuildPipelineFinish)
+- [BuildPipelineHistoricalData](#fn-BuildPipelineHistoricalData)
+- [BuildPipelineModeling](#fn-BuildPipelineModeling)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
+- [BuildPipelinePredictingData](#fn-BuildPipelinePredictingData)
+- [MsgBuildPipeline](#fn-MsgBuildPipeline)
 
 ### Ver também
 
-- [BuildPipeline](BuildPipeline.qmd)
-- [PublishModelRegistry_ML_FEATURE_STORE](PublishModelRegistry_ML_FEATURE_STORE.qmd)
+- [BuildPipeline](#fn-BuildPipeline)
+- [PublishModelRegistry_ML_FEATURE_STORE](#fn-PublishModelRegistry_ML_FEATURE_STORE)
 
 ### Referências
 
@@ -8467,7 +8467,7 @@ listPipelinePublishing <- BuildPipelinePublishing()
 
 *Gerado a partir de `BuildPipelinePublishing.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## ConsolidatePredictionData {.unnumbered}
+## ConsolidatePredictionData {#fn-ConsolidatePredictionData .unnumbered}
 
 *Consolidar a Feature Store de Predição em Memória*
 
@@ -8530,16 +8530,16 @@ predictionData <- ConsolidatePredictionData(
 
 **Feature Store**
 
-- [CheckFeatureStore](CheckFeatureStore.qmd)
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
-- [CreateTable_IM_ML_FEATURE_CATALOG](CreateTable_IM_ML_FEATURE_CATALOG.qmd)
-- [DefineValidCustomers](DefineValidCustomers.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [CheckFeatureStore](#fn-CheckFeatureStore)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
+- [CreateTable_IM_ML_FEATURE_CATALOG](#fn-CreateTable_IM_ML_FEATURE_CATALOG)
+- [DefineValidCustomers](#fn-DefineValidCustomers)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
 
 ### Ver também
 
-- [PrepareDataModel](PrepareDataModel.qmd)
-- [BuildPipelinePredicting](BuildPipelinePredicting.qmd)
+- [PrepareDataModel](#fn-PrepareDataModel)
+- [BuildPipelinePredicting](#fn-BuildPipelinePredicting)
 
 ### Referências
 
@@ -8549,7 +8549,7 @@ predictionData <- ConsolidatePredictionData(
 
 *Gerado a partir de `ConsolidatePredictionData.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## CreateTable_IM_ML_FEATURE_CATALOG {.unnumbered}
+## CreateTable_IM_ML_FEATURE_CATALOG {#fn-CreateTable_IM_ML_FEATURE_CATALOG .unnumbered}
 
 *Criar a Tabela do Catálogo de Features*
 
@@ -8618,15 +8618,15 @@ CreateTable_IM_ML_FEATURE_CATALOG()
 
 **Feature Store**
 
-- [CheckFeatureStore](CheckFeatureStore.qmd)
-- [ConsolidateHistoricalData](ConsolidateHistoricalData.qmd)
-- [ConsolidatePredictionData](ConsolidatePredictionData.qmd)
-- [DefineValidCustomers](DefineValidCustomers.qmd)
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [CheckFeatureStore](#fn-CheckFeatureStore)
+- [ConsolidateHistoricalData](#fn-ConsolidateHistoricalData)
+- [ConsolidatePredictionData](#fn-ConsolidatePredictionData)
+- [DefineValidCustomers](#fn-DefineValidCustomers)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
 
 ### Ver também
 
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
 - `DBI::dbExecute`
 
 ### Referências
@@ -8638,7 +8638,7 @@ CreateTable_IM_ML_FEATURE_CATALOG()
 
 *Gerado a partir de `CreateTable_IM_ML_FEATURE_CATALOG.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## LoadArtifacts {.unnumbered}
+## LoadArtifacts {#fn-LoadArtifacts .unnumbered}
 
 *Carregar um Artefato Persistido em Parquet ou qs2*
 
@@ -8707,11 +8707,11 @@ dadosTreino <- LoadArtifacts(
 
 **Persistência de Artefatos**
 
-- [PersistArtifacts](PersistArtifacts.qmd)
+- [PersistArtifacts](#fn-PersistArtifacts)
 
 ### Ver também
 
-- [PersistArtifacts](PersistArtifacts.qmd)
+- [PersistArtifacts](#fn-PersistArtifacts)
 - `qs2::qs_read`
 
 ### Referências
@@ -8724,7 +8724,7 @@ dadosTreino <- LoadArtifacts(
 
 *Gerado a partir de `LoadArtifacts.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PersistArtifacts {.unnumbered}
+## PersistArtifacts {#fn-PersistArtifacts .unnumbered}
 
 *Persistir um Artefato em Parquet ou qs2*
 
@@ -8797,11 +8797,11 @@ PersistArtifacts(
 
 **Persistência de Artefatos**
 
-- [LoadArtifacts](LoadArtifacts.qmd)
+- [LoadArtifacts](#fn-LoadArtifacts)
 
 ### Ver também
 
-- [LoadArtifacts](LoadArtifacts.qmd)
+- [LoadArtifacts](#fn-LoadArtifacts)
 - `qs2::qs_save`
 
 ### Referências
@@ -8814,7 +8814,7 @@ PersistArtifacts(
 
 *Gerado a partir de `PersistArtifacts.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PrepareFitModelXGBoost {.unnumbered}
+## PrepareFitModelXGBoost {#fn-PrepareFitModelXGBoost .unnumbered}
 
 *Preparar as Matrizes Esparsas de Ajuste do XGBoost*
 
@@ -8881,14 +8881,14 @@ fitXGBoostSet <- PrepareFitModelXGBoost(fitSet = trainingSet, nThreads = 4L)
 
 **Modelagem Preditiva**
 
-- [FitModel](FitModel.qmd)
-- [FitModelLightGBM](FitModelLightGBM.qmd)
-- [FitModelXGBoost](FitModelXGBoost.qmd)
-- [PrepareDataModel](PrepareDataModel.qmd)
+- [FitModel](#fn-FitModel)
+- [FitModelLightGBM](#fn-FitModelLightGBM)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
+- [PrepareDataModel](#fn-PrepareDataModel)
 
 ### Ver também
 
-- [FitModelXGBoost](FitModelXGBoost.qmd)
+- [FitModelXGBoost](#fn-FitModelXGBoost)
 - `Matrix::dgCMatrix-class`
 
 ### Referências
@@ -8900,7 +8900,7 @@ fitXGBoostSet <- PrepareFitModelXGBoost(fitSet = trainingSet, nThreads = 4L)
 
 *Gerado a partir de `PrepareFitModelXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PrepareTuneModelFoldsXGBoost {.unnumbered}
+## PrepareTuneModelFoldsXGBoost {#fn-PrepareTuneModelFoldsXGBoost .unnumbered}
 
 *Preparar Folds Nativos do XGBoost em Memória*
 
@@ -8970,20 +8970,20 @@ preparedTuneModel <- PrepareTuneModelFoldsXGBoost(
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 - `rsample::vfold_cv`
 
 ### Referências
@@ -8995,7 +8995,7 @@ preparedTuneModel <- PrepareTuneModelFoldsXGBoost(
 
 *Gerado a partir de `PrepareTuneModelFoldsXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PrepareTuneModelFoldXGBoost {.unnumbered}
+## PrepareTuneModelFoldXGBoost {#fn-PrepareTuneModelFoldXGBoost .unnumbered}
 
 *Preparar as Matrizes Quantizadas de um Fold do XGBoost*
 
@@ -9073,19 +9073,19 @@ tuneFold <- PrepareTuneModelFoldXGBoost(
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldsLightGBM](PrepareTuneModelFoldsLightGBM.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldsLightGBM](#fn-PrepareTuneModelFoldsLightGBM)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
 - `rsample::analysis`
 - `xgboost::xgb.QuantileDMatrix`
 
@@ -9097,7 +9097,7 @@ tuneFold <- PrepareTuneModelFoldXGBoost(
 
 *Gerado a partir de `PrepareTuneModelFoldXGBoost.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PrepareTuneModelFoldsLightGBM {.unnumbered}
+## PrepareTuneModelFoldsLightGBM {#fn-PrepareTuneModelFoldsLightGBM .unnumbered}
 
 *Preparar Folds Nativos do LightGBM*
 
@@ -9159,20 +9159,20 @@ preparedTuneModel <- PrepareTuneModelFoldsLightGBM(tuneData = tuneSet, nFolds = 
 
 **Otimização de Hiperparâmetros**
 
-- [PrepareTuneModelFoldXGBoost](PrepareTuneModelFoldXGBoost.qmd)
-- [PrepareTuneModelFoldsXGBoost](PrepareTuneModelFoldsXGBoost.qmd)
-- [TuneModel](TuneModel.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
-- [TuneModelBoundsXGBoost](TuneModelBoundsXGBoost.qmd)
-- [TuneModelEvaluateXGBoost](TuneModelEvaluateXGBoost.qmd)
-- [TuneModelEvaluateXGBoostFolds](TuneModelEvaluateXGBoostFolds.qmd)
-- [TuneModelLastGrid](TuneModelLastGrid.qmd)
-- [TuneModelResampleFoldsXGBoost](TuneModelResampleFoldsXGBoost.qmd)
+- [PrepareTuneModelFoldXGBoost](#fn-PrepareTuneModelFoldXGBoost)
+- [PrepareTuneModelFoldsXGBoost](#fn-PrepareTuneModelFoldsXGBoost)
+- [TuneModel](#fn-TuneModel)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
+- [TuneModelBoundsXGBoost](#fn-TuneModelBoundsXGBoost)
+- [TuneModelEvaluateXGBoost](#fn-TuneModelEvaluateXGBoost)
+- [TuneModelEvaluateXGBoostFolds](#fn-TuneModelEvaluateXGBoostFolds)
+- [TuneModelLastGrid](#fn-TuneModelLastGrid)
+- [TuneModelResampleFoldsXGBoost](#fn-TuneModelResampleFoldsXGBoost)
 
 ### Ver também
 
-- [FitModelLightGBM](FitModelLightGBM.qmd)
-- [TuneModelBoundsLightGBM](TuneModelBoundsLightGBM.qmd)
+- [FitModelLightGBM](#fn-FitModelLightGBM)
+- [TuneModelBoundsLightGBM](#fn-TuneModelBoundsLightGBM)
 - `Matrix::sparse.model.matrix`
 - `rsample::vfold_cv`
 
@@ -9185,7 +9185,7 @@ preparedTuneModel <- PrepareTuneModelFoldsLightGBM(tuneData = tuneSet, nFolds = 
 
 *Gerado a partir de `PrepareTuneModelFoldsLightGBM.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## PublishModelRegistry_ML_FEATURE_STORE {.unnumbered}
+## PublishModelRegistry_ML_FEATURE_STORE {#fn-PublishModelRegistry_ML_FEATURE_STORE .unnumbered}
 
 *Publicar a Feature Store In-Memory na Tabela Persistente*
 
@@ -9293,13 +9293,13 @@ PublishModelRegistry_ML_FEATURE_STORE(
 
 **Publicação do Modelo**
 
-- [RegisterPredictiveModel](RegisterPredictiveModel.qmd)
+- [RegisterPredictiveModel](#fn-RegisterPredictiveModel)
 
 ### Ver também
 
-- [Generate_IM_ML_FEATURE_STORE](Generate_IM_ML_FEATURE_STORE.qmd)
-- [CheckFeatureStore](CheckFeatureStore.qmd)
-- [BuildPipelinePublishing](BuildPipelinePublishing.qmd)
+- [Generate_IM_ML_FEATURE_STORE](#fn-Generate_IM_ML_FEATURE_STORE)
+- [CheckFeatureStore](#fn-CheckFeatureStore)
+- [BuildPipelinePublishing](#fn-BuildPipelinePublishing)
 
 ### Referências
 
@@ -9309,7 +9309,7 @@ PublishModelRegistry_ML_FEATURE_STORE(
 
 *Gerado a partir de `PublishModelRegistry_ML_FEATURE_STORE.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## RegisterPredictiveModel {.unnumbered}
+## RegisterPredictiveModel {#fn-RegisterPredictiveModel .unnumbered}
 
 *Registrar os Metadados do Modelo Preditivo*
 
@@ -9367,11 +9367,11 @@ RegisterPredictiveModel(
 
 **Publicação do Modelo**
 
-- [PublishModelRegistry_ML_FEATURE_STORE](PublishModelRegistry_ML_FEATURE_STORE.qmd)
+- [PublishModelRegistry_ML_FEATURE_STORE](#fn-PublishModelRegistry_ML_FEATURE_STORE)
 
 ### Ver também
 
-- [PublishModelRegistry_ML_FEATURE_STORE](PublishModelRegistry_ML_FEATURE_STORE.qmd)
+- [PublishModelRegistry_ML_FEATURE_STORE](#fn-PublishModelRegistry_ML_FEATURE_STORE)
 - `pacman::p_loaded`
 
 ### Referências
@@ -9382,7 +9382,7 @@ RegisterPredictiveModel(
 
 *Gerado a partir de `PublishModelRegistry.R` em 26/11/2026. Para alterar, edite o cabeçalho roxygen2 do arquivo de origem.*
 
-## RenderRoxygenToQuarto {.unnumbered}
+## RenderRoxygenToQuarto {#fn-RenderRoxygenToQuarto .unnumbered}
 
 *Renderizar Cabeçalhos roxygen2 em Páginas Quarto*
 

@@ -130,7 +130,9 @@ for(funcao in ordem$funcao){
   corpo <- linhas[(fimYaml + 1L):length(linhas)]
   corpo <- sub("^## ", "### ", corpo)
   corpo <- corpo[!grepl("^\\[!\\[", corpo)]
-  pdf <- c(pdf, "", paste0("## ", funcao, " {.unnumbered}"), "",
+  # Links entre paginas de funcoes viram links para as secoes do proprio PDF
+  corpo <- gsub("\\]\\(([A-Za-z0-9_.]+)\\.qmd\\)", "](#fn-\\1)", corpo)
+  pdf <- c(pdf, "", paste0("## ", funcao, " {#fn-", funcao, " .unnumbered}"), "",
            paste0("*", ordem$titulo[ordem$funcao == funcao], "*"), corpo)
 }
 writeLines(enc2utf8(pdf), "_referencia-pdf.qmd", useBytes = TRUE)

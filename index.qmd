@@ -5,6 +5,8 @@ author: "João Batista Gonçalves de Brito"
 toc: false
 ---
 
+{{< include _capa.qmd >}}
+
 ::: {.content-visible when-format="html"}
 {{< include _badges.qmd >}}
 :::

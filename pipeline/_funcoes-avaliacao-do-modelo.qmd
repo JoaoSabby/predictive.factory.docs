@@ -2,6 +2,14 @@
 
 **Avaliação do modelo**
 
+::: {.content-visible when-format="html"}
 - [`EvaluateModel()`](../referencia/funcoes/EvaluateModel.qmd): Avaliar o Desempenho do Modelo na Base de Teste
 - [`PredictModelXGBoost()`](../referencia/funcoes/PredictModelXGBoost.qmd): Executar a Predição Binária com XGBoost
 - [`EstimateBinaryPerformance()`](../referencia/funcoes/EstimateBinaryPerformance.qmd): Estimar o Desempenho de um Modelo Preditivo Binário
+:::
+
+::: {.content-visible unless-format="html"}
+- [`EvaluateModel()`](#fn-EvaluateModel): Avaliar o Desempenho do Modelo na Base de Teste
+- [`PredictModelXGBoost()`](#fn-PredictModelXGBoost): Executar a Predição Binária com XGBoost
+- [`EstimateBinaryPerformance()`](#fn-EstimateBinaryPerformance): Estimar o Desempenho de um Modelo Preditivo Binário
+:::

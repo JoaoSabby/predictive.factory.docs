@@ -2,6 +2,7 @@
 
 **Configuração e execução**
 
+::: {.content-visible when-format="html"}
 - [`DefineOptionsSetup()`](../referencia/funcoes/DefineOptionsSetup.qmd): Definir as Opções de Configuração do Predictive Factory
 - [`RunPipeline()`](../referencia/funcoes/RunPipeline.qmd): Executar o Pipeline Preditivo de um Modelo Alvo
 - [`CheckPredictiveModelExists()`](../referencia/funcoes/CheckPredictiveModelExists.qmd): Verificar a Existência do Modelo Preditivo no Registro
@@ -9,3 +10,14 @@
 - [`LoadModelRunConfig()`](../referencia/funcoes/LoadModelRunConfig.qmd): Carregar a Configuração de Execução do Modelo Preditivo
 - [`ShowStartupBanner()`](../referencia/funcoes/ShowStartupBanner.qmd): Exibir o Banner de Inicialização do Motor Preditivo
 - [`CreateCrewControllerGroup()`](../referencia/funcoes/CreateCrewControllerGroup.qmd): Criar o Grupo de Controladores de Paralelismo crew
+:::
+
+::: {.content-visible unless-format="html"}
+- [`DefineOptionsSetup()`](#fn-DefineOptionsSetup): Definir as Opções de Configuração do Predictive Factory
+- [`RunPipeline()`](#fn-RunPipeline): Executar o Pipeline Preditivo de um Modelo Alvo
+- [`CheckPredictiveModelExists()`](#fn-CheckPredictiveModelExists): Verificar a Existência do Modelo Preditivo no Registro
+- [`ConfigurePredictiveModelRun()`](#fn-ConfigurePredictiveModelRun): Configurar a Execução do Modelo Preditivo
+- [`LoadModelRunConfig()`](#fn-LoadModelRunConfig): Carregar a Configuração de Execução do Modelo Preditivo
+- [`ShowStartupBanner()`](#fn-ShowStartupBanner): Exibir o Banner de Inicialização do Motor Preditivo
+- [`CreateCrewControllerGroup()`](#fn-CreateCrewControllerGroup): Criar o Grupo de Controladores de Paralelismo crew
+:::

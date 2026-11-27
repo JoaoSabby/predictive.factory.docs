@@ -2,5 +2,12 @@
 
 **Consolidação dos dados**
 
+::: {.content-visible when-format="html"}
 - [`Generate_IM_ML_FEATURE_STORE()`](../referencia/funcoes/Generate_IM_ML_FEATURE_STORE.qmd): Consolidar os Feature Groups na Feature Store In-Memory
 - [`ConsolidateHistoricalData()`](../referencia/funcoes/ConsolidateHistoricalData.qmd): Consolidar Alvo e Preditores para Modelagem
+:::
+
+::: {.content-visible unless-format="html"}
+- [`Generate_IM_ML_FEATURE_STORE()`](#fn-Generate_IM_ML_FEATURE_STORE): Consolidar os Feature Groups na Feature Store In-Memory
+- [`ConsolidateHistoricalData()`](#fn-ConsolidateHistoricalData): Consolidar Alvo e Preditores para Modelagem
+:::

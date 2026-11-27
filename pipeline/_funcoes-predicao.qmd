@@ -2,4 +2,10 @@
 
 **Predição**
 
+::: {.content-visible when-format="html"}
 - [`PredictModel()`](../referencia/funcoes/PredictModel.qmd): Executar a Predição do Modelo sobre a Base de Inferência
+:::
+
+::: {.content-visible unless-format="html"}
+- [`PredictModel()`](#fn-PredictModel): Executar a Predição do Modelo sobre a Base de Inferência
+:::

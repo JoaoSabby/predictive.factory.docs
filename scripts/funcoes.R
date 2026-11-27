@@ -137,6 +137,8 @@ for(funcao in ordem$funcao){
   corpo <- corpo[!grepl("^\\[!\\[", corpo)]
   # Links entre paginas de funcoes viram links para as secoes do proprio PDF
   corpo <- gsub("\\]\\(([A-Za-z0-9_.]+)\\.qmd\\)", "](#fn-\\1)", corpo)
+  # Imagens das paginas (fluxogramas do flow) ficam em referencia/funcoes/figures
+  corpo <- gsub("](figures/", "](referencia/funcoes/figures/", corpo, fixed = TRUE)
   pdf <- c(pdf, "", paste0("## ", funcao, " {#fn-", funcao, " .unnumbered}"), "",
            paste0("*", ordem$titulo[ordem$funcao == funcao], "*"), corpo)
 }
